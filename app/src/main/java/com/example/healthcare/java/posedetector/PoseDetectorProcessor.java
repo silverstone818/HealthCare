@@ -287,7 +287,18 @@ public class PoseDetectorProcessor
                 isSquat = false;
                 maxAngle = temp;
                 numAnglesInRange = 0;
-
+                if(maxAngle >= 54 && maxAngle <= 75 && waist_banding == true){
+                    //좋은 자세
+                }
+                else if(maxAngle > 75){
+                    //조금 구부렸을 때
+                }
+                else if(maxAngle < 54){
+                    //너무 많이 구부렸을 때
+                }
+                else if(waist_banding == false){
+                    //허리가 굽었을 때
+                }
                 if(waistAngle >= 170 && waistAngle <= 200){
                     waist_banding = true;
                 }else{
