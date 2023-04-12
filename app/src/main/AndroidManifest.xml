@@ -41,9 +41,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SquatsActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true" />
     </application>

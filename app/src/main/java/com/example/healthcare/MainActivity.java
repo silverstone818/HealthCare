@@ -1,6 +1,18 @@
 package com.example.healthcare;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.Settings;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -8,16 +20,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.annotation.SuppressLint;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.EditText;
-import android.widget.TextView;
-
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.normal.TedPermission;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,11 +35,23 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser mFirebaseUser;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.R)
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(Environment.isExternalStorageManager() != true){
+            requestManageExternalStoragePermission();
+        }
+
+        TedPermission.create()
+                .setPermissionListener(permission)
+                .setRationaleMessage("녹화를 위하여 권한을 허용해주세요.")
+                .setDeniedMessage("권한이 거부되었습니다. 설정 > 권한에서 허용해주세요.")
+                .setPermissions(android.Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
+                .check();
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -101,5 +122,28 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton("아니오", null)
                 .show();
     }
+
+    private static final int REQUEST_MANAGE_EXTERNAL_STORAGE_PERMISSION = 1;
+
+    private void requestManageExternalStoragePermission() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+            Uri uri = Uri.fromParts("package", getPackageName(), null);
+            intent.setData(uri);
+            startActivityForResult(intent, REQUEST_MANAGE_EXTERNAL_STORAGE_PERMISSION);
+        }
+    }
+
+    PermissionListener permission = new PermissionListener() {
+        @Override
+        public void onPermissionGranted() {
+
+        }
+
+        @Override
+        public void onPermissionDenied(List<String> deniedPermissions) {
+            Toast.makeText(MainActivity.this, "권한 거부", Toast.LENGTH_SHORT).show();
+        }
+    };
 
 }
