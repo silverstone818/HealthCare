@@ -146,6 +146,9 @@ public class PoseDetectorProcessor
     private double maxAngle = 0;
     private double temp = 0;
 
+    private double leftAngle = 0;
+    private double rightAngle = 0;
+
     @Override
     protected void onSuccess(
             @NonNull PoseWithClassification poseWithClassification,
@@ -165,35 +168,6 @@ public class PoseDetectorProcessor
                     public void draw(Canvas canvas) {
                         super.draw(canvas);
                         if (pose != null) {
-                            PointF leftHip = null;
-                            PointF leftKnee = null;
-                            PointF leftAnkle = null;
-
-                            PointF rightHip = null;
-                            PointF rightKnee = null;
-                            PointF rightAnkle = null;
-
-
-                            if (pose.getPoseLandmark(PoseLandmark.LEFT_HIP) != null) {
-                                leftHip = pose.getPoseLandmark(PoseLandmark.LEFT_HIP).getPosition();
-                            }
-                            if (pose.getPoseLandmark(PoseLandmark.LEFT_KNEE) != null) {
-                                leftKnee = pose.getPoseLandmark(PoseLandmark.LEFT_KNEE).getPosition();
-                            }
-                            if (pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE) != null) {
-                                leftAnkle = pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE).getPosition();
-                            }
-
-                            if (pose.getPoseLandmark(PoseLandmark.RIGHT_HIP) != null) {
-                                rightHip = pose.getPoseLandmark(PoseLandmark.RIGHT_HIP).getPosition();
-                            }
-                            if (pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE) != null) {
-                                rightKnee = pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE).getPosition();
-                            }
-                            if (pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE) != null) {
-                                rightAnkle = pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE).getPosition();
-                            }
-
 
                             Paint whitePaint = new Paint();
                             whitePaint.setColor(Color.WHITE);
@@ -201,36 +175,7 @@ public class PoseDetectorProcessor
                             whitePaint.setStrokeWidth(4.0f);
                             whitePaint.setTextSize(50f);
 
-                            double leftAngle = calculateAngle(leftHip, leftKnee, leftAnkle);
-                            double rightAngle = calculateAngle(rightHip, rightKnee, rightAnkle);
-                            double allAngle = Math.min(leftAngle, rightAngle);
-                            if (leftHip != null && leftKnee != null && leftAnkle != null
-                                    && rightHip != null && rightKnee != null && rightAnkle != null) {
-
-
-                                // 새로운 스쿼트마다 개수 초기화
-                                if (allAngle == 0) {
-                                    isSquat = false;
-                                    numSquats = 0;
-                                    maxAngle = 0;
-                                }
-
-                                if (allAngle != 0 && allAngle <= 90) {
-                                    numAnglesInRange++;
-                                    if (numAnglesInRange >= 8 && !isSquat) {  // 스쿼트 체크
-                                        isSquat = true;
-                                        temp = Math.min(leftAngle, rightAngle);
-                                    }
-                                }
-
-                                if (allAngle > 150) {
-                                    if(isSquat) numSquats++;
-                                    isSquat = false;
-                                    maxAngle = temp;
-                                    numAnglesInRange = 0;
-                                }
-                            }
-
+                            onSqurtsAngle(pose);
                             canvas.drawText("Left angle: " + leftAngle, 20, 200, whitePaint);
                             canvas.drawText("Right angle: " + rightAngle, 20, 250, whitePaint);
                             canvas.drawText("Max angle: " + maxAngle, 20, 300, whitePaint);
@@ -241,6 +186,70 @@ public class PoseDetectorProcessor
                 });
     }
 
+
+    public void onSqurtsAngle(Pose pose){
+        PointF leftHip = null;
+        PointF leftKnee = null;
+        PointF leftAnkle = null;
+
+        PointF rightHip = null;
+        PointF rightKnee = null;
+        PointF rightAnkle = null;
+
+
+        if (pose.getPoseLandmark(PoseLandmark.LEFT_HIP) != null) {
+            leftHip = pose.getPoseLandmark(PoseLandmark.LEFT_HIP).getPosition();
+        }
+        if (pose.getPoseLandmark(PoseLandmark.LEFT_KNEE) != null) {
+            leftKnee = pose.getPoseLandmark(PoseLandmark.LEFT_KNEE).getPosition();
+        }
+        if (pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE) != null) {
+            leftAnkle = pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE).getPosition();
+        }
+
+        if (pose.getPoseLandmark(PoseLandmark.RIGHT_HIP) != null) {
+            rightHip = pose.getPoseLandmark(PoseLandmark.RIGHT_HIP).getPosition();
+        }
+        if (pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE) != null) {
+            rightKnee = pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE).getPosition();
+        }
+        if (pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE) != null) {
+            rightAnkle = pose.getPoseLandmark(PoseLandmark.RIGHT_ANKLE).getPosition();
+        }
+        leftAngle = calculateAngle(leftHip, leftKnee, leftAnkle);
+        rightAngle = calculateAngle(rightHip, rightKnee, rightAnkle);
+
+
+
+
+        double allAngle = Math.min(leftAngle, rightAngle);
+        if (leftHip != null && leftKnee != null && leftAnkle != null
+                && rightHip != null && rightKnee != null && rightAnkle != null) {
+
+
+            // 새로운 스쿼트마다 개수 초기화
+            if (allAngle == 0) {
+                isSquat = false;
+                numSquats = 0;
+                maxAngle = 0;
+            }
+
+            if (allAngle != 0 && allAngle <= 90) {
+                numAnglesInRange++;
+                if (numAnglesInRange >= 8 && !isSquat) {  // 스쿼트 체크
+                    isSquat = true;
+                    temp = Math.min(leftAngle, rightAngle);
+                }
+            }
+
+            if (allAngle > 150) {
+                if(isSquat) numSquats++;
+                isSquat = false;
+                maxAngle = temp;
+                numAnglesInRange = 0;
+            }
+        }
+    }
     @Override
     protected void onFailure(@NonNull Exception e) {
         Log.e(TAG, "Pose detection failed!", e);
