@@ -148,6 +148,8 @@ public class PoseDetectorProcessor
 
     private double leftAngle = 0;
     private double rightAngle = 0;
+    private double waistAngle = 0;
+    private boolean waist_banding = false;
 
     @Override
     protected void onSuccess(
@@ -176,16 +178,50 @@ public class PoseDetectorProcessor
                             whitePaint.setTextSize(50f);
 
                             onSqurtsAngle(pose);
+
                             canvas.drawText("Left angle: " + leftAngle, 20, 200, whitePaint);
                             canvas.drawText("Right angle: " + rightAngle, 20, 250, whitePaint);
                             canvas.drawText("Max angle: " + maxAngle, 20, 300, whitePaint);
                             canvas.drawText("Num squats: " + numSquats, 20, 350, whitePaint);
                             canvas.drawText("numAnglesInRange: " + numAnglesInRange, 20, 400, whitePaint);
+                            canvas.drawText("Waist angle: " + waistAngle, 20, 450, whitePaint);
+                            canvas.drawText("Waist banding: " + waist_banding, 20, 500, whitePaint);
                         }
                     }
                 });
     }
 
+
+    public void waistBending(Pose pose){
+        PointF leftShoulder = null;
+        PointF rightShoulder = null;
+        PointF leftHip = null;
+        PointF rightHip = null;
+
+// 2. 어깨 중심점과 엉덩이 중심점을 계산합니다.
+        if (pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER) != null) {
+            leftShoulder = pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER).getPosition();
+        }
+        if (pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER) != null) {
+            rightShoulder = pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER).getPosition();
+        }
+        if (pose.getPoseLandmark(PoseLandmark.LEFT_HIP) != null) {
+            leftHip = pose.getPoseLandmark(PoseLandmark.LEFT_HIP).getPosition();
+        }
+        if (pose.getPoseLandmark(PoseLandmark.RIGHT_HIP) != null) {
+            rightHip = pose.getPoseLandmark(PoseLandmark.RIGHT_HIP).getPosition();
+        }
+
+        if (leftHip != null && leftShoulder != null
+                && rightHip != null && rightShoulder != null) {
+
+            PointF hipCenter = new PointF((leftHip.x + rightHip.x) / 2, (leftHip.y + rightHip.y) / 2);
+            PointF shoulderCenter = new PointF((leftShoulder.x + rightShoulder.x) / 2, (leftShoulder.y + rightShoulder.y) / 2);
+
+// 3. 엉덩이 중심점, 골반 중심점 및 어깨 중심점 사이의 각도를 계산합니다.
+            waistAngle = calculateAngle(hipCenter, shoulderCenter, new PointF(shoulderCenter.x, shoulderCenter.y - 1));
+        }
+    }
 
     public void onSqurtsAngle(Pose pose){
         PointF leftHip = null;
@@ -219,26 +255,30 @@ public class PoseDetectorProcessor
         leftAngle = calculateAngle(leftHip, leftKnee, leftAnkle);
         rightAngle = calculateAngle(rightHip, rightKnee, rightAnkle);
 
-
-
-
         double allAngle = Math.min(leftAngle, rightAngle);
+        // 새로운 스쿼트마다 개수 초기화
+        if (allAngle == 0) {
+            isSquat = false;
+            numSquats = 0;
+            maxAngle = 0;
+            waist_banding = false;
+        }
+
         if (leftHip != null && leftKnee != null && leftAnkle != null
                 && rightHip != null && rightKnee != null && rightAnkle != null) {
 
-
-            // 새로운 스쿼트마다 개수 초기화
-            if (allAngle == 0) {
-                isSquat = false;
-                numSquats = 0;
-                maxAngle = 0;
-            }
+            waistBending(pose);
 
             if (allAngle != 0 && allAngle <= 90) {
                 numAnglesInRange++;
                 if (numAnglesInRange >= 8 && !isSquat) {  // 스쿼트 체크
                     isSquat = true;
                     temp = Math.min(leftAngle, rightAngle);
+                    if(waistAngle >= 200 && waistAngle <= 220){
+                        waist_banding = true;
+                    }else{
+                        waist_banding = false;
+                    }
                 }
             }
 
@@ -247,6 +287,12 @@ public class PoseDetectorProcessor
                 isSquat = false;
                 maxAngle = temp;
                 numAnglesInRange = 0;
+
+                if(waistAngle >= 170 && waistAngle <= 200){
+                    waist_banding = true;
+                }else{
+                    waist_banding = false;
+                }
             }
         }
     }
