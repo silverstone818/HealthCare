@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser mFirebaseUser;
 
 
+
     @RequiresApi(api = Build.VERSION_CODES.R)
     @SuppressLint("MissingInflatedId")
     @Override
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         TedPermission.create()
                 .setPermissionListener(permission)
-                .setRationaleMessage("녹화를 위하여 권한을 허용해주세요.")
+                .setRationaleMessage("동작 인식을 위하여 권한을 허용해주세요.")
                 .setDeniedMessage("권한이 거부되었습니다. 설정 > 권한에서 허용해주세요.")
                 .setPermissions(android.Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
                 .check();
@@ -60,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, AuthActivity.class));
             finish();
             return;
-
         }
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tl_tabs);

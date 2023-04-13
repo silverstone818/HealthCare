@@ -274,7 +274,7 @@ public class PoseDetectorProcessor
                 if (numAnglesInRange >= 8 && !isSquat) {  // 스쿼트 체크
                     isSquat = true;
                     temp = Math.min(leftAngle, rightAngle);
-                    if(waistAngle >= 200 && waistAngle <= 220){
+                    if(waistAngle >= 200 && waistAngle <= 225){
                         waist_banding = true;
                     }else{
                         waist_banding = false;

@@ -30,7 +30,6 @@ import com.google.mlkit.vision.pose.Pose;
 import com.google.mlkit.vision.pose.PoseLandmark;
 
 import java.util.List;
-import java.util.Locale;
 
 /** Draw the detected pose in preview. */
 public class PoseGraphic extends Graphic {
@@ -139,21 +138,21 @@ public class PoseGraphic extends Graphic {
         // Face
 
 
-        drawLine(canvas, leftShoulder, rightShoulder, whitePaint);
-        drawLine(canvas, leftHip, rightHip, whitePaint);
+//        drawLine(canvas, leftShoulder, rightShoulder, whitePaint);
+//        drawLine(canvas, leftHip, rightHip, whitePaint);
 
         // Left body
-        drawLine(canvas, leftShoulder, leftElbow, leftPaint);
-        drawLine(canvas, leftElbow, leftWrist, leftPaint);
-        drawLine(canvas, leftShoulder, leftHip, leftPaint);
-        drawLine(canvas, leftHip, leftKnee, leftPaint);
-        drawLine(canvas, leftKnee, leftAnkle, leftPaint);
-        drawLine(canvas, leftWrist, leftThumb, leftPaint);
-        drawLine(canvas, leftWrist, leftPinky, leftPaint);
-        drawLine(canvas, leftWrist, leftIndex, leftPaint);
-        drawLine(canvas, leftIndex, leftPinky, leftPaint);
-        drawLine(canvas, leftAnkle, leftHeel, leftPaint);
-        drawLine(canvas, leftHeel, leftFootIndex, leftPaint);
+//        drawLine(canvas, leftShoulder, leftElbow, leftPaint);
+//        drawLine(canvas, leftElbow, leftWrist, leftPaint);
+//        drawLine(canvas, leftShoulder, leftHip, leftPaint);
+//        drawLine(canvas, leftHip, leftKnee, leftPaint);
+//        drawLine(canvas, leftKnee, leftAnkle, leftPaint);
+//        drawLine(canvas, leftWrist, leftThumb, leftPaint);
+//        drawLine(canvas, leftWrist, leftPinky, leftPaint);
+//        drawLine(canvas, leftWrist, leftIndex, leftPaint);
+//        drawLine(canvas, leftIndex, leftPinky, leftPaint);
+//        drawLine(canvas, leftAnkle, leftHeel, leftPaint);
+//        drawLine(canvas, leftHeel, leftFootIndex, leftPaint);
 
         // Right body
         drawLine(canvas, rightShoulder, rightElbow, rightPaint);
@@ -169,22 +168,22 @@ public class PoseGraphic extends Graphic {
         drawLine(canvas, rightHeel, rightFootIndex, rightPaint);
 
         // Draw inFrameLikelihood for all points
-        if (showInFrameLikelihood) {
-            for (PoseLandmark landmark : landmarks) {
-                canvas.drawText(
-                        String.format(Locale.US, "%.2f", landmark.getInFrameLikelihood()),
-                        translateX(landmark.getPosition().x),
-                        translateY(landmark.getPosition().y),
-                        whitePaint);
-            }
-        }
+//        if (showInFrameLikelihood) {
+//            for (PoseLandmark landmark : landmarks) {
+//                canvas.drawText(
+//                        String.format(Locale.US, "%.2f", landmark.getInFrameLikelihood()),
+//                        translateX(landmark.getPosition().x),
+//                        translateY(landmark.getPosition().y),
+//                        whitePaint);
+//            }
+//        }
     }
 
     void drawPoint(Canvas canvas, PoseLandmark landmark, Paint paint) {
         PointF3D point = landmark.getPosition3D();
-        updatePaintColorByZValue(
-                paint, canvas, visualizeZ, rescaleZForVisualization, point.getZ(), zMin, zMax);
-        canvas.drawCircle(translateX(point.getX()), translateY(point.getY()), DOT_RADIUS, paint);
+//        updatePaintColorByZValue(
+//                paint, canvas, visualizeZ, rescaleZForVisualization, point.getZ(), zMin, zMax);
+//        canvas.drawCircle(translateX(point.getX()), translateY(point.getY()), DOT_RADIUS, paint);
     }
 
     void drawLine(Canvas canvas, PoseLandmark startLandmark, PoseLandmark endLandmark, Paint paint) {
