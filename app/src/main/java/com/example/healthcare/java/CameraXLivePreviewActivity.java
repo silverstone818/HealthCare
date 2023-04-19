@@ -46,13 +46,14 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
     private int lensFacing = CameraSelector.LENS_FACING_BACK;
     private CameraSelector cameraSelector;
 
-
+    private PoseDetectorProcessor poseDetectorProcessor;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
+
 
         cameraSelector = new CameraSelector.Builder().requireLensFacing(lensFacing).build();
 
@@ -151,6 +152,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
             boolean runClassification = PreferenceUtils.shouldPoseDetectionRunClassification(this);
             imageProcessor =
                     (VisionImageProcessor) new PoseDetectorProcessor(
+                            this,
                             this,
                             poseDetectorOptions,
                             shouldShowInFrameLikelihood,

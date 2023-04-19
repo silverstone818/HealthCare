@@ -21,6 +21,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,7 @@ import com.google.mlkit.vision.pose.PoseLandmark;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -54,6 +56,7 @@ public class PoseDetectorProcessor
     private final boolean rescaleZForVisualization;
     private final boolean runClassification;
     private final boolean isStreamMode;
+    private boolean isTtsInitialized = false;
     private final Context context;
     private final Executor classificationExecutor;
 
@@ -78,23 +81,26 @@ public class PoseDetectorProcessor
     }
 
     public PoseDetectorProcessor(
-            Context context,
+            Context context1,
+            Context context2,
             PoseDetectorOptionsBase options,
             boolean showInFrameLikelihood,
             boolean visualizeZ,
             boolean rescaleZForVisualization,
             boolean runClassification,
             boolean isStreamMode) {
-        super(context);
+        super(context1);
+        initializeTextToSpeech(context2);
         this.showInFrameLikelihood = showInFrameLikelihood;
         this.visualizeZ = visualizeZ;
         this.rescaleZForVisualization = rescaleZForVisualization;
         detector = PoseDetection.getClient(options);
         this.runClassification = runClassification;
         this.isStreamMode = isStreamMode;
-        this.context = context;
+        this.context = context1;
         classificationExecutor = Executors.newSingleThreadExecutor();
     }
+
 
     @Override
     public void stop() {
@@ -144,12 +150,28 @@ public class PoseDetectorProcessor
     private boolean isSquat = false;
     private int numSquats = 0;
     private double maxAngle = 0;
-    private double temp = 0;
+    private double temp = 120.0;
 
     private double leftAngle = 0;
     private double rightAngle = 0;
     private double waistAngle = 0;
     private boolean waist_banding = false;
+
+    private TextToSpeech tts;
+
+
+    private void initializeTextToSpeech(Context context) {
+        tts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status != TextToSpeech.ERROR) {
+                    // 언어를 선택합니다.
+                    tts.setLanguage(Locale.KOREAN);
+                    isTtsInitialized = true;
+                }
+            }
+        });
+    }
 
     @Override
     protected void onSuccess(
@@ -170,7 +192,10 @@ public class PoseDetectorProcessor
                     public void draw(Canvas canvas) {
                         super.draw(canvas);
                         if (pose != null) {
-
+                            if (isTtsInitialized) {
+                                tts.speak("인식되었습니다. 다리가 내려갔을 때 1초 기다렸다가 올라와주세요. 그래야 정확한 자세를 판단을 할 수 있습니다.", TextToSpeech.QUEUE_FLUSH, null, null);
+                                isTtsInitialized = false;
+                            }
                             Paint whitePaint = new Paint();
                             whitePaint.setColor(Color.WHITE);
                             whitePaint.setStyle(Paint.Style.STROKE);
@@ -186,6 +211,8 @@ public class PoseDetectorProcessor
                             canvas.drawText("numAnglesInRange: " + numAnglesInRange, 20, 400, whitePaint);
                             canvas.drawText("Waist angle: " + waistAngle, 20, 450, whitePaint);
                             canvas.drawText("Waist banding: " + waist_banding, 20, 500, whitePaint);
+                            canvas.drawText("Waist Angle: " + waistAngle, 20, 550, whitePaint);
+
                         }
                     }
                 });
@@ -259,8 +286,6 @@ public class PoseDetectorProcessor
         // 새로운 스쿼트마다 개수 초기화
         if (allAngle == 0) {
             isSquat = false;
-            numSquats = 0;
-            maxAngle = 0;
             waist_banding = false;
         }
 
@@ -269,44 +294,61 @@ public class PoseDetectorProcessor
 
             waistBending(pose);
 
-            if (allAngle != 0 && allAngle <= 90) {
+            if (allAngle != 0 && allAngle <= 130) {
                 numAnglesInRange++;
-                if (numAnglesInRange >= 8 && !isSquat) {  // 스쿼트 체크
-                    isSquat = true;
-                    temp = Math.min(leftAngle, rightAngle);
-                    if(waistAngle >= 200 && waistAngle <= 225){
+                if (numAnglesInRange >= 20 && !isSquat) {  // 스쿼트 체크
+                    if(waistAngle >= 170 && waistAngle <= 225){
                         waist_banding = true;
                     }else{
                         waist_banding = false;
+                    }
+                    if((int)temp < (int)allAngle){
+                        isSquat = true;
+                    }else{
+                        temp = allAngle;
                     }
                 }
             }
 
             if (allAngle > 150) {
-                if(isSquat) numSquats++;
+                if(isSquat){
+                    numSquats++;
+                    maxAngle = temp;
+                    temp = 120;
+                    if(waistAngle >= 170 && waistAngle <= 200){
+                        waist_banding = true;
+                    }else{
+                        waist_banding = false;
+                    }
+                    if(waist_banding == false){
+                        //허리가 굽었을 때
+                        tts.speak("허리를 펴주세요.", TextToSpeech.QUEUE_FLUSH, null, null);
+
+                    }
+                    else if(maxAngle > 85){
+                        //조금 구부렸을 때
+                        tts.speak("조금 더 구부려주세요.", TextToSpeech.QUEUE_FLUSH, null, null);
+
+                    }
+                    else if(maxAngle < 56){
+                        //너무 많이 구부렸을 때
+                        tts.speak("너무 많이 구부리셨어요.", TextToSpeech.QUEUE_FLUSH, null, null);
+
+                    }
+                    else if(maxAngle >= 56 && maxAngle <= 85 && waist_banding == true){
+                        //좋은 자세 일 때
+                        tts.speak("좋은 자세 입니다.", TextToSpeech.QUEUE_FLUSH, null, null);
+                    }
+
+                }
                 isSquat = false;
-                maxAngle = temp;
+
                 numAnglesInRange = 0;
-                if(maxAngle >= 54 && maxAngle <= 75 && waist_banding == true){
-                    //좋은 자세
-                }
-                else if(maxAngle > 75){
-                    //조금 구부렸을 때
-                }
-                else if(maxAngle < 54){
-                    //너무 많이 구부렸을 때
-                }
-                else if(waist_banding == false){
-                    //허리가 굽었을 때
-                }
-                if(waistAngle >= 170 && waistAngle <= 200){
-                    waist_banding = true;
-                }else{
-                    waist_banding = false;
-                }
             }
         }
     }
+
+
     @Override
     protected void onFailure(@NonNull Exception e) {
         Log.e(TAG, "Pose detection failed!", e);
