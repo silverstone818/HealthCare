@@ -58,8 +58,9 @@ dependencies {
     implementation 'org.tensorflow:tensorflow-lite-task-text:0.3.0'
     implementation 'org.tensorflow:tensorflow-lite-task-audio:0.3.0'
 
-    implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.android.gms:play-services-auth:20.5.0'
+
+    implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-analytics'
     implementation platform('com.google.firebase:firebase-bom:31.3.0')

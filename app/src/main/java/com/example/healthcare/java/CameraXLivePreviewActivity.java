@@ -1,6 +1,7 @@
 package com.example.healthcare.java;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory;
 import com.example.healthcare.CameraXViewModel;
 import com.example.healthcare.GraphicOverlay;
 import com.example.healthcare.R;
+import com.example.healthcare.ResultActivity;
 import com.example.healthcare.VisionImageProcessor;
 import com.example.healthcare.java.posedetector.PoseDetectorProcessor;
 import com.example.healthcare.preference.PreferenceUtils;
@@ -29,11 +31,18 @@ import com.google.android.gms.common.annotation.KeepName;
 import com.google.mlkit.common.MlKitException;
 import com.google.mlkit.vision.pose.PoseDetectorOptionsBase;
 
+import java.util.ArrayList;
+
 @KeepName
 @RequiresApi(VERSION_CODES.LOLLIPOP)
 public final class CameraXLivePreviewActivity extends AppCompatActivity {
     private static final String TAG = "CameraXLivePreview";
+    private static final String TAG1 = "AngleTest";
 
+
+    private int numSquats, temp = 1;
+    private ArrayList<Double> maxAngle = new ArrayList<>();
+    private ArrayList<Boolean> waist_banding = new ArrayList<>();
     private PreviewView previewView;
     private GraphicOverlay graphicOverlay;
 
@@ -141,7 +150,6 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
         if (imageProcessor != null) {
             imageProcessor.stop();
         }
-
         try {
             PoseDetectorOptionsBase poseDetectorOptions =
                     PreferenceUtils.getPoseDetectorOptionsForLivePreview(this);
@@ -194,6 +202,29 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
                     }
                     try {
                         imageProcessor.processImageProxy(imageProxy, graphicOverlay);
+
+                        // Add this block after processing the imageProxy
+                        if (imageProcessor instanceof PoseDetectorProcessor) {
+                            PoseDetectorProcessor poseProcessor = (PoseDetectorProcessor) imageProcessor;
+                            numSquats = poseProcessor.getNumSquats();
+                            if(numSquats == temp){
+                                maxAngle.add(poseProcessor.getMaxAngle());
+                                waist_banding.add(poseProcessor.isWaist_banding());
+                                Log.d(TAG1, Integer.toString(numSquats));
+                                Log.d(TAG1, maxAngle.toString());
+                                Log.d(TAG1, waist_banding.toString());
+                                temp++;
+                                if(numSquats == 12){
+                                    cameraProvider.unbind(analysisUseCase);
+                                    imageProcessor.stop();
+                                    Intent intent = null;
+                                    intent = new Intent(CameraXLivePreviewActivity.this, ResultActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }
+
+                        }
                     } catch (MlKitException e) {
                         Log.e(TAG, "Failed to process image. Error: " + e.getLocalizedMessage());
                         Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT)
@@ -203,7 +234,5 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
 
         cameraProvider.bindToLifecycle(/* lifecycleOwner= */ this, cameraSelector, analysisUseCase);
     }
-
-
 }
 

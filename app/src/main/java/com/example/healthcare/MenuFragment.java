@@ -8,18 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**
@@ -37,7 +33,8 @@ public class MenuFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private TextView txtEmail, txtName;
+    private FirebaseDatabase mFirebaseDatabase;
+
 
     public MenuFragment() {
         // Required empty public constructor
@@ -60,11 +57,11 @@ public class MenuFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-    private Button btn_move;
     private Button btn_logout;
-    private TextView age_text2;
-    private TextView height_text2;
-    private TextView weight_text2;
+    private Button btn_withdrawal;
+    private Button btn_profile;
+    private Button btn_record;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +74,6 @@ public class MenuFragment extends Fragment {
     }
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
-    private FirebaseDatabase mFirebaseDatabase;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,62 +82,22 @@ public class MenuFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        User user = new User();
-        age_text2 = view.findViewById(R.id.age_text2);
-        height_text2 = view.findViewById(R.id.height_text2);
-        weight_text2 = view.findViewById(R.id.weight_text2);
-        txtEmail = view.findViewById(R.id.txtEmail);
-        txtName = view.findViewById(R.id.txtName);
-        txtEmail.setText(mFirebaseUser.getEmail());
-        txtName.setText(mFirebaseUser.getDisplayName());
         mFirebaseDatabase = FirebaseDatabase.getInstance();
+        User user = new User();
 
-
-        mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid())
-                .addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        User user = dataSnapshot.getValue(User.class);
-                        age_text2.setText(user.getAge());
-                        height_text2.setText(user.getHeight());
-                        weight_text2.setText(user.getWeight());
-                        // user 데이터를 사용하여 출력
-                    }
-
-                    @Override
-                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        // 변경된 데이터 처리
-                    }
-
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                        // 삭제된 데이터 처리
-                    }
-
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        // 이동된 데이터 처리
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        // 처리할 오류가 있으면 여기에 작성
-                    }
-                });
-
-        btn_move = view.findViewById(R.id.btn_move);
-        btn_move.setOnClickListener(new View.OnClickListener() {
+        btn_profile = view.findViewById(R.id.btn_proflie);
+        btn_profile.setOnClickListener(new View.OnClickListener() {
+            Intent intent = null;
             @Override
-            public void onClick(View view) {
-                Intent intent = null; // 다른 Activity로 전환하는 Intent 객체를 생성합니다.
+            public void onClick(View v) {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-                    intent = new Intent(getActivity(), SubMenuActivity.class);
+                    intent = new Intent(getActivity(), ProfileActivity.class);
                 }
                 startActivity(intent);
-                getActivity().finish();
-
             }
         });
+
+
 
         btn_logout = view.findViewById(R.id.btn_logout);
         btn_logout.setOnClickListener(new View.OnClickListener(){
@@ -153,6 +109,7 @@ public class MenuFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 mFirebaseAuth.signOut();
+                                GoogleSignIn.getClient(getContext(), GoogleSignInOptions.DEFAULT_SIGN_IN).signOut();
                                 Intent intent = null;
                                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
                                     intent = new Intent(getActivity(), AuthActivity.class);
@@ -165,6 +122,45 @@ public class MenuFragment extends Fragment {
                         .show();
             }
         });
+
+        btn_withdrawal = view.findViewById(R.id.btn_withdrawal);
+        btn_withdrawal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(view.getContext())
+                        .setMessage("정말 회원탈퇴 하시겠습니까?")
+                        .setCancelable(false)
+                        .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                new AlertDialog.Builder(view.getContext())
+                                        .setMessage("탈퇴하시면 정보는 전부 삭제됩니다.\n정말 삭제하시겠습니까?")
+                                        .setCancelable(false)
+                                        .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which){
+                                                Intent intent = null;
+
+                                                mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).removeValue();
+                                                mFirebaseAuth.getCurrentUser().delete();
+                                                GoogleSignIn.getClient(getContext(), GoogleSignInOptions.DEFAULT_SIGN_IN).signOut();
+
+                                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+                                                    intent = new Intent(getActivity(), AuthActivity.class);
+                                                }
+                                                startActivity(intent);
+                                                getActivity().finish();
+                                            }
+                                        })
+                                        .setNegativeButton("아니오", null)
+                                        .show();
+                            }
+                        })
+                        .setNegativeButton("아니오", null)
+                        .show();
+            }
+        });
+
         return view;
     }
 }

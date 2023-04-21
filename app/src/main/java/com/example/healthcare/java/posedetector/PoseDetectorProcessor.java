@@ -105,6 +105,11 @@ public class PoseDetectorProcessor
     @Override
     public void stop() {
         super.stop();
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+            tts = null;
+        }
         detector.close();
     }
 
@@ -159,6 +164,17 @@ public class PoseDetectorProcessor
 
     private TextToSpeech tts;
 
+    public int getNumSquats() {
+        return numSquats;
+    }
+
+    public double getMaxAngle() {
+        return maxAngle;
+    }
+
+    public boolean isWaist_banding() {
+        return waist_banding;
+    }
 
     private void initializeTextToSpeech(Context context) {
         tts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
@@ -192,10 +208,11 @@ public class PoseDetectorProcessor
                     public void draw(Canvas canvas) {
                         super.draw(canvas);
                         if (pose != null) {
-                            if (isTtsInitialized) {
-                                tts.speak("인식되었습니다. 다리가 내려갔을 때 1초 기다렸다가 올라와주세요. 그래야 정확한 자세를 판단을 할 수 있습니다.", TextToSpeech.QUEUE_FLUSH, null, null);
+                            if(isTtsInitialized){
+                                tts.speak("인식되었습니다. 정확한 판단을 위해 동작 1번에서 1초 대기 후 동작 2번을 시행해주세요.", TextToSpeech.QUEUE_FLUSH, null, null);
                                 isTtsInitialized = false;
                             }
+
                             Paint whitePaint = new Paint();
                             whitePaint.setColor(Color.WHITE);
                             whitePaint.setStyle(Paint.Style.STROKE);
@@ -214,6 +231,7 @@ public class PoseDetectorProcessor
                             canvas.drawText("Waist Angle: " + waistAngle, 20, 550, whitePaint);
 
                         }
+
                     }
                 });
     }
@@ -373,7 +391,6 @@ public class PoseDetectorProcessor
 
         return angle;
     }
-
 
 }
 
