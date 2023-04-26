@@ -1,15 +1,19 @@
 package com.example.healthcare.java;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
@@ -24,6 +28,7 @@ import com.example.healthcare.CameraXViewModel;
 import com.example.healthcare.GraphicOverlay;
 import com.example.healthcare.R;
 import com.example.healthcare.ResultActivity;
+import com.example.healthcare.SquatsGuideActivity;
 import com.example.healthcare.VisionImageProcessor;
 import com.example.healthcare.java.posedetector.PoseDetectorProcessor;
 import com.example.healthcare.preference.PreferenceUtils;
@@ -43,6 +48,8 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
     private int numSquats, temp = 1;
     private ArrayList<Double> maxAngle = new ArrayList<>();
     private ArrayList<Boolean> waist_banding = new ArrayList<>();
+    private ArrayList<Integer> contract = new ArrayList<>();
+    private ArrayList<Boolean> Tension = new ArrayList<>();
     private PreviewView previewView;
     private GraphicOverlay graphicOverlay;
 
@@ -56,6 +63,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
     private CameraSelector cameraSelector;
 
     private PoseDetectorProcessor poseDetectorProcessor;
+    private Button btn_pass;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -75,6 +83,27 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
         if (graphicOverlay == null) {
             Log.d(TAG, "graphicOverlay is null");
         }
+
+        btn_pass = (Button) findViewById(R.id.btn_pass);
+        btn_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(view.getContext())
+                        .setMessage("지금 바로 그만두시겠습니까?")
+                        .setCancelable(false)
+                        .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = null;
+                                intent = new Intent(CameraXLivePreviewActivity.this, ResultActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("아니오", null)
+                        .show();
+            }
+        });
 
 
         new ViewModelProvider(this, (ViewModelProvider.Factory) AndroidViewModelFactory.getInstance(getApplication()))
@@ -210,15 +239,24 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
                             if(numSquats == temp){
                                 maxAngle.add(poseProcessor.getMaxAngle());
                                 waist_banding.add(poseProcessor.isWaist_banding());
+                                contract.add(poseProcessor.getContract());
+                                Tension.add(poseProcessor.isTension());
                                 Log.d(TAG1, Integer.toString(numSquats));
                                 Log.d(TAG1, maxAngle.toString());
                                 Log.d(TAG1, waist_banding.toString());
+                                Log.d(TAG1, contract.toString());
+                                Log.d(TAG1, Tension.toString());
                                 temp++;
                                 if(numSquats == 12){
                                     cameraProvider.unbind(analysisUseCase);
                                     imageProcessor.stop();
                                     Intent intent = null;
                                     intent = new Intent(CameraXLivePreviewActivity.this, ResultActivity.class);
+                                    intent.putExtra("numSquats", numSquats);
+                                    intent.putExtra("maxAngle", maxAngle);
+                                    intent.putExtra("waist_banding", waist_banding);
+                                    intent.putExtra("contract", contract);
+                                    intent.putExtra("Tension", Tension);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -233,6 +271,26 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
                 });
 
         cameraProvider.bindToLifecycle(/* lifecycleOwner= */ this, cameraSelector, analysisUseCase);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            new AlertDialog.Builder(this)
+                    .setMessage("가이드 창으로 돌아가시겠습니까?")
+                    .setCancelable(false)
+                    .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startActivity(new Intent(CameraXLivePreviewActivity.this, SquatsGuideActivity.class));
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("아니오", null)
+                    .show();
+        }
     }
 }
 

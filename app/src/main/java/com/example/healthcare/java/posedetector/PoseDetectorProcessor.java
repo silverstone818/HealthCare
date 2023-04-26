@@ -159,6 +159,15 @@ public class PoseDetectorProcessor
 
     private double leftAngle = 0;
     private double rightAngle = 0;
+
+    public int getContract() {
+        return contract;
+    }
+
+    public boolean isTension() {
+        return Tension;
+    }
+
     private double waistAngle = 0;
     private boolean waist_banding = false;
 
@@ -209,7 +218,7 @@ public class PoseDetectorProcessor
                         super.draw(canvas);
                         if (pose != null) {
                             if(isTtsInitialized){
-                                tts.speak("인식되었습니다. 정확한 판단을 위해 동작 1번에서 1초 대기 후 동작 2번을 시행해주세요.", TextToSpeech.QUEUE_FLUSH, null, null);
+                                tts.speak("인식되었습니다. 정확한 판단을 위해 동작 1번에서 1초 대기 후, 동작 2번을 시행해주세요.", TextToSpeech.QUEUE_FLUSH, null, null);
                                 isTtsInitialized = false;
                             }
 
@@ -267,6 +276,8 @@ public class PoseDetectorProcessor
             waistAngle = calculateAngle(hipCenter, shoulderCenter, new PointF(shoulderCenter.x, shoulderCenter.y - 1));
         }
     }
+    private int contract, MnumAnglesInRange;
+    private boolean Tension = false;
 
     public void onSqurtsAngle(Pose pose){
         PointF leftHip = null;
@@ -322,6 +333,7 @@ public class PoseDetectorProcessor
                     }
                     if((int)temp < (int)allAngle){
                         isSquat = true;
+                        MnumAnglesInRange = numAnglesInRange;
                     }else{
                         temp = allAngle;
                     }
@@ -333,6 +345,7 @@ public class PoseDetectorProcessor
                     numSquats++;
                     maxAngle = temp;
                     temp = 120;
+                    contract = numAnglesInRange - MnumAnglesInRange;
                     if(waistAngle >= 170 && waistAngle <= 200){
                         waist_banding = true;
                     }else{
@@ -362,6 +375,12 @@ public class PoseDetectorProcessor
                 isSquat = false;
 
                 numAnglesInRange = 0;
+            }
+
+            if (allAngle <= 160){
+                Tension = true;
+            }else{
+                Tension = false;
             }
         }
     }

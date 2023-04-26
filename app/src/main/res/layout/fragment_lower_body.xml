@@ -3,10 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".LowerBodyFragment"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="#C1C1C1"
     android:gravity="center">
+
+
 
 
     <LinearLayout
@@ -15,39 +18,50 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <ImageButton
                 android:id="@+id/btn_squats"
                 android:layout_width="500px"
                 android:layout_height="500px"
-                android:layout_margin="10dp"
-                android:background="@drawable/border"
-                android:scaleType="fitXY"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:alpha="0.5"
+                android:background="@drawable/border"
+                android:padding="5dp"
                 android:contentDescription="스쿼트"
-                android:src="@drawable/squat"/>
+                android:scaleType="fitXY"
+                android:src="@drawable/squats_back" />
+
             <TextView
                 android:layout_width="414px"
                 android:layout_height="400px"
+                android:layout_centerInParent="true"
                 android:layout_marginTop="15dp"
+                android:gravity="center"
                 android:text="스쿼트"
                 android:textAlignment="center"
-                android:textSize="150px"
                 android:textColor="@color/black"
-                android:layout_centerInParent="true"
-                android:gravity="center"/>
+                android:textSize="150px" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <ImageButton
                 android:layout_width="500px"
                 android:layout_height="500px"
-                android:layout_margin="10dp"
-                android:background="@drawable/border"
-                android:scaleType="fitXY"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:alpha="0.5"
+                android:padding="5dp"
+                android:background="@drawable/border"
                 android:contentDescription="데드 리프트"
-                android:src="@drawable/deadlift"/>
+                android:scaleType="fitXY"
+                android:src="@drawable/deadlift" />
             <TextView
                 android:layout_width="414px"
                 android:layout_height="400px"
@@ -68,15 +82,20 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <ImageButton
                 android:layout_width="500px"
                 android:layout_height="500px"
-                android:layout_margin="10dp"
-                android:background="@drawable/border"
-                android:scaleType="fitXY"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:alpha="0.5"
+                android:background="@drawable/border"
                 android:contentDescription="레그 프레스"
-                android:src="@drawable/legpress"/>
+                android:scaleType="fitXY"
+                android:padding="5dp"
+                android:src="@drawable/legpress" />
             <TextView
                 android:layout_width="414px"
                 android:layout_height="400px"
@@ -92,15 +111,20 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <ImageButton
                 android:layout_width="500px"
                 android:layout_height="500px"
-                android:layout_margin="10dp"
-                android:background="@drawable/border"
-                android:scaleType="fitXY"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:alpha="0.5"
+                android:background="@drawable/border"
                 android:contentDescription="카프 레이즈"
-                android:src="@drawable/calfraise"/>
+                android:scaleType="fitXY"
+                android:padding="5dp"
+                android:src="@drawable/calfraise" />
             <TextView
                 android:layout_width="414px"
                 android:layout_height="400px"

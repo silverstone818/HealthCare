@@ -109,18 +109,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setMessage("종료 하시겠습니까?")
-                .setCancelable(false)
-                .setPositiveButton("네", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                })
-                .setNegativeButton("아니오", null)
-                .show();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            new AlertDialog.Builder(this)
+                    .setMessage("종료 하시겠습니까?")
+                    .setCancelable(false)
+                    .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("아니오", null)
+                    .show();
+        }
     }
 
     private static final int REQUEST_MANAGE_EXTERNAL_STORAGE_PERMISSION = 1;

@@ -9,8 +9,6 @@ import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.healthcare.java.CameraXLivePreviewActivity;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link LowerBodyFragment#newInstance} factory method to
@@ -68,12 +66,13 @@ public class LowerBodyFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = null; // 다른 Activity로 전환하는 Intent 객체를 생성합니다.
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-                    intent = new Intent(getActivity(), CameraXLivePreviewActivity.class);
+                    intent = new Intent(getActivity(), SquatsGuideActivity.class);
                 }
                 startActivity(intent); // Intent를 실행하여 다른 Activity로 전환합니다.
             }
         });
 
         return view;
+
     }
 }

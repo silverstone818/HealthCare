@@ -4,6 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ResultActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/txt_numSquats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="스쿼트 개수 :" />
+        <TextView
+            android:id="@+id/txt_maxAngle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+
+            android:text="이완 :" />
+        <TextView
+            android:id="@+id/txt_waist_banding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="허리 굽음 :" />
+        <TextView
+            android:id="@+id/txt_contract"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+
+            android:text="수축 :" />
+        <TextView
+            android:id="@+id/txt_Tension"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+
+            android:text="긴장 :" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
