@@ -25,7 +25,9 @@ public class SquatsGuideActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SquatsGuideActivity.this, CameraXLivePreviewActivity.class));
+                Intent intent = new Intent(SquatsGuideActivity.this, CameraXLivePreviewActivity.class);
+                intent.putExtra("Health", 1);
+                startActivity(intent);
                 finish();
             }
         });

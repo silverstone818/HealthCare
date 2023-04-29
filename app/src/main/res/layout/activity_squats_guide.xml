@@ -105,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="이 운동은 허벅지와 엉덩이 근육을 단련시키며, 하체 운동에 속한다."
+                android:text="이 운동은 허벅지와 엉덩이 근육을 단련시킵니다."
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
@@ -130,6 +130,37 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"/>
 
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="화면 녹화 방법"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:textColor="#FF0000"
+                android:textStyle="bold"
+                android:textSize="18dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/guide1"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"/>
+
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/guide2"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -141,17 +172,55 @@
                 android:textStyle="bold"
                 android:textSize="18dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:text="정확한 판단을 위해 동작 1번에서 1초 대기 후 동작 2번을 시행해주세요."
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="20dp"
-                android:textColor="#000000"
-                android:textSize="18dp"
-                tools:ignore="MissingPrefix" />
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text="* "
+                    android:layout_marginLeft="20dp"
+                    android:textColor="#000000"
+                    android:textSize="18dp"
+                    tools:ignore="MissingPrefix" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text="정확한 판단을 위해 동작 1번 후 '업!' 소리에 동작 2번을 시행해주세요."
+                    android:layout_marginRight="20dp"
+                    android:textColor="#000000"
+                    android:textSize="18dp"
+                    tools:ignore="MissingPrefix" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text="* "
+                    android:layout_marginLeft="20dp"
+                    android:textColor="#000000"
+                    android:textSize="18dp"
+                    tools:ignore="MissingPrefix" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text="카메라는 몸 전체가 보여야 하며 사용자 명치 정도 높이에 놓아서 측정해주세요.(약 100cm 높이)"
+                    android:layout_marginRight="20dp"
+                    android:textColor="#000000"
+                    android:textSize="18dp"
+                    tools:ignore="MissingPrefix" />
+            </LinearLayout>
 
 
             <Button

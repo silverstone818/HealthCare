@@ -44,10 +44,11 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
     private static final String TAG = "CameraXLivePreview";
     private static final String TAG1 = "AngleTest";
 
-
-    private int numSquats, temp = 1;
+    private Intent intent;
+    private int Health;
+    private int num, temp = 1;
     private ArrayList<Double> maxAngle = new ArrayList<>();
-    private ArrayList<Boolean> waist_banding = new ArrayList<>();
+    private ArrayList<Boolean> goodPose = new ArrayList<>();
     private ArrayList<Integer> contract = new ArrayList<>();
     private ArrayList<Boolean> Tension = new ArrayList<>();
     private PreviewView previewView;
@@ -71,6 +72,8 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
 
+        intent = getIntent();
+        Health = intent.getIntExtra("Health", 0);
 
         cameraSelector = new CameraSelector.Builder().requireLensFacing(lensFacing).build();
 
@@ -94,8 +97,15 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
                         .setPositiveButton("네", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = null;
-                                intent = new Intent(CameraXLivePreviewActivity.this, ResultActivity.class);
+                                cameraProvider.unbind(analysisUseCase);
+                                imageProcessor.stop();
+                                Intent intent = new Intent(CameraXLivePreviewActivity.this, ResultActivity.class);
+
+                                intent.putExtra("num", num);
+                                intent.putExtra("maxAngle", maxAngle);
+                                intent.putExtra("goodPose", goodPose);
+                                intent.putExtra("contract", contract);
+                                intent.putExtra("Tension", Tension);
                                 startActivity(intent);
                                 finish();
                             }
@@ -191,6 +201,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
                     (VisionImageProcessor) new PoseDetectorProcessor(
                             this,
                             this,
+                            Health,
                             poseDetectorOptions,
                             shouldShowInFrameLikelihood,
                             visualizeZ,
@@ -235,31 +246,29 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
                         // Add this block after processing the imageProxy
                         if (imageProcessor instanceof PoseDetectorProcessor) {
                             PoseDetectorProcessor poseProcessor = (PoseDetectorProcessor) imageProcessor;
-                            numSquats = poseProcessor.getNumSquats();
-                            if(numSquats == temp){
+                            num = poseProcessor.getNum();
+                            if(num == temp) {
                                 maxAngle.add(poseProcessor.getMaxAngle());
-                                waist_banding.add(poseProcessor.isWaist_banding());
+                                goodPose.add(poseProcessor.isGoodPose());
                                 contract.add(poseProcessor.getContract());
                                 Tension.add(poseProcessor.isTension());
-                                Log.d(TAG1, Integer.toString(numSquats));
-                                Log.d(TAG1, maxAngle.toString());
-                                Log.d(TAG1, waist_banding.toString());
+
                                 Log.d(TAG1, contract.toString());
-                                Log.d(TAG1, Tension.toString());
+
                                 temp++;
-                                if(numSquats == 12){
-                                    cameraProvider.unbind(analysisUseCase);
-                                    imageProcessor.stop();
-                                    Intent intent = null;
-                                    intent = new Intent(CameraXLivePreviewActivity.this, ResultActivity.class);
-                                    intent.putExtra("numSquats", numSquats);
-                                    intent.putExtra("maxAngle", maxAngle);
-                                    intent.putExtra("waist_banding", waist_banding);
-                                    intent.putExtra("contract", contract);
-                                    intent.putExtra("Tension", Tension);
-                                    startActivity(intent);
-                                    finish();
-                                }
+                            }
+                            if(num == 12){
+                                cameraProvider.unbind(analysisUseCase);
+                                imageProcessor.stop();
+                                Intent intent = new Intent(CameraXLivePreviewActivity.this, ResultActivity.class);
+
+                                intent.putExtra("num", num);
+                                intent.putExtra("maxAngle", maxAngle);
+                                intent.putExtra("goodPose", goodPose);
+                                intent.putExtra("contract", contract);
+                                intent.putExtra("Tension", Tension);
+                                startActivity(intent);
+                                finish();
                             }
 
                         }
@@ -272,6 +281,8 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
 
         cameraProvider.bindToLifecycle(/* lifecycleOwner= */ this, cameraSelector, analysisUseCase);
     }
+
+
 
     @Override
     public void onBackPressed() {
