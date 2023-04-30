@@ -71,8 +71,10 @@ public class PoseDetectorProcessor
     private double maxAngle = 0;
     private int contract;
     private boolean goodPose = false;
+    private boolean waist_banding = false;
     private boolean Tension = false;
 
+    public boolean isWaist_banding() {return waist_banding;}
     public int getNum() {
         return num;
     }
@@ -242,6 +244,7 @@ public class PoseDetectorProcessor
 
                             Kind.onHealthAngle(pose);
 
+                            waist_banding = Kind.isWaist_banding();
                             numAnglesInRange = Kind.getNumAnglesInRange();
                             num = Kind.getNum();
                             maxAngle = Kind.getMaxAngle();
@@ -256,7 +259,7 @@ public class PoseDetectorProcessor
                             canvas.drawText("Num: " + num, 20, 350, whitePaint);
                             canvas.drawText("numAnglesInRange: " + numAnglesInRange, 20, 400, whitePaint);
                             canvas.drawText("contract: " + contract, 20, 450, whitePaint);
-                            canvas.drawText("Waist banding: " + Kind.isWaist_banding(), 20, 500, whitePaint);
+                            canvas.drawText("Waist banding: " + waist_banding, 20, 500, whitePaint);
 
                         }
 

@@ -49,6 +49,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
     private int num, temp = 1;
     private ArrayList<Double> maxAngle = new ArrayList<>();
     private ArrayList<Boolean> goodPose = new ArrayList<>();
+    private ArrayList<Boolean> waist_banding = new ArrayList<>();
     private ArrayList<Integer> contract = new ArrayList<>();
     private ArrayList<Boolean> Tension = new ArrayList<>();
     private PreviewView previewView;
@@ -101,6 +102,8 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
                                 imageProcessor.stop();
                                 Intent intent = new Intent(CameraXLivePreviewActivity.this, ResultActivity.class);
 
+                                intent.putExtra("waist_banding", waist_banding);
+                                intent.putExtra("Health", Health);
                                 intent.putExtra("num", num);
                                 intent.putExtra("maxAngle", maxAngle);
                                 intent.putExtra("goodPose", goodPose);
@@ -252,8 +255,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
                                 goodPose.add(poseProcessor.isGoodPose());
                                 contract.add(poseProcessor.getContract());
                                 Tension.add(poseProcessor.isTension());
-
-                                Log.d(TAG1, contract.toString());
+                                waist_banding.add(poseProcessor.isWaist_banding());
 
                                 temp++;
                             }
@@ -262,6 +264,9 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
                                 imageProcessor.stop();
                                 Intent intent = new Intent(CameraXLivePreviewActivity.this, ResultActivity.class);
 
+
+                                intent.putExtra("waist_banding", waist_banding);
+                                intent.putExtra("Health", Health);
                                 intent.putExtra("num", num);
                                 intent.putExtra("maxAngle", maxAngle);
                                 intent.putExtra("goodPose", goodPose);
