@@ -35,9 +35,9 @@ public interface HealthKind {
 
     void setWaistAngle(double waistAngle);
 
-    int getContract();
+    double getContract();
 
-    void setContract(int contract);
+    void setContract(double contract);
 
     int getMnumAnglesInRange();
 

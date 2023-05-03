@@ -50,6 +50,7 @@ public class RecordActivity extends AppCompatActivity {
     private TextView feedbackTension;
     private TextView feedbackContract;
     private TextView feedbackMaxAngle;
+    private int list;
 
 
 
@@ -74,6 +75,7 @@ public class RecordActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
         Health = intent.getStringExtra("Name");
+        list = intent.getIntExtra("list", 0);
 
         if(Health.contains("스쿼트")){
             APPS[0] = "과한 동작";
@@ -109,7 +111,7 @@ public class RecordActivity extends AppCompatActivity {
             }
         };
 
-        memoRef = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/record");
+        memoRef = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/record" + list);
         memoRef.addValueEventListener(valueEventListener);
 
 

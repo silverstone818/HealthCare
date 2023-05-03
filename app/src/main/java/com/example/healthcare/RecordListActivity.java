@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,37 +44,47 @@ public class RecordListActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
+        adapter = new CustomAdapter(this, new ArrayList<ExerciseItem>());
+        adapter.clear();
+        for(int i = 1; i <= 10; i++){
+            mFirebaseDatabase.getReference("memos/" + mFirebaseAuth.getUid()+"/record"+i)
+                    .addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                            Together_group_list tgList = dataSnapshot.getValue(Together_group_list.class);
+                            if (tgList != null) {
+                                String date = tgList.getDate();
+                                String name = tgList.getName();
 
-        valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    DataSnapshot profileSnapshot = dataSnapshot.child("profile");
-                    if (profileSnapshot != null) {
-                        Together_group_list tgList = profileSnapshot.getValue(Together_group_list.class);
-                        if (tgList != null) {
-                            String date = tgList.getDate();
-                            String name = tgList.getName();
-                            adapter.clear();
-                            adapter.add(new ExerciseItem(name, date));
-                            adapter.notifyDataSetChanged();
+                                adapter.add(new ExerciseItem(name, date));
+                                adapter.notifyDataSetChanged();
+                            }
                         }
-                    }
-                }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d("AngleTest", "Failed to get data from Firebase.");
-            }
-        };
+                        @Override
+                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                            // 변경된 데이터 처리
+                        }
 
-        memoRef = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/record");
-        memoRef.addValueEventListener(valueEventListener);
+                        @Override
+                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                            // 삭제된 데이터 처리
+                        }
+
+                        @Override
+                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                            // 이동된 데이터 처리
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            // 처리할 오류가 있으면 여기에 작성
+                        }
+                    });
+        }
 
         ListView list = findViewById(R.id.listView1);
 
-        adapter = new CustomAdapter(this, new ArrayList<ExerciseItem>());
         list.setAdapter(adapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -83,17 +93,14 @@ public class RecordListActivity extends AppCompatActivity {
                 ExerciseItem selectedItem = adapter.getItem(position);
                 Intent intent = new Intent(RecordListActivity.this, RecordActivity.class);
                 intent.putExtra("Name", adapter.getItem(position).getName());
+                intent.putExtra("list", position+1);
                 startActivity(intent);
                 finish();
             }
         });
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        memoRef.removeEventListener(valueEventListener);
-    }
+
 }
 
 

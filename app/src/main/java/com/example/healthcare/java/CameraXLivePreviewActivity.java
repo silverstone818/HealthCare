@@ -50,7 +50,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
     private ArrayList<Double> maxAngle = new ArrayList<>();
     private ArrayList<Boolean> goodPose = new ArrayList<>();
     private ArrayList<Boolean> waist_banding = new ArrayList<>();
-    private ArrayList<Integer> contract = new ArrayList<>();
+    private ArrayList<Double> contract = new ArrayList<>();
     private ArrayList<Boolean> Tension = new ArrayList<>();
     private PreviewView previewView;
     private GraphicOverlay graphicOverlay;

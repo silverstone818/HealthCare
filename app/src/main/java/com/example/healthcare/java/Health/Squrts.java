@@ -6,6 +6,9 @@ import android.speech.tts.TextToSpeech;
 import com.google.mlkit.vision.pose.Pose;
 import com.google.mlkit.vision.pose.PoseLandmark;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Squrts implements HealthKind{
 
     private int numAnglesInRange = 0;
@@ -15,13 +18,14 @@ public class Squrts implements HealthKind{
     private double leftAngle = 0;
     private double rightAngle = 0;
     private double waistAngle = 0;
-    private int contract;
+    private double contract;
     private TextToSpeech tts;
     private int MnumAnglesInRange;
     private boolean isSquat = false;
     private boolean waist_banding = false;
     private boolean goodPose = false;
     private boolean Tension = false;
+    private double timeAsDoubleTemp;
 
     public TextToSpeech getTts() {
         return tts;
@@ -83,11 +87,11 @@ public class Squrts implements HealthKind{
         this.waistAngle = waistAngle;
     }
 
-    public int getContract() {
+    public double getContract() {
         return contract;
     }
 
-    public void setContract(int contract) {
+    public void setContract(double contract) {
         this.contract = contract;
     }
 
@@ -225,6 +229,11 @@ public class Squrts implements HealthKind{
                         isSquat = true;
                     }else{
                         temp = allAngle;
+                        long now = System.currentTimeMillis();
+                        Date date = new Date(now);
+                        SimpleDateFormat dataFormat = new SimpleDateFormat("ss.SSS");
+                        String getTime = dataFormat.format(date);
+                        timeAsDoubleTemp = Double.parseDouble(getTime);
                     }
                 }
             }
@@ -234,7 +243,20 @@ public class Squrts implements HealthKind{
                     numSquats++;
                     maxAngle = temp;
                     temp = 120;
-                    contract = numAnglesInRange - 24;
+
+                    long now = System.currentTimeMillis();
+                    Date date = new Date(now);
+                    SimpleDateFormat dataFormat = new SimpleDateFormat("ss.SSS");
+                    String getTime = dataFormat.format(date);
+                    double timeAsDouble = Double.parseDouble(getTime);
+
+                    if(timeAsDouble < timeAsDoubleTemp){
+                        contract = (timeAsDouble + 60) - timeAsDoubleTemp;
+                    }
+                    else{
+                        contract = timeAsDouble - timeAsDoubleTemp;
+                    }
+
                     if(waistAngle >= 170 && waistAngle <= 200){
                         waist_banding = true;
                     }else{

@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,10 +32,14 @@ import java.util.List;
 import java.util.Map;
 
 public class ResultActivity extends AppCompatActivity {
+
+    private DatabaseReference memoRef1, memoRef2;
+    private Together_group_list user, user1;
+    private ValueEventListener valueEventListener;
     private int num;
     private ArrayList<Double> maxAngle;
     private ArrayList<Boolean> goodPose, waist_banding;
-    private ArrayList<Integer> contract;
+    private ArrayList<Double> contract;
     private ArrayList<Boolean> Tension;
     private int Health;
     private BarChart barChart, barChart2;
@@ -53,8 +58,6 @@ public class ResultActivity extends AppCompatActivity {
 
     private static final String TAG1 = "AngleTest";
     private ArrayList<Double> scores = new ArrayList<>();
-
-    private Together_group_list user;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -83,7 +86,7 @@ public class ResultActivity extends AppCompatActivity {
         goodPose = (ArrayList<Boolean>) intent.getSerializableExtra("goodPose");
         waist_banding = (ArrayList<Boolean>) intent.getSerializableExtra("waist_banding");
         Tension = (ArrayList<Boolean>) intent.getSerializableExtra("Tension");
-        contract = (ArrayList<Integer>) intent.getSerializableExtra("contract");
+        contract = (ArrayList<Double>) intent.getSerializableExtra("contract");
 
         feedback = (TextView) findViewById(R.id.feedback);
         feedbackBalance = (TextView) findViewById(R.id.feedbackBalance);
@@ -381,16 +384,16 @@ public class ResultActivity extends AppCompatActivity {
         if(contract != null && contract.size() > 0){
             ArrayList<Double> percentages = new ArrayList<>();
 
-            for (int value : contract) {
+            for (double value : contract) {
                 double percentage;
-                if (value >= 0 && value <= 5) {
+                if (value >= 0 && value <= 1.5) {
                     percentage = 20;
-                } else if (value > 30) {
+                } else if (value > 5) {
                     percentage = 0;
                 } else {
                     // 원하는 비율에 맞게 값 사이의 비율을 조정하십시오.
                     // 예: 선형 비례를 사용하여 6~30 사이의 값에 대해 계산하려면 다음을 사용하십시오.
-                    percentage = 20 - (value - 5) * (20.0 / (30 - 5));
+                    percentage = 20 - (value - 1.5) * (20.0 / (5 - 1.5));
                 }
                 percentages.add(percentage);
             }
@@ -531,10 +534,10 @@ public class ResultActivity extends AppCompatActivity {
 
         // 수정할 데이터의 참조 경로 가져오기
         // 수정할 데이터의 참조 경로 가져오기
-        DatabaseReference memoRef = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/record/");
+        memoRef1 = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/record1");
 
         // 수정할 데이터의 참조 경로와 고유 ID를 결합하여 해당 데이터의 참조 경로를 가져옵니다.
-        DatabaseReference memoToUpdateRef = memoRef.child("profile");
+        DatabaseReference memoToUpdateRef = memoRef1.child("profile");
 
         // 수정할 데이터의 값을 Map 객체로 만듭니다.
         Map<String, Object> updates = new HashMap<>();
@@ -563,6 +566,7 @@ public class ResultActivity extends AppCompatActivity {
         // 해당 데이터의 참조 경로에 updateChildren() 메소드를 호출하여 값을 수정합니다.
         memoToUpdateRef.updateChildren(updates);
     }
+
 
 }
 

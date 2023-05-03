@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,11 +21,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -141,26 +137,42 @@ public class UserdataActivity extends AppCompatActivity {
         btn_move2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveMemo();
-                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("memos/").child(uid+"/BeforeData/profile");
 
-                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            startActivity(new Intent(UserdataActivity.this, MainActivity.class));
-                            finish();
-                        } else {
-                            Toast.makeText(UserdataActivity.this, "정보를 전부 입력해주세요.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                if(age_text.getText().toString().length() == 0){
+                    Toast.makeText(UserdataActivity.this, "나이를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if(height_text.getText().toString().length() == 0){
+                    Toast.makeText(UserdataActivity.this, "키를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if(weight_text.getText().toString().length() == 0){
+                    Toast.makeText(UserdataActivity.this, "몸무게를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(UserdataActivity.this, "데이터를 읽지 못하였습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                // 수정할 User 객체 생성
+                User updatedUser = new User();
+                updatedUser.setAge(age_text.getText().toString());
+                updatedUser.setHeight(height_text.getText().toString());
+                updatedUser.setWeight(weight_text.getText().toString());
+
+                // 수정할 데이터의 참조 경로 가져오기
+                DatabaseReference memoRef = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/BeforeData/");
+
+                // 수정할 데이터의 참조 경로와 고유 ID를 결합하여 해당 데이터의 참조 경로를 가져옵니다.
+                DatabaseReference memoToUpdateRef = memoRef.child("profile");
+
+                // 수정할 데이터의 값을 Map 객체로 만듭니다.
+                Map<String, Object> updates = new HashMap<>();
+                updates.put("age", updatedUser.getAge());
+                updates.put("height", updatedUser.getHeight());
+                updates.put("weight", updatedUser.getWeight());
+
+                // 해당 데이터의 참조 경로에 updateChildren() 메소드를 호출하여 값을 수정합니다.
+                memoToUpdateRef.updateChildren(updates);
+                startActivity(new Intent(UserdataActivity.this, MainActivity.class));
+                finish();
             }
 
         });

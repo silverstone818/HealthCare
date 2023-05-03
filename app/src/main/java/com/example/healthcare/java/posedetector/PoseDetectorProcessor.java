@@ -69,7 +69,7 @@ public class PoseDetectorProcessor
     private int numAnglesInRange = 0;
     private int num = 0;
     private double maxAngle = 0;
-    private int contract;
+    private double contract;
     private boolean goodPose = false;
     private boolean waist_banding = false;
     private boolean Tension = false;
@@ -83,7 +83,7 @@ public class PoseDetectorProcessor
         return maxAngle;
     }
 
-    public int getContract() {
+    public double getContract() {
         return contract;
     }
 
