@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package com.example.healthcare;
+package com.example.healthcare.Graphic;
 
 import android.graphics.Bitmap;
 
 import androidx.camera.core.ImageProxy;
 
+import com.example.healthcare.Graphic.FrameMetadata;
+import com.example.healthcare.Graphic.GraphicOverlay;
 import com.google.mlkit.common.MlKitException;
 import com.google.mlkit.vision.pose.Pose;
 

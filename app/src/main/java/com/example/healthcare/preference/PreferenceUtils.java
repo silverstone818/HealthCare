@@ -26,7 +26,7 @@ import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.camera.core.CameraSelector;
 
-import com.example.healthcare.CameraSource;
+import com.example.healthcare.Graphic.CameraSource;
 import com.example.healthcare.R;
 import com.google.android.gms.common.images.Size;
 import com.google.common.base.Preconditions;

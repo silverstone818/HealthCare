@@ -1,4 +1,4 @@
-package com.example.healthcare;
+package com.example.healthcare.Guide;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.healthcare.R;
 import com.example.healthcare.java.CameraXLivePreviewActivity;
 
 public class SquatsGuideActivity extends AppCompatActivity {

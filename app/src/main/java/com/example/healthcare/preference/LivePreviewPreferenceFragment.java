@@ -26,7 +26,7 @@ import android.widget.Toast;
 
 import androidx.annotation.StringRes;
 
-import com.example.healthcare.CameraSource;
+import com.example.healthcare.Graphic.CameraSource;
 import com.example.healthcare.R;
 
 import java.util.HashMap;

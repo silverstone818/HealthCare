@@ -21,7 +21,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.healthcare.GraphicOverlay;
+import com.example.healthcare.Graphic.GraphicOverlay;
 import com.example.healthcare.java.VisionProcessorBase;
 import com.google.android.gms.tasks.Task;
 import com.google.mlkit.vision.common.InputImage;

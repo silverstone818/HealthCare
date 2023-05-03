@@ -36,12 +36,12 @@ import androidx.camera.core.ExperimentalGetImage;
 import androidx.camera.core.ImageProxy;
 import com.example.healthcare.preference.PreferenceUtils;
 
-import com.example.healthcare.BitmapUtils;
-import com.example.healthcare.FrameMetadata;
-import com.example.healthcare.GraphicOverlay;
-import com.example.healthcare.ScopedExecutor;
-import com.example.healthcare.TemperatureMonitor;
-import com.example.healthcare.VisionImageProcessor;
+import com.example.healthcare.Graphic.BitmapUtils;
+import com.example.healthcare.Graphic.FrameMetadata;
+import com.example.healthcare.Graphic.GraphicOverlay;
+import com.example.healthcare.Graphic.ScopedExecutor;
+import com.example.healthcare.Graphic.TemperatureMonitor;
+import com.example.healthcare.Graphic.VisionImageProcessor;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
 import com.google.android.gms.tasks.Tasks;

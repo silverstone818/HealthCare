@@ -21,7 +21,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
-import com.example.healthcare.GraphicOverlay;
+import com.example.healthcare.Graphic.GraphicOverlay;
 import com.google.mlkit.vision.objects.DetectedObject;
 import com.google.mlkit.vision.objects.DetectedObject.Label;
 

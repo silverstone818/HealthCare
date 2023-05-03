@@ -85,6 +85,8 @@ public class MenuFragment extends Fragment {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         User user = new User();
 
+
+        //내정보
         btn_profile = view.findViewById(R.id.btn_proflie);
         btn_profile.setOnClickListener(new View.OnClickListener() {
             Intent intent = null;
@@ -97,8 +99,21 @@ public class MenuFragment extends Fragment {
             }
         });
 
+        //최근 운동 기록
+        btn_record = view.findViewById(R.id.btn_record);
+        btn_record.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+                    intent = new Intent(getActivity(), RecordListActivity.class);
+                }
+                startActivity(intent);
+            }
+        });
 
 
+        //로그아웃
         btn_logout = view.findViewById(R.id.btn_logout);
         btn_logout.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
@@ -123,6 +138,7 @@ public class MenuFragment extends Fragment {
             }
         });
 
+        //회원탈퇴
         btn_withdrawal = view.findViewById(R.id.btn_withdrawal);
         btn_withdrawal.setOnClickListener(new View.OnClickListener() {
             @Override

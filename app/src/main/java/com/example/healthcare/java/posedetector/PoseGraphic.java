@@ -23,8 +23,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-import com.example.healthcare.GraphicOverlay;
-import com.example.healthcare.GraphicOverlay.Graphic;
+import com.example.healthcare.Graphic.GraphicOverlay;
+import com.example.healthcare.Graphic.GraphicOverlay.Graphic;
 import com.google.mlkit.vision.common.PointF3D;
 import com.google.mlkit.vision.pose.Pose;
 import com.google.mlkit.vision.pose.PoseLandmark;

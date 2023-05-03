@@ -24,12 +24,12 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory;
 
-import com.example.healthcare.CameraXViewModel;
-import com.example.healthcare.GraphicOverlay;
+import com.example.healthcare.Graphic.CameraXViewModel;
+import com.example.healthcare.Graphic.GraphicOverlay;
 import com.example.healthcare.R;
 import com.example.healthcare.ResultActivity;
-import com.example.healthcare.SquatsGuideActivity;
-import com.example.healthcare.VisionImageProcessor;
+import com.example.healthcare.Guide.SquatsGuideActivity;
+import com.example.healthcare.Graphic.VisionImageProcessor;
 import com.example.healthcare.java.posedetector.PoseDetectorProcessor;
 import com.example.healthcare.preference.PreferenceUtils;
 import com.google.android.gms.common.annotation.KeepName;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.healthcare;
+package com.example.healthcare.Graphic;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

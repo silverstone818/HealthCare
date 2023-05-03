@@ -1,4 +1,4 @@
-package com.example.healthcare;
+package com.example.healthcare.Graphic;
 
 import android.content.Context;
 import android.hardware.Sensor;

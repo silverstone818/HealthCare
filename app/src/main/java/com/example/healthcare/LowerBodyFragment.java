@@ -9,6 +9,8 @@ import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.healthcare.Guide.SquatsGuideActivity;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link LowerBodyFragment#newInstance} factory method to

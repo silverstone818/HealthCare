@@ -18,9 +18,17 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ResultActivity extends AppCompatActivity {
     private int num;
@@ -28,7 +36,6 @@ public class ResultActivity extends AppCompatActivity {
     private ArrayList<Boolean> goodPose, waist_banding;
     private ArrayList<Integer> contract;
     private ArrayList<Boolean> Tension;
-    private String fb = "";
     private int Health;
     private BarChart barChart, barChart2;
     private String[] label = {"이완", "수축", "긴장", "균형", "종합"}, APPS = new String[5];
@@ -37,23 +44,36 @@ public class ResultActivity extends AppCompatActivity {
     private TextView feedbackTension;
     private TextView feedbackContract;
     private TextView feedbackMaxAngle;
-
+    private FirebaseDatabase mFirebaseDatabase;
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
+    private ArrayList<String> record;
     private Button btn_result;
     private Button btn_share;
 
     private static final String TAG1 = "AngleTest";
-    private int big = 0, small = 0, waist = 0, tension = 0, good = 0;
-
-    private float normalizedNum;
-    private double MaxAnglePercentage;
-    private double goodPosePercentage, TensionPercentage, contractPercentage, result;
     private ArrayList<Double> scores = new ArrayList<>();
+
+    private Together_group_list user;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+        record = new ArrayList<>();
+        record.add("record1");
+        record.add("record2");
+        record.add("record3");
+        record.add("record4");
+        record.add("record5");
+
+
 
         Intent intent = getIntent();
 
@@ -76,14 +96,17 @@ public class ResultActivity extends AppCompatActivity {
 
         Log.d(TAG1, "result"+contract.toString());
 
+        user = new Together_group_list();
 
-        //스쿼트 개수 점수
-        normalizedNum = (float) num / 12 * 20;
+
+        //수행 개수 점수
+        user.setNormalizedNum((float) num / 12 * 20);
 
         switch (Health){
             case 1:
                 SqurtsScore();
                 Squrts();
+                user.setName("스쿼트");
                 break;
 
             default:
@@ -97,6 +120,7 @@ public class ResultActivity extends AppCompatActivity {
         btn_result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                saveMemo();
                 finish();
             }
         });
@@ -153,13 +177,15 @@ public class ResultActivity extends AppCompatActivity {
 
         BarData barData = new BarData(); // 차트에 담길 데이터
 
-        result = (MaxAnglePercentage + contractPercentage + TensionPercentage + goodPosePercentage + normalizedNum) / 8;
+        if((user.getMaxAnglePercentage() + user.getContractPercentage() + user.getTensionPercentage() + user.getNormalizedNum() + user.getGoodPosePercentage()) > 0){
+            user.setResult((user.getMaxAnglePercentage() + user.getContractPercentage() + user.getTensionPercentage() + user.getNormalizedNum() + user.getGoodPosePercentage()) / 5);
+        }
 
-        entry_chart.add(new BarEntry(1, (int)MaxAnglePercentage)); //entry_chart1에 좌표 데이터를 담는다.
-        entry_chart.add(new BarEntry(2, (int)contractPercentage));
-        entry_chart.add(new BarEntry(3, (int)TensionPercentage));
-        entry_chart.add(new BarEntry(4, (int)goodPosePercentage));
-        entry_chart.add(new BarEntry(5, (int)result));
+        entry_chart.add(new BarEntry(1, (int)user.getMaxAnglePercentage())); //entry_chart1에 좌표 데이터를 담는다.
+        entry_chart.add(new BarEntry(2, (int)user.getContractPercentage()));
+        entry_chart.add(new BarEntry(3, (int)user.getTensionPercentage()));
+        entry_chart.add(new BarEntry(4, (int)user.getGoodPosePercentage()));
+        entry_chart.add(new BarEntry(5, (int)user.getResult()));
 
         entries.add(entry_chart.get(0));
         entries.add(entry_chart.get(1));
@@ -178,7 +204,19 @@ public class ResultActivity extends AppCompatActivity {
 
         barDataSet.setDrawIcons(false);
         barDataSet.setDrawValues(true);
-        barDataSet.setColor(Color.parseColor("#66767676")); // 해당 BarDataSet 색 설정 :: 각 막대 과 관련된 세팅은 여기서 설정한다.
+        List<Integer> colors = new ArrayList<>();
+        for (BarEntry entry : entry_chart) {
+            if (entry.getY() >= 15 && entry.getY() <= 20) {
+                colors.add(Color.GREEN);
+            } else if (entry.getY() >= 10 && entry.getY() <= 14) {
+                colors.add(Color.parseColor("#FFA500")); // orange 색깔 추가
+            } else if (entry.getY() >= 5 && entry.getY() <= 9) {
+                colors.add(Color.YELLOW);
+            }else {
+                colors.add(Color.RED);
+            }
+        }
+        barDataSet.setColors(colors);
         barDataSet.setValueTextSize(15f);
         barData.addDataSet(barDataSet); // 해당 BarDataSet 을 적용될 차트에 들어갈 DataSet 에 넣는다.
         barData.setBarWidth(0.5f);
@@ -237,11 +275,11 @@ public class ResultActivity extends AppCompatActivity {
 
         BarData barData = new BarData(); // 차트에 담길 데이터
 
-        entry_chart.add(new BarEntry(1, (int)big)); //entry_chart1에 좌표 데이터를 담는다.
-        entry_chart.add(new BarEntry(2, (int)small));
-        entry_chart.add(new BarEntry(3, (int)waist));
-        entry_chart.add(new BarEntry(4, (int)tension));
-        entry_chart.add(new BarEntry(5, (int)good));
+        entry_chart.add(new BarEntry(1, (int)user.getBig())); //entry_chart1에 좌표 데이터를 담는다.
+        entry_chart.add(new BarEntry(2, (int)user.getSmall()));
+        entry_chart.add(new BarEntry(3, (int)user.getWaist()));
+        entry_chart.add(new BarEntry(4, (int)user.getTension()));
+        entry_chart.add(new BarEntry(5, (int)user.getGood()));
 
         entries.add(entry_chart.get(0));
         entries.add(entry_chart.get(1));
@@ -265,7 +303,18 @@ public class ResultActivity extends AppCompatActivity {
 
         barDataSet.setDrawIcons(false);
         barDataSet.setDrawValues(true);
-        barDataSet.setColor(Color.parseColor("#66767676")); // 해당 BarDataSet 색 설정 :: 각 막대 과 관련된 세팅은 여기서 설정한다.
+        List<Integer> colors = new ArrayList<>();
+        for (BarEntry entry : entry_chart) {
+            if (entry.getY() >= 15 && entry.getY() <= 20) {
+                colors.add(Color.GREEN);
+            } else if (entry.getY() >= 10 && entry.getY() <= 14) {
+                colors.add(Color.parseColor("#FFA500")); // orange 색깔 추가
+            } else if (entry.getY() >= 5 && entry.getY() <= 9) {
+                colors.add(Color.YELLOW);
+            }else {
+                colors.add(Color.RED);
+            }
+        }
         barDataSet.setValueTextSize(15f);
         barData.addDataSet(barDataSet); // 해당 BarDataSet 을 적용될 차트에 들어갈 DataSet 에 넣는다.
         barData.setBarWidth(0.5f);
@@ -278,7 +327,7 @@ public class ResultActivity extends AppCompatActivity {
     public void SqurtsScore(){
         //이완 점수
         double sum = 0;
-        if(maxAngle != null){
+        if(maxAngle != null && maxAngle.size() > 0){
             // maxAngle 값들에 대한 점수 계산
             for (Double angle : maxAngle) {
                 double score;
@@ -297,13 +346,11 @@ public class ResultActivity extends AppCompatActivity {
             double average = sum / num;
 
             // 0일 수록 평균이 20, 90일 수록 평균이 0 (10%에서 0% 사이)
-            MaxAnglePercentage = 20 - (average / 90 * 20);
-        }else{
-            MaxAnglePercentage = 0;
+            user.setMaxAnglePercentage(20 - (average / 90 * 20));
         }
 
         //균형 점수
-        if(goodPose != null){
+        if(goodPose != null && goodPose.size() > 0){
             int countTrue = 0;
             for (boolean isWaistBanding : goodPose) {
                 if (isWaistBanding) {
@@ -313,13 +360,11 @@ public class ResultActivity extends AppCompatActivity {
             double percentageTrue = (double) countTrue / num;
 
             // 0~10% 범위로 변환
-            goodPosePercentage = percentageTrue * 20;
-        }else{
-            goodPosePercentage = 0;
+            user.setGoodPosePercentage(percentageTrue * 20);
         }
 
         //긴장 점수
-        if(Tension != null){
+        if(Tension != null && Tension.size() > 0){
             int countTrue = 0;
             for (boolean isWaistBanding : Tension) {
                 if (isWaistBanding) {
@@ -329,13 +374,11 @@ public class ResultActivity extends AppCompatActivity {
             double percentageTrue = (double) countTrue / num;
 
             // 0~10% 범위로 변환
-            TensionPercentage = percentageTrue * 20;
-        }else{
-            TensionPercentage = 0;
+            user.setTensionPercentage(percentageTrue * 20);
         }
 
         //수축 점수
-        if(contract != null){
+        if(contract != null && contract.size() > 0){
             ArrayList<Double> percentages = new ArrayList<>();
 
             for (int value : contract) {
@@ -356,63 +399,66 @@ public class ResultActivity extends AppCompatActivity {
                 sum += value;
             }
             // contract 값을 0~10% 범위로 변환
-            contractPercentage = sum / num;
-            Log.d(TAG1, "percentage: " + contractPercentage);
-        }else{
-            contractPercentage = 0;
+            user.setContractPercentage(sum / num);
         }
 
-        if(MaxAnglePercentage <= 5){
-            feedbackMaxAngle.setText("가동범위가 너무 대체적으로 적습니다. 보통 가동범위가 적으신 분들은 근육의 유연성이 적어서 그렇습니다.\n운동이 끝난 후 스트레칭을 해주며 근육을 늘려주세요. 가동범위가 점차 늘어날 것입니다.");
+        if(user.getMaxAnglePercentage() <= 5){
+            user.setFbM("가동범위가 너무 대체적으로 적습니다. 보통 가동범위가 적으신 분들은 근육의 유연성이 적어서 그렇습니다.\n운동이 끝난 후 스트레칭을 해주며 근육을 늘려주세요. 가동범위가 점차 늘어날 것입니다.");
         }
-        else if(MaxAnglePercentage <= 10){
-            feedbackMaxAngle.setText("가동범위가 적습니다. 한동작 한동작 천천히 가동범위를 늘려보면서 각각의 횟수마다 퀄리티를 높혀주세요. 좋은 효과가 나올 것입니다.");
+        else if(user.getMaxAnglePercentage() <= 10){
+            user.setFbM("가동범위가 적습니다. 한동작 한동작 천천히 가동범위를 늘려보면서 각각의 횟수마다 퀄리티를 높혀주세요. 좋은 효과가 나올 것입니다.");
         }
-        else if(MaxAnglePercentage <= 15){
-            feedbackMaxAngle.setText("대체적으로 안정적입니다.");
+        else if(user.getMaxAnglePercentage() <= 15){
+            user.setFbM("대체적으로 안정적입니다.");
         }
-        else if(MaxAnglePercentage <= 20){
-            feedbackMaxAngle.setText("훌륭합니다.");
-        }
-
-        if(contractPercentage <= 5){
-            feedbackContract.setText("근력 부족이 느껴집니다. 일어날 때 힘을 폭발시키듯이 빠르게 올라와주세요.");
-        }
-        else if(contractPercentage <= 10){
-            feedbackContract.setText("중량 이시면 훌륭합니다. 맨몸일 경우 조금 더 일어날 때 힘을 넣어주세요.");
-        }
-        else if(contractPercentage <= 15){
-            feedbackContract.setText("대체적으로 안정적입니다.");
-        }
-        else if(contractPercentage <= 20){
-            feedbackContract.setText("훌륭합니다!");
+        else if(user.getMaxAnglePercentage() <= 20){
+            user.setFbM("훌륭합니다.");
         }
 
-        if(TensionPercentage <= 5){
-            feedbackTension.setText("긴장이 너무 많이 풀립니다. 부상 주의하세요.");
+        if(user.getContractPercentage() <= 5){
+            user.setFbC("근력 부족이 느껴집니다. 일어날 때 힘을 폭발시키듯이 빠르게 올라와주세요.");
         }
-        else if(TensionPercentage <= 10){
-            feedbackTension.setText("중간중간 쉬어가는 것이 느껴집니다.");
+        else if(user.getContractPercentage() <= 10){
+            user.setFbC("중량 이시면 훌륭합니다. 맨몸일 경우 조금 더 일어날 때 힘을 넣어주세요.");
         }
-        else if(TensionPercentage <= 15){
-            feedbackTension.setText("대체적으로 안정적입니다.");
+        else if(user.getContractPercentage() <= 15){
+            user.setFbC("대체적으로 안정적입니다.");
         }
-        else if(TensionPercentage <= 20){
-            feedbackTension.setText("훌륭합니다!");
+        else if(user.getContractPercentage() <= 20){
+            user.setFbC("훌륭합니다!");
         }
 
-        if(goodPosePercentage <= 5){
-            feedbackBalance.setText("심각합니다. 기초 체력 부족일 가능성이 있으니 런닝과, 플랭크 등을 통하여 코어와 체력을 키우세요!");
+        if(user.getTensionPercentage() <= 5){
+            user.setFbT("긴장이 너무 많이 풀립니다. 부상 주의하세요.");
         }
-        else if(goodPosePercentage <= 10){
-            feedbackBalance.setText("불안정할 때가 많습니다. 밑에 분석결과를 참조해주세요.");
+        else if(user.getTensionPercentage() <= 10){
+            user.setFbT("중간중간 쉬어가는 것이 느껴집니다.");
         }
-        else if(goodPosePercentage <= 15){
-            feedbackBalance.setText("대체적으로 안정적입니다.");
+        else if(user.getTensionPercentage() <= 15){
+            user.setFbT("대체적으로 안정적입니다.");
         }
-        else if(goodPosePercentage <= 20){
-            feedbackBalance.setText("훌륭합니다!");
+        else if(user.getTensionPercentage() <= 20){
+            user.setFbT("훌륭합니다!");
         }
+
+        if(user.getGoodPosePercentage() <= 5){
+            user.setFbB("심각합니다. 기초 체력 부족일 가능성이 있으니 런닝과, 플랭크 등을 통하여 코어와 체력을 키우세요!");
+        }
+        else if(user.getGoodPosePercentage() <= 10){
+            user.setFbB("불안정할 때가 많습니다. 밑에 분석결과를 참조해주세요.");
+        }
+        else if(user.getGoodPosePercentage() <= 15){
+            user.setFbB("대체적으로 안정적입니다.");
+        }
+        else if(user.getGoodPosePercentage() <= 20){
+            user.setFbB("훌륭합니다!");
+        }
+
+
+        feedbackMaxAngle.setText(user.getFbM());
+        feedbackContract.setText(user.getFbC());
+        feedbackTension.setText(user.getFbT());
+        feedbackBalance.setText(user.getFbB());
 
     }
 
@@ -425,44 +471,44 @@ public class ResultActivity extends AppCompatActivity {
 
         for(int i = 0; i < num; i++){
             if(maxAngle.get(i) < 56){
-                big++;
+                user.setBig(user.getBig()+1);
             }
             else if (maxAngle.get(i) > 85){
-                small++;
+                user.setSmall(user.getSmall() + 1);
             }
             if (waist_banding.get(i) == false){
-                waist++;
+                user.setWaist(user.getWaist() + 1);
             }
             if (Tension.get(i) == false){
-                tension++;
+                user.setTension(user.getTension() + 1);
             }
             if(goodPose.get(i) == true){
-                good++;
+                user.setGood(user.getGood() + 1);
             }
         }
 
-        if(waist >= good / 2){
-            fb += "\n허리가 휘거나 굽습니다. 또는 상체가 자주 앞으로 숙여집니다.\n이것은 체중의 무게가 앞쪽으로 실려있어 그렇습니다. 스쿼트를 할 때 항상 무게 중심을 뒷꿈치에 잡습니다.\n" +
-                    "간단한 팁을 알려드리자면 엉덩이와 복부에 힘을 준 상태에서 천천히 내려가세요.\n내려간 이후 엉덩이를 앞으로 내미는 동시에 일어납니다.\n그렇게 된다면 수월하게 동작이 이루어 지고 허리가 덜 굽게 될 것입니다.\n";
+        if(user.getWaist() >= user.getGood() / 2 && user.getWaist() != 0){
+            user.setFb(user.getFb() + "\n허리가 휘거나 굽습니다. 또는 상체가 자주 앞으로 숙여집니다.\n이것은 체중의 무게가 앞쪽으로 실려있어 그렇습니다. 스쿼트를 할 때 항상 무게 중심을 뒷꿈치에 잡습니다.\n" +
+                    "간단한 팁을 알려드리자면 엉덩이와 복부에 힘을 준 상태에서 천천히 내려가세요.\n내려간 이후 엉덩이를 앞으로 내미는 동시에 일어납니다.\n그렇게 된다면 수월하게 동작이 이루어 지고 허리가 덜 굽게 될 것입니다.\n");
         }
-        if(big + small >= num / 2){
-            fb += "\n대부분의 자세에서 가동범위가 크거나 작습니다.\n가동범위가 클 경우 무릎에 가해지는 부하가 심해집니다.\n작을 경우에는 스트렝스가 적어 허벅지에 자극이 적을 것입니다.\n" +
-                    "영상촬영을 통해 가동범위가 어떤지 확인하며 모범자세와의 차이점을 확인하세요.\n몸 전체가 아닌 어느 한 부분이 잘려서 찍힌거나 촬영 각도가 문제 있을 시 다시 측정해주십시오.\n";
+        if(user.getBig() + user.getSmall() >= num / 2 && user.getBig() + user.getSmall() != 0){
+            user.setFb(user.getFb() + "\n대부분의 자세에서 가동범위가 크거나 작습니다.\n가동범위가 클 경우 무릎에 가해지는 부하가 심해집니다.\n작을 경우에는 스트렝스가 적어 허벅지에 자극이 적을 것입니다.\n" +
+                    "영상촬영을 통해 가동범위가 어떤지 확인하며 모범자세와의 차이점을 확인하세요.\n몸 전체가 아닌 어느 한 부분이 잘려서 찍힌거나 촬영 각도가 문제 있을 시 다시 측정해주십시오.\n");
         }
-        if(tension >= num / 2){
-            fb += "\n일어났을 때 다리를 완전히 펴버리면 근육의 긴장이 풀리게 됩니다.\n긴장이 풀릴 시 다음 동작 수행에서 부상 위험과 관절 통증, 근육 스트렝스 저하 등 문제점이 생깁니다.\n일어날 때 무릎은 살짝 굽힌 상태를 유지한다는 느낌으로 일어나 주세요.\n";
+        if(user.getTension() >= num / 2 && user.getTension() != 0){
+            user.setFb(user.getFb() + "\n일어났을 때 다리를 완전히 펴버리면 근육의 긴장이 풀리게 됩니다.\n긴장이 풀릴 시 다음 동작 수행에서 부상 위험과 관절 통증, 근육 스트렝스 저하 등 문제점이 생깁니다.\n일어날 때 무릎은 살짝 굽힌 상태를 유지한다는 느낌으로 일어나 주세요.\n");
         }
-        if(good > waist + big + small){
-            fb += "\n대체적으로 자세는 괜찮습니다. 다만 완벽하지는 않기에 데이터를 토대로 모범자세를 의식하며 계속 정진하세요!!\n";
+        if(user.getGood() > user.getWaist() + user.getBig() + user.getSmall()){
+            user.setFb(user.getFb() + "\n대체적으로 자세는 괜찮습니다. 다만 완벽하지는 않기에 데이터를 토대로 모범자세를 의식하며 계속 정진하세요!!\n");
         }
         if(num < 12){
-            fb += "\n전체 횟수가 아직 12개 이상이 되지 않는 다는 것은 기초 근력이 부족하다는 것입니다.\n꾸준히 정진하여 12개를 채우는 것을 목표로 잡습니다.\n만약 중량이시면 횟수에 근접해질 시 중량을 5kg 단위로 늘려주세요.\n";
+            user.setFb(user.getFb() + "\n전체 횟수가 아직 12개 이상이 되지 않는 다는 것은 기초 근력이 부족하다는 것입니다.\n꾸준히 정진하여 12개를 채우는 것을 목표로 잡습니다.\n만약 중량이시면 횟수에 근접해질 시 중량을 5kg 단위로 늘려주세요.\n");
         }
-        if(good == 12){
-            fb += "\n자세가 완벽합니다! 이대로 꾸준히 정진해주세요!! 다음 운동도 파이팅!\n";
+        if(user.getGood() == 12){
+            user.setFb(user.getFb() + "\n자세가 완벽합니다! 이대로 꾸준히 정진해주세요!! 다음 운동도 파이팅!\n");
         }
 
-        feedback.setText(fb);
+        feedback.setText(user.getFb());
     }
 
 
@@ -474,11 +520,205 @@ public class ResultActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {}
 
+    private void saveMemo(){
+
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String getTime = dataFormat.format(date);
+
+        user.setDate(getTime);
+
+        // 수정할 데이터의 참조 경로 가져오기
+        // 수정할 데이터의 참조 경로 가져오기
+        DatabaseReference memoRef = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/record/");
+
+        // 수정할 데이터의 참조 경로와 고유 ID를 결합하여 해당 데이터의 참조 경로를 가져옵니다.
+        DatabaseReference memoToUpdateRef = memoRef.child("profile");
+
+        // 수정할 데이터의 값을 Map 객체로 만듭니다.
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("MaxAnglePercentage", user.getMaxAnglePercentage());
+        updates.put("goodPosePercentage", user.getGoodPosePercentage());
+        updates.put("TensionPercentage", user.getTensionPercentage());
+        updates.put("contractPercentage", user.getContractPercentage());
+        updates.put("normalizedNum", user.getNormalizedNum());
+        updates.put("result", user.getResult());
+
+        updates.put("big", user.getBig());
+        updates.put("small", user.getSmall());
+        updates.put("waist", user.getWaist());
+        updates.put("tension", user.getTension());
+        updates.put("good", user.getGood());
+
+        updates.put("fb", user.getFb());
+        updates.put("fbB", user.getFbB());
+        updates.put("fbT", user.getFbT());
+        updates.put("fbC", user.getFbC());
+        updates.put("fbM", user.getFbM());
+        updates.put("date", user.getDate());
+        updates.put("name", user.getName());
+
+
+        // 해당 데이터의 참조 경로에 updateChildren() 메소드를 호출하여 값을 수정합니다.
+        memoToUpdateRef.updateChildren(updates);
+    }
+
 }
 
 class IntegerValueFormatter extends ValueFormatter {
     @Override
     public String getFormattedValue(float value) {
         return String.valueOf((int) value);
+    }
+}
+
+class Together_group_list{
+    private double MaxAnglePercentage = 0, goodPosePercentage = 0, TensionPercentage = 0, contractPercentage = 0, result = 0, normalizedNum = 0;
+    private int big = 0, small = 0, waist = 0, tension = 0, good = 0;
+    private String fb = "", fbB = "", fbT = "", fbC = "", fbM = "", date = "", name = "";
+
+    public double getMaxAnglePercentage() {
+        return MaxAnglePercentage;
+    }
+
+    public void setMaxAnglePercentage(double maxAnglePercentage) {
+        MaxAnglePercentage = maxAnglePercentage;
+    }
+
+    public double getGoodPosePercentage() {
+        return goodPosePercentage;
+    }
+
+    public void setGoodPosePercentage(double goodPosePercentage) {
+        this.goodPosePercentage = goodPosePercentage;
+    }
+
+    public double getTensionPercentage() {
+        return TensionPercentage;
+    }
+
+    public void setTensionPercentage(double tensionPercentage) {
+        TensionPercentage = tensionPercentage;
+    }
+
+    public double getContractPercentage() {
+        return contractPercentage;
+    }
+
+    public void setContractPercentage(double contractPercentage) {
+        this.contractPercentage = contractPercentage;
+    }
+
+    public double getResult() {
+        return result;
+    }
+
+    public void setResult(double result) {
+        this.result = result;
+    }
+
+    public double getNormalizedNum() {
+        return normalizedNum;
+    }
+
+    public void setNormalizedNum(double normalizedNum) {
+        this.normalizedNum = normalizedNum;
+    }
+
+    public int getBig() {
+        return big;
+    }
+
+    public void setBig(int big) {
+        this.big = big;
+    }
+
+    public int getSmall() {
+        return small;
+    }
+
+    public void setSmall(int small) {
+        this.small = small;
+    }
+
+    public int getWaist() {
+        return waist;
+    }
+
+    public void setWaist(int waist) {
+        this.waist = waist;
+    }
+
+    public int getTension() {
+        return tension;
+    }
+
+    public void setTension(int tension) {
+        this.tension = tension;
+    }
+
+    public int getGood() {
+        return good;
+    }
+
+    public void setGood(int good) {
+        this.good = good;
+    }
+
+    public String getFb() {
+        return fb;
+    }
+
+    public void setFb(String fb) {
+        this.fb = fb;
+    }
+
+    public String getFbB() {
+        return fbB;
+    }
+
+    public void setFbB(String fbB) {
+        this.fbB = fbB;
+    }
+
+    public String getFbT() {
+        return fbT;
+    }
+
+    public void setFbT(String fbT) {
+        this.fbT = fbT;
+    }
+
+    public String getFbC() {
+        return fbC;
+    }
+
+    public void setFbC(String fbC) {
+        this.fbC = fbC;
+    }
+
+    public String getFbM() {
+        return fbM;
+    }
+
+    public void setFbM(String fbM) {
+        this.fbM = fbM;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

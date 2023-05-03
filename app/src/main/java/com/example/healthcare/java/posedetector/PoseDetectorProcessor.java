@@ -25,7 +25,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.healthcare.GraphicOverlay;
+import com.example.healthcare.Graphic.GraphicOverlay;
 import com.example.healthcare.java.Health.HealthKind;
 import com.example.healthcare.java.Health.Squrts;
 import com.example.healthcare.java.VisionProcessorBase;
@@ -229,6 +229,7 @@ public class PoseDetectorProcessor
                                         Kind = new Squrts();
                                         Kind.setTts(tts);
                                         break;
+
                                     default:
                                         Kind = null;
                                         break;
