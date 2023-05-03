@@ -119,6 +119,7 @@ public class RecordActivity extends AppCompatActivity {
         btn_result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(RecordActivity.this, RecordListActivity.class));
                 finish();
             }
         });
@@ -324,5 +325,8 @@ public class RecordActivity extends AppCompatActivity {
         barChart2.invalidate(); // 차트 업데이트
         barChart2.setTouchEnabled(false); // 차트 터치 불가능하게
     }
-
+    public void onBackPressed() {
+        startActivity(new Intent(RecordActivity.this, RecordListActivity.class));
+        finish();
+    }
 }

@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -20,6 +22,9 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -30,6 +35,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.IntConsumer;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -521,17 +529,137 @@ public class ResultActivity extends AppCompatActivity {
         finish();
     }
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+        saveMemo();
+        finish();
+    }
+
+    private void findMinimumEmptyRecord(int i, IntConsumer onMinFound) {
+        if (i > 10) {
+            onMinFound.accept(-1);
+            return;
+        }
+
+        DatabaseReference userRef = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/record" + i);
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()) {
+                    onMinFound.accept(i);
+                } else {
+                    findMinimumEmptyRecord(i + 1, onMinFound);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                onMinFound.accept(-1);
+            }
+        });
+    }
 
     private void saveMemo(){
+        AtomicBoolean state = new AtomicBoolean(true);
 
+        findMinimumEmptyRecord(1, minEmptyRecord -> {
+            if (minEmptyRecord > 1) {
+                state.set(false);
+                AtomicInteger counter = new AtomicInteger(minEmptyRecord - 1);
+                for(int i = minEmptyRecord - 1; i >= 1; i--){
+                    int finalI = i;
+                    mFirebaseDatabase.getReference("memos/" + mFirebaseAuth.getUid()+"/record"+i)
+                            .addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                    Together_group_list tgList = dataSnapshot.getValue(Together_group_list.class);
+                                    if (tgList != null) {
+                                        memoRef2 = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/record" + (finalI+1));
+
+                                        // 수정할 데이터의 참조 경로와 고유 ID를 결합하여 해당 데이터의 참조 경로를 가져옵니다.
+                                        DatabaseReference memoToUpdateRef = memoRef2.child("profile");
+
+                                        // 수정할 데이터의 값을 Map 객체로 만듭니다.
+                                        Map<String, Object> updates = new HashMap<>();
+                                        updates.put("MaxAnglePercentage", tgList.getMaxAnglePercentage());
+                                        updates.put("goodPosePercentage", tgList.getGoodPosePercentage());
+                                        updates.put("TensionPercentage", tgList.getTensionPercentage());
+                                        updates.put("contractPercentage", tgList.getContractPercentage());
+                                        updates.put("normalizedNum", tgList.getNormalizedNum());
+                                        updates.put("result", tgList.getResult());
+
+                                        updates.put("big", tgList.getBig());
+                                        updates.put("small", tgList.getSmall());
+                                        updates.put("waist", tgList.getWaist());
+                                        updates.put("tension", tgList.getTension());
+                                        updates.put("good", tgList.getGood());
+
+                                        updates.put("fb", tgList.getFb());
+                                        updates.put("fbB", tgList.getFbB());
+                                        updates.put("fbT", tgList.getFbT());
+                                        updates.put("fbC", tgList.getFbC());
+                                        updates.put("fbM", tgList.getFbM());
+                                        updates.put("date", tgList.getDate());
+                                        updates.put("name", tgList.getName());
+
+
+                                        // 해당 데이터의 참조 경로에 updateChildren() 메소드를 호출하여 값을 수정합니다.
+                                        memoToUpdateRef.updateChildren(updates);
+
+                                        int currentCount = counter.decrementAndGet();
+
+                                        // 모든 작업이 완료되었는지 확인
+                                        if (currentCount == 0) {
+                                            updateRecord1();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                    // 변경된 데이터 처리
+                                }
+
+                                @Override
+                                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                                    // 삭제된 데이터 처리
+                                }
+
+                                @Override
+                                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                    // 이동된 데이터 처리
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    // 처리할 오류가 있으면 여기에 작성
+                                }
+                            });
+                }
+                Log.d(TAG1, "Minimum empty record: " + minEmptyRecord);
+            }
+            else if(minEmptyRecord == 1){
+                if(state.get()){
+                    Log.d(TAG1, "Minimum empty record: " + minEmptyRecord);
+                    updateRecord1();
+                }
+            }
+            else {
+                // 모든 record에 값이 있습니다.
+                deleteMemo();
+                saveMemo();
+                Log.d(TAG1, "All records are full.");
+            }
+        });
+
+    }
+    private void updateRecord1() {
         long now = System.currentTimeMillis();
         Date date = new Date(now);
         SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String getTime = dataFormat.format(date);
 
         user.setDate(getTime);
-
         // 수정할 데이터의 참조 경로 가져오기
         // 수정할 데이터의 참조 경로 가져오기
         memoRef1 = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/record1");
@@ -567,6 +695,17 @@ public class ResultActivity extends AppCompatActivity {
         memoToUpdateRef.updateChildren(updates);
     }
 
+    private void deleteMemo() {
+        DatabaseReference memoRef = FirebaseDatabase.getInstance().getReference("memos/" + FirebaseAuth.getInstance().getUid() + "/record10");
+
+        memoRef.removeValue().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Log.d(TAG1, "Memo deleted successfully");
+            } else {
+                Log.e(TAG1, "Error deleting memo", task.getException());
+            }
+        });
+    }
 
 }
 
