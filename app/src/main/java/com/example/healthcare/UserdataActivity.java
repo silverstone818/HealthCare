@@ -171,14 +171,25 @@ public class UserdataActivity extends AppCompatActivity {
 
                 // 해당 데이터의 참조 경로에 updateChildren() 메소드를 호출하여 값을 수정합니다.
                 memoToUpdateRef.updateChildren(updates);
-                startActivity(new Intent(UserdataActivity.this, MainActivity.class));
+
+                Button moveButton;
+                moveButton = findViewById(R.id.btn_move2);
+                moveButton.setOnClickListener(onClickListener);
+
+                Intent intent = new Intent(UserdataActivity.this, TutorialActivity.class);
+                startActivity(intent);
                 finish();
             }
-
         });
-
-
     }
+    Button.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(UserdataActivity.this, TutorialActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    };
     public void onBackPressed() {
         new AlertDialog.Builder(this)
                 .setMessage("종료 하시겠습니까?")
