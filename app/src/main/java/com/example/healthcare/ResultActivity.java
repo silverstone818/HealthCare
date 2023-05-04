@@ -84,8 +84,6 @@ public class ResultActivity extends AppCompatActivity {
         record.add("record4");
         record.add("record5");
 
-
-
         Intent intent = getIntent();
 
         Health = intent.getIntExtra("Health", 0);
