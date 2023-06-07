@@ -62,8 +62,8 @@ public class LowerBodyFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lower_body, container, false);
 
-        ImageButton button = view.findViewById(R.id.btn_squats); // Fragment에서 버튼 객체를 가져옵니다.
-        button.setOnClickListener(new View.OnClickListener() {
+        ImageButton button1 = view.findViewById(R.id.btn_squats); // Fragment에서 버튼 객체를 가져옵니다.
+        button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = null; // 다른 Activity로 전환하는 Intent 객체를 생성합니다.
@@ -74,7 +74,17 @@ public class LowerBodyFragment extends Fragment {
             }
         });
 
+        ImageButton button2 = view.findViewById(R.id.btn_pushups); // Fragment에서 버튼 객체를 가져옵니다.
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = null; // 다른 Activity로 전환하는 Intent 객체를 생성합니다.
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+                    intent = new Intent(getActivity(), SquatsGuideActivity.class);
+                }
+                startActivity(intent); // Intent를 실행하여 다른 Activity로 전환합니다.
+            }
+        });
         return view;
-
     }
 }

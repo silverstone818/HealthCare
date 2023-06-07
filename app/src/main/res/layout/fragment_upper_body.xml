@@ -8,16 +8,14 @@
     android:background="#C1C1C1"
     android:gravity="center">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <ImageButton
-                android:layout_width="500px"
-                android:layout_height="500px"
+                android:id="@+id/btn_pushups"
+                android:layout_width="1000px"
+                android:layout_height="400px"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
@@ -36,7 +34,6 @@
                 android:layout_marginTop="15dp"
                 android:gravity="center"
                 android:text="푸쉬업"
-                android:alpha="0.5"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="150px" />
@@ -46,8 +43,8 @@
             android:layout_height="wrap_content">
 
             <ImageButton
-                android:layout_width="500px"
-                android:layout_height="500px"
+                android:layout_width="1000px"
+                android:layout_height="400px"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
@@ -71,18 +68,14 @@
                 android:textColor="@color/black"
                 android:textSize="150px" />
         </RelativeLayout>
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <ImageButton
-                android:layout_width="500px"
-                android:layout_height="500px"
+                android:layout_width="1000px"
+                android:layout_height="400px"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
@@ -92,7 +85,7 @@
                 android:contentDescription="벤치 프레스"
                 android:scaleType="fitXY"
                 android:padding="5dp"
-                android:src="@drawable/bench" />
+                android:src="@drawable/squats_back" />
 
             <TextView
                 android:layout_width="414px"
@@ -101,8 +94,7 @@
                 android:layout_marginTop="15dp"
                 android:alpha="0.5"
                 android:gravity="center"
-                android:text="벤치
-                프레스"
+                android:text="벤치프레스"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="36sp" />
@@ -112,8 +104,8 @@
             android:layout_height="wrap_content">
 
             <ImageButton
-                android:layout_width="500px"
-                android:layout_height="500px"
+                android:layout_width="1000px"
+                android:layout_height="400px"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
@@ -123,7 +115,7 @@
                 android:contentDescription="밀리터리 프레스"
                 android:scaleType="fitXY"
                 android:padding="5dp"
-                android:src="@drawable/military" />
+                android:src="@drawable/millitary" />
 
             <TextView
                 android:layout_width="414px"
@@ -137,6 +129,4 @@
                 android:textColor="@color/black"
                 android:textSize="34sp" />
         </RelativeLayout>
-    </LinearLayout>
-
 </LinearLayout>

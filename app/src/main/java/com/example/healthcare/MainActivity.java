@@ -74,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
         MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager(), arrFragments);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+
+        viewPager.setCurrentItem(1); // 하체 페이지를 중앙으로 설정
     }
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
@@ -88,9 +90,9 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position){
             switch (position){
                 case 0:
-                    return "상체";
+                    return "비고";
                 case 1:
-                    return "하체";
+                    return "운동 목록";
                 case 2:
                     return "메뉴";
                 default:

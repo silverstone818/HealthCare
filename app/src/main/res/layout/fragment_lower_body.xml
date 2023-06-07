@@ -9,133 +9,104 @@
     android:background="#C1C1C1"
     android:gravity="center">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
+        <ImageButton
+            android:id="@+id/btn_squats"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.8"
+            android:padding="0.5dp"
+            android:contentDescription="스쿼트"
+            android:scaleType="fitXY"
+            android:src="@drawable/squats_back" />
 
+        <TextView
+            android:layout_width="400px"
+            android:layout_height="200px"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="SQUAT"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="100px" />
+    </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-            <ImageButton
-                android:id="@+id/btn_squats"
-                android:layout_width="500px"
-                android:layout_height="500px"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:alpha="0.5"
-                android:background="@drawable/border"
-                android:padding="5dp"
-                android:contentDescription="스쿼트"
-                android:scaleType="fitXY"
-                android:src="@drawable/squats_back" />
+        <ImageButton
+            android:id="@+id/btn_pushups"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.8"
+            android:contentDescription="푸쉬업"
+            android:padding="0.5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/push_up" />
 
-            <TextView
-                android:layout_width="414px"
-                android:layout_height="400px"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="15dp"
-                android:gravity="center"
-                android:text="스쿼트"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="150px" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="400px"
+            android:layout_height="200px"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="15dp"
+            android:text="Push Up"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="100px" />
+    </RelativeLayout>
 
-            <ImageButton
-                android:layout_width="500px"
-                android:layout_height="500px"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:alpha="0.5"
-                android:padding="5dp"
-                android:background="@drawable/border"
-                android:contentDescription="데드 리프트"
-                android:scaleType="fitXY"
-                android:src="@drawable/deadlift" />
-            <TextView
-                android:layout_width="414px"
-                android:layout_height="400px"
-                android:layout_marginTop="15dp"
-                android:text="데드 리프트"
-                android:alpha="0.5"
-                android:textAlignment="center"
-                android:textSize="150px"
-                android:textColor="@color/black"
-                android:layout_centerInParent="true"
-                android:gravity="center"/>
-        </RelativeLayout>
-    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.8"
+            android:padding="0.5dp"
+            android:contentDescription="풀 업"
+            android:scaleType="fitXY"
+            android:src="@drawable/poll" />
 
-            <ImageButton
-                android:layout_width="500px"
-                android:layout_height="500px"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:alpha="0.5"
-                android:background="@drawable/border"
-                android:contentDescription="레그 프레스"
-                android:scaleType="fitXY"
-                android:padding="5dp"
-                android:src="@drawable/legpress" />
-            <TextView
-                android:layout_width="414px"
-                android:layout_height="400px"
-                android:layout_marginTop="15dp"
-                android:text="레그 프레스"
-                android:alpha="0.5"
-                android:textAlignment="center"
-                android:textSize="150px"
-                android:textColor="@color/black"
-                android:layout_centerInParent="true"
-                android:gravity="center"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="400px"
+            android:layout_height="200px"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="Pull Up"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="100px" />
+    </RelativeLayout>
 
-            <ImageButton
-                android:layout_width="500px"
-                android:layout_height="500px"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:alpha="0.5"
-                android:background="@drawable/border"
-                android:contentDescription="카프 레이즈"
-                android:scaleType="fitXY"
-                android:padding="5dp"
-                android:src="@drawable/calfraise" />
-            <TextView
-                android:layout_width="414px"
-                android:layout_height="400px"
-                android:layout_marginTop="15dp"
-                android:text="카프 레이즈"
-                android:alpha="0.5"
-                android:textAlignment="center"
-                android:textSize="150px"
-                android:textColor="@color/black"
-                android:layout_centerInParent="true"
-                android:gravity="center"/>
-        </RelativeLayout>
-    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.8"
+            android:padding="0.5dp"
+            android:contentDescription="밀리터리 프레스"
+            android:scaleType="fitXY"
+            android:src="@drawable/millitary" />
+        <TextView
+            android:layout_width="800px"
+            android:layout_height="200px"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="15dp"
+            android:text="Millitary Press"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="100px" />
+    </RelativeLayout>
 </LinearLayout>
