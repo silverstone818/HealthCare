@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.healthcare.Guide.SquatsGuideActivity;
+import com.example.healthcare.Guide.PushUpsGuideActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,14 +31,6 @@ public class LowerBodyFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LowerBodyFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static LowerBodyFragment newInstance(String param1, String param2) {
         LowerBodyFragment fragment = new LowerBodyFragment();
@@ -58,31 +52,30 @@ public class LowerBodyFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lower_body, container, false);
 
-        ImageButton button1 = view.findViewById(R.id.btn_squats); // Fragment에서 버튼 객체를 가져옵니다.
+        ImageButton button1 = view.findViewById(R.id.btn_squats);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = null; // 다른 Activity로 전환하는 Intent 객체를 생성합니다.
+                Intent intent = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
                     intent = new Intent(getActivity(), SquatsGuideActivity.class);
                 }
-                startActivity(intent); // Intent를 실행하여 다른 Activity로 전환합니다.
+                startActivity(intent);
             }
         });
 
-        ImageButton button2 = view.findViewById(R.id.btn_pushups); // Fragment에서 버튼 객체를 가져옵니다.
+        ImageButton button2 = view.findViewById(R.id.btn_pushups);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = null; // 다른 Activity로 전환하는 Intent 객체를 생성합니다.
+                Intent intent = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-                    intent = new Intent(getActivity(), SquatsGuideActivity.class);
+                    intent = new Intent(getActivity(), PushUpsGuideActivity.class);
                 }
-                startActivity(intent); // Intent를 실행하여 다른 Activity로 전환합니다.
+                startActivity(intent);
             }
         });
         return view;

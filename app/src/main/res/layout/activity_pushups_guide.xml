@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="25dp"
-                android:text="스쿼트 자세"
+                android:text="푸쉬업 자세"
                 android:textColor="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="250dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/squat_highlight"
+                app:srcCompat="@drawable/pushup_highlight"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"/>
@@ -49,8 +49,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="팔을 앞으로 뻗고 엉덩이와 팔이 수직이 되게
-                몸 전체를 일자로 내려간다."
+                android:text="엎드린 자세에서 두 손을 어깨너비보다
+                    조금 넓게 바닥에 짚습니다."
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="동작2번"
+                android:text="동작 2번"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:textColor="#000000"
@@ -72,8 +72,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="팔은 유지한 상태로 엉덩이를 앞으로 밀면서
-                일어난다."
+                android:text="내려갈 때는 가슴이 바닥에 닿기 전까지
+                팔꿈치를 굽히며, 올라올 때는 겨드랑이에 힘을
+                주면서 가슴을 모아주는 느낌으로 팔을 곧게 편다."
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
@@ -95,7 +96,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="이 운동은 허벅지와 엉덩이 근육을 단련시킵니다."
+                android:text="이 운동은 가슴, 삼두근, 삼각근, 코어 근육 등
+                전신 근육을 균형있게 발전시켜줍니다.
+                "
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
@@ -115,7 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="350dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/squats_part"
+                app:srcCompat="@drawable/pushup_part"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"/>
@@ -150,7 +153,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:text="정확한 판단을 위해 동작 1번 후 '업!' 소리에
+                    android:text="정확한 판단을 위해 동작 1번 후 '다운!' 소리에
                     동작 2번을, 총 12회 실행해주세요."
                     android:layout_marginRight="20dp"
                     android:textColor="#000000"
@@ -187,7 +190,7 @@
 
 
             <Button
-                android:id="@+id/start_btn"
+                android:id="@+id/start_btn1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

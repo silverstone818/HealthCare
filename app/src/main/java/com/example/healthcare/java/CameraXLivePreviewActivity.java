@@ -28,6 +28,7 @@ import com.example.healthcare.Graphic.CameraXViewModel;
 import com.example.healthcare.Graphic.GraphicOverlay;
 import com.example.healthcare.R;
 import com.example.healthcare.ResultActivity;
+import com.example.healthcare.Guide.PushUpsGuideActivity;
 import com.example.healthcare.Guide.SquatsGuideActivity;
 import com.example.healthcare.Graphic.VisionImageProcessor;
 import com.example.healthcare.java.posedetector.PoseDetectorProcessor;

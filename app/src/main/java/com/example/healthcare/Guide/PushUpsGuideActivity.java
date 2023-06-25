@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.healthcare.R;
 import com.example.healthcare.java.CameraXLivePreviewActivity;
 
-public class SquatsGuideActivity extends AppCompatActivity {
+public class PushUpsGuideActivity extends AppCompatActivity {
 
     private Button startButton;
 
@@ -19,14 +19,14 @@ public class SquatsGuideActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_squats_guide);
+        setContentView(R.layout.activity_pushups_guide);
 
-        startButton = (Button) findViewById(R.id.start_btn);
+        startButton = (Button) findViewById(R.id.start_btn1);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SquatsGuideActivity.this, CameraXLivePreviewActivity.class);
-                intent.putExtra("Health", 1);
+                Intent intent = new Intent(PushUpsGuideActivity.this, CameraXLivePreviewActivity.class);
+                intent.putExtra("Health", 2);
                 startActivity(intent);
                 finish();
             }
