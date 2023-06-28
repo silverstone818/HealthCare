@@ -10,8 +10,10 @@ import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.healthcare.Guide.PullupGuideActivity;
 import com.example.healthcare.Guide.SquatsGuideActivity;
 import com.example.healthcare.Guide.PushUpsGuideActivity;
+import com.example.healthcare.java.Health.Pullup;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,6 +76,17 @@ public class LowerBodyFragment extends Fragment {
                 Intent intent = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
                     intent = new Intent(getActivity(), PushUpsGuideActivity.class);
+                }
+                startActivity(intent);
+            }
+        });
+        ImageButton button3 = view.findViewById(R.id.btn_pullup);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+                    intent = new Intent(getActivity(), PullupGuideActivity.class);
                 }
                 startActivity(intent);
             }

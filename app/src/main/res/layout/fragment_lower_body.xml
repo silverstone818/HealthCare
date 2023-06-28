@@ -67,11 +67,12 @@
         android:layout_weight="1">
 
         <ImageButton
+            android:id="@+id/btn_pullup"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0.8"
-            android:padding="0.5dp"
             android:contentDescription="풀 업"
+            android:padding="0.5dp"
             android:scaleType="fitXY"
             android:src="@drawable/poll" />
 
