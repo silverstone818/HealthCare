@@ -28,7 +28,7 @@ import com.example.healthcare.Graphic.CameraXViewModel;
 import com.example.healthcare.Graphic.GraphicOverlay;
 import com.example.healthcare.R;
 import com.example.healthcare.ResultActivity;
-import com.example.healthcare.MainActivity;
+import com.example.healthcare.Guide.SquatsGuideActivity;
 import com.example.healthcare.Graphic.VisionImageProcessor;
 import com.example.healthcare.java.posedetector.PoseDetectorProcessor;
 import com.example.healthcare.preference.PreferenceUtils;
@@ -295,12 +295,12 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
             getSupportFragmentManager().popBackStack();
         } else {
             new AlertDialog.Builder(this)
-                    .setMessage("운동 목록으로 돌아가시겠습니까?")
+                    .setMessage("가이드 창으로 돌아가시겠습니까?")
                     .setCancelable(false)
                     .setPositiveButton("네", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            startActivity(new Intent(CameraXLivePreviewActivity.this, MainActivity.class));
+                            startActivity(new Intent(CameraXLivePreviewActivity.this, SquatsGuideActivity.class));
                             finish();
                         }
                     })
@@ -309,5 +309,4 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
         }
     }
 }
-
 

@@ -218,7 +218,7 @@ public class PushUps implements HealthKind {
             if (allAngle != 0 && allAngle >= 160) {
                 numAnglesInRange++;
                 if (numAnglesInRange >= 12 && !isPushup) {  // 푸시업 체크
-                    tts.speak("Down!!", TextToSpeech.QUEUE_FLUSH, null, null);
+                    tts.speak("Down!", TextToSpeech.QUEUE_FLUSH, null, null);
                     isPushup = true;
                 }
             }
@@ -246,16 +246,16 @@ public class PushUps implements HealthKind {
 
                     // 푸시업 자세 분석
                     if (maxAngle < 135) {
-                        // 깊게 내려가지 않았을 때
-                        tts.speak("팔을 더 굽혀주세요.", TextToSpeech.QUEUE_FLUSH, null, null);
+                        // 푸시업 자세가 너무 낮을 때
+                        tts.speak("Raise your body higher.", TextToSpeech.QUEUE_FLUSH, null, null);
                         goodPose = false;
                     } else if (maxAngle > 155) {
-                        // 허리가 내려갔을 때
-                        tts.speak("허리를 펴주세요.", TextToSpeech.QUEUE_FLUSH, null, null);
+                        // 푸시업 자세가 너무 높을 때
+                        tts.speak("Lower your body more.", TextToSpeech.QUEUE_FLUSH, null, null);
                         goodPose = false;
                     } else if (maxAngle >= 135 && maxAngle <= 155) {
                         // 좋은 푸시업 자세일 때
-                        tts.speak("좋은 자세입니다!", TextToSpeech.QUEUE_FLUSH, null, null);
+                        tts.speak("Good push-up!", TextToSpeech.QUEUE_FLUSH, null, null);
                         goodPose = true;
                     }
                 }

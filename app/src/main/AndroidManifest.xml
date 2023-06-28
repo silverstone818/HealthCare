@@ -31,12 +31,6 @@
             android:name=".Guide.SquatsGuideActivity"
             android:exported="false" />
         <activity
-            android:name=".Guide.PushUpsGuideActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Guide.PullupGuideActivity"
-            android:exported="false" />
-        <activity
             android:name=".ResultActivity"
             android:exported="false" />
         <activity

@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position){
             switch (position){
                 case 0:
-                    return "루틴";
+                    return "비고";
                 case 1:
                     return "운동 목록";
                 case 2:
