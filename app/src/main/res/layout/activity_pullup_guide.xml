@@ -18,26 +18,39 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="턱걸이 자세"
+                android:textAllCaps="false"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="391dp"
+                android:layout_height="250dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="25dp"
-                android:text="스쿼트 자세"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                app:srcCompat="@drawable/pull_up" />
+
+            <TextView
+                android:id="@+id/squats_len"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="턱걸이x12"
+                android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold" />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="250dp"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/squat_highlight"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="20dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="동작 1번"
+                android:text="동작1번"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp"
@@ -49,8 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="팔을 앞으로 뻗고 엉덩이와 팔이 수직이 되게
-                몸 전체를 일자로 내려간다."
+                android:text="철봉을 어깨보다 넓게 오버그립으로 잡고 견갑을 한다."
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
@@ -72,8 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="팔은 유지한 상태로 엉덩이를 앞으로 밀면서
-                일어난다."
+                android:text="턱이 턱걸이 봉을 지날때까지 가슴으로 당기듯이 당기고 천천히 내려온다."
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
@@ -84,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="기대 효과"
+                android:text="효과"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:textColor="#000000"
@@ -95,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="이 운동은 허벅지와 엉덩이 근육을 단련시킵니다."
+                android:text="이 운동은 광배근과 이두를 단련시킵니다."
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
@@ -105,7 +116,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="left"
                 android:text="집중영역"
                 android:textColor="#000000"
                 android:textSize="24sp"
@@ -115,11 +126,41 @@
                 android:layout_width="wrap_content"
                 android:layout_height="350dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/squats_part"
+                app:srcCompat="@drawable/pull_up_muscle"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"/>
 
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="화면 녹화 방법"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:textColor="#FF0000"
+                android:textStyle="bold"
+                android:textSize="18dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/guide1"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"/>
+
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/guide2"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -150,8 +191,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:text="정확한 판단을 위해 동작 1번 후 '업!' 소리에
-                    동작 2번을, 총 12회 실행해주세요."
+                    android:text="정확한 판단을 위해 동작 1번 후 'Down Slowly' 소리에 동작 2번을 시행해주세요."
                     android:layout_marginRight="20dp"
                     android:textColor="#000000"
                     android:textSize="18dp"
@@ -176,9 +216,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:text="카메라는 몸 전체가 보여야 하며
-                            사용자 명치 정도 높이에 놓아서 측정해주세요.
-                            (약 100cm 높이)"
+                    android:text="카메라는 몸 전체가 보여야 하며 사용자 명치 정도 높이에 놓아서 측정해주세요.(약 100cm 높이)"
                     android:layout_marginRight="20dp"
                     android:textColor="#000000"
                     android:textSize="18dp"
@@ -187,13 +225,11 @@
 
 
             <Button
-                android:id="@+id/start_btn"
+                android:id="@+id/pullup_start_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="25dp"
                 android:layout_marginBottom="10dp"
-                android:textSize="25dp"
                 android:text="시    작"
                 android:textStyle="bold"
                 android:textAllCaps="false"

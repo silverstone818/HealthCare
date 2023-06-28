@@ -27,6 +27,8 @@ import androidx.annotation.NonNull;
 
 import com.example.healthcare.Graphic.GraphicOverlay;
 import com.example.healthcare.java.Health.HealthKind;
+import com.example.healthcare.java.Health.Pullup;
+import com.example.healthcare.java.Health.PushUps;
 import com.example.healthcare.java.Health.Squrts;
 import com.example.healthcare.java.VisionProcessorBase;
 import com.example.healthcare.java.posedetector.classification.PoseClassifierProcessor;
@@ -229,7 +231,14 @@ public class PoseDetectorProcessor
                                         Kind = new Squrts();
                                         Kind.setTts(tts);
                                         break;
-
+                                    case 2:
+                                        Kind = new PushUps();
+                                        Kind.setTts(tts);
+                                        break;
+                                    case 3:
+                                        Kind = new Pullup();
+                                        Kind.setTts(tts);
+                                        break;
                                     default:
                                         Kind = null;
                                         break;
