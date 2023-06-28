@@ -300,7 +300,6 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity {
                     .setPositiveButton("네", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            startActivity(new Intent(CameraXLivePreviewActivity.this, MainActivity.class));
                             finish();
                         }
                     })

@@ -26,12 +26,10 @@ public class PullupGuideActivity extends AppCompatActivity {
         PullupStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = null; // 다른 Activity로 전환하는 Intent 객체를 생성합니다.
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-                    intent = new Intent(PullupGuideActivity.this, CameraXLivePreviewActivity.class);
-                    intent.putExtra("Health", 3);
-                }
+                Intent intent = new Intent(PullupGuideActivity.this, CameraXLivePreviewActivity.class);
+                intent.putExtra("Health", 3);
                 startActivity(intent);
+                finish();
             }
         });
     }
