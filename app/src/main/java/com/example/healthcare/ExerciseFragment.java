@@ -6,21 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.healthcare.Guide.PullupGuideActivity;
 import com.example.healthcare.Guide.SquatsGuideActivity;
 import com.example.healthcare.Guide.PushUpsGuideActivity;
-import com.example.healthcare.java.Health.Pullup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link LowerBodyFragment#newInstance} factory method to
+ * Use the {@link ExerciseFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LowerBodyFragment extends Fragment {
+public class ExerciseFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -29,13 +27,13 @@ public class LowerBodyFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public LowerBodyFragment() {
+    public ExerciseFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static LowerBodyFragment newInstance(String param1, String param2) {
-        LowerBodyFragment fragment = new LowerBodyFragment();
+    public static ExerciseFragment newInstance(String param1, String param2) {
+        ExerciseFragment fragment = new ExerciseFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -55,7 +53,7 @@ public class LowerBodyFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_lower_body, container, false);
+        View view = inflater.inflate(R.layout.fragment_exercise, container, false);
 
         ImageButton button1 = view.findViewById(R.id.btn_squats);
         button1.setOnClickListener(new View.OnClickListener() {

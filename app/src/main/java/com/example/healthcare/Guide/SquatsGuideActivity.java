@@ -21,7 +21,7 @@ public class SquatsGuideActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_squats_guide);
 
-        startButton = (Button) findViewById(R.id.start_btn);
+        startButton = (Button) findViewById(R.id.squat_start_btn);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

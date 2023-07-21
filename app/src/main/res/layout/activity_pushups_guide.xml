@@ -123,7 +123,6 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"/>
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -188,9 +187,8 @@
                     tools:ignore="MissingPrefix" />
             </LinearLayout>
 
-
             <Button
-                android:id="@+id/start_btn1"
+                android:id="@+id/pushup_start_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

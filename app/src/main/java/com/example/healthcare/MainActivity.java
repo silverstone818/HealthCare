@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.vp_pager);
 
         Fragment[] arrFragments = new Fragment[3];
-        arrFragments[0] = new UpperBodyFragment();
-        arrFragments[1] = new LowerBodyFragment();
+        arrFragments[0] = new RoutinFragment();
+        arrFragments[1] = new ExerciseFragment();
         arrFragments[2] = new MenuFragment();
 
         MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager(), arrFragments);

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".LowerBodyFragment"
+    tools:context=".ExerciseFragment"
     android:orientation="vertical"
     android:background="#C1C1C1"
     android:gravity="center">
@@ -48,7 +48,7 @@
             android:contentDescription="푸쉬업"
             android:padding="0.5dp"
             android:scaleType="fitXY"
-            android:src="@drawable/push_up" />
+            android:src="@drawable/push_up_back" />
 
         <TextView
             android:layout_width="400px"
@@ -74,7 +74,7 @@
             android:contentDescription="풀 업"
             android:padding="0.5dp"
             android:scaleType="fitXY"
-            android:src="@drawable/poll" />
+            android:src="@drawable/poll_up_back" />
 
         <TextView
             android:layout_width="400px"
@@ -87,27 +87,4 @@
             android:textSize="100px" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <ImageButton
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.8"
-            android:padding="0.5dp"
-            android:contentDescription="밀리터리 프레스"
-            android:scaleType="fitXY"
-            android:src="@drawable/millitary" />
-        <TextView
-            android:layout_width="800px"
-            android:layout_height="200px"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="15dp"
-            android:text="Millitary Press"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="100px" />
-    </RelativeLayout>
 </LinearLayout>

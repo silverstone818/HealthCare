@@ -9,49 +9,38 @@ import com.google.mlkit.vision.pose.PoseLandmark;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PushUps implements HealthKind {
+public class PushUps implements HealthKind{
     private int numAnglesInRange = 0;
-    private int numPushups;
-    private int numPushUps = 0;
+    private int numPushUp = 0;
     private double maxAngle = 0;
     private double temp = 120.0;
     private double leftAngle = 0;
     private double rightAngle = 0;
     private double waistAngle = 0;
     private double contract;
-    private double contractionTime = 0;
     private TextToSpeech tts;
     private int MnumAnglesInRange;
-    private boolean isPushUp;
-    private boolean isPushup = false;
+    private boolean isPushUp = false;
     private boolean waist_banding = false;
     private boolean goodPose = false;
     private boolean Tension = false;
     private double timeAsDoubleTemp;
 
-    public TextToSpeech getTts() {
-        return tts;
-    }
+    public TextToSpeech getTts() { return tts; }
 
-    public int getNumAnglesInRange() {
-        return numAnglesInRange;
-    }
+    public int getNumAnglesInRange() { return numAnglesInRange; }
 
-    public void setNumAnglesInRange(int numAnglesInRange) {
-        this.numAnglesInRange = numAnglesInRange;
-    }
+    public void setNumAnglesInRange(int numAnglesInRange) { this.numAnglesInRange = numAnglesInRange; }
 
     public int getNum() {
-        return numPushUps;
+        return numPushUp;
     }
 
-    public void setNum(int numPushUps) {
-        this.numPushUps = numPushUps;
+    public void setNum(int numPushUp) {
+        this.numPushUp = numPushUp;
     }
 
-    public double getMaxAngle() {
-        return maxAngle;
-    }
+    public double getMaxAngle() { return maxAngle; }
 
     public void setMaxAngle(double maxAngle) {
         this.maxAngle = maxAngle;
@@ -101,17 +90,11 @@ public class PushUps implements HealthKind {
         return MnumAnglesInRange;
     }
 
-    public void setMnumAnglesInRange(int mnumAnglesInRange) {
-        MnumAnglesInRange = mnumAnglesInRange;
-    }
+    public void setMnumAnglesInRange(int mnumAnglesInRange) { MnumAnglesInRange = mnumAnglesInRange; }
 
-    public boolean isState() {
-        return isPushUp;
-    }
+    public boolean isState() { return isPushUp; }
 
-    public void setState(boolean pushUp) {
-        isPushUp = pushUp;
-    }
+    public void setState(boolean pushUp) { isPushUp = pushUp; }
 
     public boolean isWaist_banding() {
         return waist_banding;
@@ -141,18 +124,18 @@ public class PushUps implements HealthKind {
         this.tts = tts;
     }
 
-    public void waistBending(Pose pose) {
-        PointF leftShoulder = null;
-        PointF rightShoulder = null;
+    public void waistBending(Pose pose){
+        PointF leftshoulder = null;
+        PointF rightshoulder = null;
         PointF leftHip = null;
         PointF rightHip = null;
 
         // 2. 어깨 중심점과 엉덩이 중심점을 계산합니다.
         if (pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER) != null) {
-            leftShoulder = pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER).getPosition();
+            leftshoulder = pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER).getPosition();
         }
         if (pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER) != null) {
-            rightShoulder = pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER).getPosition();
+            rightshoulder = pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER).getPosition();
         }
         if (pose.getPoseLandmark(PoseLandmark.LEFT_HIP) != null) {
             leftHip = pose.getPoseLandmark(PoseLandmark.LEFT_HIP).getPosition();
@@ -161,9 +144,11 @@ public class PushUps implements HealthKind {
             rightHip = pose.getPoseLandmark(PoseLandmark.RIGHT_HIP).getPosition();
         }
 
-        if (leftHip != null && leftShoulder != null && rightHip != null && rightShoulder != null) {
+        if (leftHip != null && leftshoulder != null
+                && rightHip != null && rightshoulder != null) {
+
             PointF hipCenter = new PointF((leftHip.x + rightHip.x) / 2, (leftHip.y + rightHip.y) / 2);
-            PointF shoulderCenter = new PointF((leftShoulder.x + rightShoulder.x) / 2, (leftShoulder.y + rightShoulder.y) / 2);
+            PointF shoulderCenter = new PointF((leftshoulder.x + rightshoulder.x) / 2, (leftshoulder.y + rightshoulder.y) / 2);
 
             // 3. 엉덩이 중심점, 골반 중심점 및 어깨 중심점 사이의 각도를 계산합니다.
             waistAngle = calculateAngle(hipCenter, shoulderCenter, new PointF(shoulderCenter.x, shoulderCenter.y - 1));
@@ -171,16 +156,16 @@ public class PushUps implements HealthKind {
     }
 
     public void onHealthAngle(Pose pose) {
-        PointF leftShoulder = null;
+        PointF leftshoulder = null;
         PointF leftElbow = null;
         PointF leftWrist = null;
 
-        PointF rightShoulder = null;
+        PointF rightshoulder = null;
         PointF rightElbow = null;
         PointF rightWrist = null;
 
         if (pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER) != null) {
-            leftShoulder = pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER).getPosition();
+            leftshoulder = pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER).getPosition();
         }
         if (pose.getPoseLandmark(PoseLandmark.LEFT_ELBOW) != null) {
             leftElbow = pose.getPoseLandmark(PoseLandmark.LEFT_ELBOW).getPosition();
@@ -188,9 +173,8 @@ public class PushUps implements HealthKind {
         if (pose.getPoseLandmark(PoseLandmark.LEFT_WRIST) != null) {
             leftWrist = pose.getPoseLandmark(PoseLandmark.LEFT_WRIST).getPosition();
         }
-
         if (pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER) != null) {
-            rightShoulder = pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER).getPosition();
+            rightshoulder = pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER).getPosition();
         }
         if (pose.getPoseLandmark(PoseLandmark.RIGHT_ELBOW) != null) {
             rightElbow = pose.getPoseLandmark(PoseLandmark.RIGHT_ELBOW).getPosition();
@@ -199,78 +183,113 @@ public class PushUps implements HealthKind {
             rightWrist = pose.getPoseLandmark(PoseLandmark.RIGHT_WRIST).getPosition();
         }
 
-        leftAngle = calculateAngle(leftShoulder, leftElbow, leftWrist);
-        rightAngle = calculateAngle(rightShoulder, rightElbow, rightWrist);
+        double leftAngle = calculateAngle(leftshoulder, leftElbow, leftWrist);
+        double rightAngle = calculateAngle(rightshoulder, rightElbow, rightWrist);
 
-        double allAngle = Math.max(leftAngle, rightAngle);
+        boolean sm = false;
+        double allAngle = Math.min(leftAngle, rightAngle);
 
-        // 새로운 푸시업마다 상태 초기화
+        // 새로운 스쿼트마다 상태 초기화
         if (allAngle == 0) {
-            isPushup = false;
+            isPushUp = false;
             waist_banding = false;
             numAnglesInRange = 0;
         }
 
-        if (leftShoulder != null && leftElbow != null && leftWrist != null
-                && rightShoulder != null && rightElbow != null && rightWrist != null) {
+        if (leftshoulder != null && leftElbow != null && leftWrist != null
+                && rightshoulder != null && rightElbow != null && rightWrist != null) {
 
-            // 4. 팔 굽혀 펴기 동작 감지를 위한 각도 계산
-            if (allAngle != 0 && allAngle >= 160) {
+            waistBending(pose);
+
+            if (allAngle != 0 && allAngle <= 130) {
                 numAnglesInRange++;
-                if (numAnglesInRange >= 12 && !isPushup) {  // 푸시업 체크
+                if (numAnglesInRange >= 24 && !isPushUp) {  // 푸쉬업 체크
                     tts.speak("Down!!", TextToSpeech.QUEUE_FLUSH, null, null);
-                    isPushup = true;
+                    if(waistAngle >= 170 && waistAngle <= 225){
+                        waist_banding = true;
+                    }else{
+                        waist_banding = false;
+                    }
+                    if((int)temp < (int)allAngle){
+                        isPushUp = true;
+                    }else{
+                        temp = allAngle;
+                        long now = System.currentTimeMillis();
+                        Date date = new Date(now);
+                        SimpleDateFormat dataFormat = new SimpleDateFormat("ss.SSS");
+                        String getTime = dataFormat.format(date);
+                        timeAsDoubleTemp = Double.parseDouble(getTime);
+                    }
                 }
             }
 
-            if (allAngle < 90) {
-                if (isPushup) {
-                    numPushups++;
-                    isPushup = false;
+            if (allAngle > 150) {
+                if(isPushUp){
+                    numPushUp++;
+                    maxAngle = temp;
+                    temp = 120;
 
-                    // 푸시업 각도와 푸시업 시간 기록
-                    if (maxAngle < allAngle) {
-                        maxAngle = allAngle;
-                    }
                     long now = System.currentTimeMillis();
                     Date date = new Date(now);
                     SimpleDateFormat dataFormat = new SimpleDateFormat("ss.SSS");
                     String getTime = dataFormat.format(date);
                     double timeAsDouble = Double.parseDouble(getTime);
 
-                    if (timeAsDouble < timeAsDoubleTemp) {
-                        contractionTime = (timeAsDouble + 60) - timeAsDoubleTemp;
-                    } else {
-                        contractionTime = timeAsDouble - timeAsDoubleTemp;
+                    if(timeAsDouble < timeAsDoubleTemp){
+                        contract = (timeAsDouble + 60) - timeAsDoubleTemp;
+                    }
+                    else{
+                        contract = timeAsDouble - timeAsDoubleTemp;
                     }
 
-                    // 푸시업 자세 분석
-                    if (maxAngle < 135) {
-                        // 깊게 내려가지 않았을 때
-                        tts.speak("팔을 더 굽혀주세요.", TextToSpeech.QUEUE_FLUSH, null, null);
-                        goodPose = false;
-                    } else if (maxAngle > 155) {
-                        // 허리가 내려갔을 때
+                    if(waistAngle >= 170 && waistAngle <= 200){
+                        waist_banding = true;
+                    }else{
+                        waist_banding = false;
+                    }
+                    if(waist_banding == false){
+                        //허리가 굽었을 때
                         tts.speak("허리를 펴주세요.", TextToSpeech.QUEUE_FLUSH, null, null);
                         goodPose = false;
-                    } else if (maxAngle >= 135 && maxAngle <= 155) {
-                        // 좋은 푸시업 자세일 때
-                        tts.speak("좋은 자세입니다!", TextToSpeech.QUEUE_FLUSH, null, null);
+
+                    }
+                    else if(maxAngle > 85){
+                        //조금 구부렸을 때
+                        tts.speak("조금 더 구부려주세요.", TextToSpeech.QUEUE_FLUSH, null, null);
+                        goodPose = false;
+
+                    }
+                    else if(maxAngle < 56){
+                        //너무 많이 구부렸을 때
+                        tts.speak("너무 많이 구부리셨어요.", TextToSpeech.QUEUE_FLUSH, null, null);
+                        goodPose = false;
+                    }
+                    else if(maxAngle >= 56 && maxAngle <= 85 && waist_banding == true){
+                        //좋은 자세 일 때
+                        tts.speak("좋은 자세 입니다.", TextToSpeech.QUEUE_FLUSH, null, null);
                         goodPose = true;
                     }
+
                 }
+                isPushUp = false;
+                sm = false;
                 numAnglesInRange = 0;
+            }
+
+            if (allAngle <= 160){
+                Tension = true;
+            }else{
+                Tension = false;
             }
         }
     }
 
-    private static double calculateAngle(PointF point1, PointF point2, PointF point3) {
-        if (point1 == null || point2 == null || point3 == null) {
+    private static double calculateAngle(PointF shoulder, PointF elbow, PointF wrist) {
+        if (shoulder == null || elbow == null || wrist == null) {
             return 0;
         }
-
-        double angle = Math.toDegrees(Math.atan2(point3.y - point2.y, point3.x - point2.x)
-                - Math.atan2(point1.y - point2.y, point1.x - point2.x));
+        double angle = Math.toDegrees(Math.atan2(shoulder.y - elbow.y, shoulder.x - elbow.x)
+                - Math.atan2(wrist.y - elbow.y, wrist.x - elbow.x));
 
         if (angle < 0) {
             angle += 360;
@@ -279,6 +298,3 @@ public class PushUps implements HealthKind {
         return angle;
     }
 }
-
-
-

@@ -33,9 +33,7 @@ public class Squrts implements HealthKind{
         return numAnglesInRange;
     }
 
-    public void setNumAnglesInRange(int numAnglesInRange) {
-        this.numAnglesInRange = numAnglesInRange;
-    }
+    public void setNumAnglesInRange(int numAnglesInRange) { this.numAnglesInRange = numAnglesInRange; }
 
     public int getNum() {
         return numSquats;
@@ -45,9 +43,7 @@ public class Squrts implements HealthKind{
         this.numSquats = numSquats;
     }
 
-    public double getMaxAngle() {
-        return maxAngle;
-    }
+    public double getMaxAngle() { return maxAngle; }
 
     public void setMaxAngle(double maxAngle) {
         this.maxAngle = maxAngle;
@@ -97,9 +93,7 @@ public class Squrts implements HealthKind{
         return MnumAnglesInRange;
     }
 
-    public void setMnumAnglesInRange(int mnumAnglesInRange) {
-        MnumAnglesInRange = mnumAnglesInRange;
-    }
+    public void setMnumAnglesInRange(int mnumAnglesInRange) { MnumAnglesInRange = mnumAnglesInRange; }
 
     public boolean isState() {
         return isSquat;
@@ -143,7 +137,7 @@ public class Squrts implements HealthKind{
         PointF leftHip = null;
         PointF rightHip = null;
 
-// 2. 어깨 중심점과 엉덩이 중심점을 계산합니다.
+        // 2. 어깨 중심점과 엉덩이 중심점을 계산합니다.
         if (pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER) != null) {
             leftShoulder = pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER).getPosition();
         }
@@ -163,7 +157,7 @@ public class Squrts implements HealthKind{
             PointF hipCenter = new PointF((leftHip.x + rightHip.x) / 2, (leftHip.y + rightHip.y) / 2);
             PointF shoulderCenter = new PointF((leftShoulder.x + rightShoulder.x) / 2, (leftShoulder.y + rightShoulder.y) / 2);
 
-// 3. 엉덩이 중심점, 골반 중심점 및 어깨 중심점 사이의 각도를 계산합니다.
+            // 3. 엉덩이 중심점, 골반 중심점 및 어깨 중심점 사이의 각도를 계산합니다.
             waistAngle = calculateAngle(hipCenter, shoulderCenter, new PointF(shoulderCenter.x, shoulderCenter.y - 1));
         }
     }
@@ -177,7 +171,6 @@ public class Squrts implements HealthKind{
         PointF rightKnee = null;
         PointF rightAnkle = null;
 
-
         if (pose.getPoseLandmark(PoseLandmark.LEFT_HIP) != null) {
             leftHip = pose.getPoseLandmark(PoseLandmark.LEFT_HIP).getPosition();
         }
@@ -187,7 +180,6 @@ public class Squrts implements HealthKind{
         if (pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE) != null) {
             leftAnkle = pose.getPoseLandmark(PoseLandmark.LEFT_ANKLE).getPosition();
         }
-
         if (pose.getPoseLandmark(PoseLandmark.RIGHT_HIP) != null) {
             rightHip = pose.getPoseLandmark(PoseLandmark.RIGHT_HIP).getPosition();
         }

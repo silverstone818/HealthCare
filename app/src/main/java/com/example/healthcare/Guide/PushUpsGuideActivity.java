@@ -21,7 +21,7 @@ public class PushUpsGuideActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pushups_guide);
 
-        startButton = (Button) findViewById(R.id.start_btn1);
+        startButton = (Button) findViewById(R.id.pushup_start_btn);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
