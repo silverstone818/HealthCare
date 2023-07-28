@@ -32,6 +32,10 @@ android {
 }
 
 dependencies {
+
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.31'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31'
+
     implementation 'com.google.mlkit:object-detection:17.0.0'
     implementation 'com.google.mlkit:object-detection-custom:17.0.0'
 
