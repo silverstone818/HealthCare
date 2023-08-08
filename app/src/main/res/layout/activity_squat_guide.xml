@@ -115,7 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="350dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/squats_part"
+                app:srcCompat="@drawable/squat_part"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"/>

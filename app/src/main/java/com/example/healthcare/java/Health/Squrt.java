@@ -8,7 +8,7 @@ import com.google.mlkit.vision.pose.PoseLandmark;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-public class Squrts implements HealthKind{
+public class Squrt implements HealthKind{
     private int numAnglesInRange = 0;
     private int numSquats = 0;
     private double maxAngle = 0;
@@ -204,7 +204,6 @@ public class Squrts implements HealthKind{
                 && rightHip != null && rightKnee != null && rightAnkle != null) {
 
             waistBending(pose);
-
 
             if (allAngle != 0 && allAngle <= 130) {
                 numAnglesInRange++;

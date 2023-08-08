@@ -22,7 +22,7 @@
             android:padding="0.5dp"
             android:contentDescription="스쿼트"
             android:scaleType="fitXY"
-            android:src="@drawable/squats_back" />
+            android:src="@drawable/squat_back" />
 
         <TextView
             android:layout_width="400px"

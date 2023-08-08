@@ -117,7 +117,11 @@ public class ResultActivity extends AppCompatActivity {
                 Squrts();
                 user.setName("스쿼트");
                 break;
-
+            case 2:
+                PushUpsScore();
+                PushUps();
+                user.setName("푸쉬업");
+                break;
             default:
                 break;
         }
@@ -520,6 +524,192 @@ public class ResultActivity extends AppCompatActivity {
         feedback.setText(user.getFb());
     }
 
+    public void PushUpsScore(){
+        //이완 점수
+        double sum = 0;
+        if(maxAngle != null && maxAngle.size() > 0){
+            // maxAngle 값들에 대한 점수 계산
+            for (Double angle : maxAngle) {
+                double score;
+                if (angle <= 60) {
+                    score = 60 - angle;
+                } else {
+                    score = angle - 60;
+                }
+                scores.add(score);
+            }
+
+            // 점수 평균 계산
+            for (double score : scores) {
+                sum += score;
+            }
+            double average = sum / num;
+
+            // 0일 수록 평균이 20, 90일 수록 평균이 0 (10%에서 0% 사이)
+            user.setMaxAnglePercentage(20 - (average / 90 * 20));
+        }
+
+        //균형 점수
+        if(goodPose != null && goodPose.size() > 0){
+            int countTrue = 0;
+            for (boolean isWaistBanding : goodPose) {
+                if (isWaistBanding) {
+                    countTrue++;
+                }
+            }
+            double percentageTrue = (double) countTrue / num;
+
+            // 0~10% 범위로 변환
+            user.setGoodPosePercentage(percentageTrue * 20);
+        }
+
+        //긴장 점수
+        if(Tension != null && Tension.size() > 0){
+            int countTrue = 0;
+            for (boolean isWaistBanding : Tension) {
+                if (isWaistBanding) {
+                    countTrue++;
+                }
+            }
+            double percentageTrue = (double) countTrue / num;
+
+            // 0~10% 범위로 변환
+            user.setTensionPercentage(percentageTrue * 20);
+        }
+
+        //수축 점수
+        if(contract != null && contract.size() > 0){
+            ArrayList<Double> percentages = new ArrayList<>();
+
+            for (double value : contract) {
+                double percentage;
+                if (value >= 0 && value <= 1.5) {
+                    percentage = 20;
+                } else if (value > 5) {
+                    percentage = 0;
+                } else {
+                    // 원하는 비율에 맞게 값 사이의 비율을 조정하십시오.
+                    // 예: 선형 비례를 사용하여 6~30 사이의 값에 대해 계산하려면 다음을 사용하십시오.
+                    percentage = 20 - (value - 1.5) * (20.0 / (5 - 1.5));
+                }
+                percentages.add(percentage);
+            }
+            sum = 0;
+            for(double value : percentages){
+                sum += value;
+            }
+            // contract 값을 0~10% 범위로 변환
+            user.setContractPercentage(sum / num);
+        }
+
+        if(user.getMaxAnglePercentage() <= 5){
+            user.setFbM("가동범위가 너무 대체적으로 적습니다. 보통 가동범위가 적으신 분들은 근육의 유연성이 적어서 그렇습니다.\n운동이 끝난 후 스트레칭을 해주며 근육을 늘려주세요. 가동범위가 점차 늘어날 것입니다.");
+        }
+        else if(user.getMaxAnglePercentage() <= 10){
+            user.setFbM("가동범위가 적습니다. 한동작 한동작 천천히 가동범위를 늘려보면서 각각의 횟수마다 퀄리티를 높혀주세요. 좋은 효과가 나올 것입니다.");
+        }
+        else if(user.getMaxAnglePercentage() <= 15){
+            user.setFbM("대체적으로 안정적입니다.");
+        }
+        else if(user.getMaxAnglePercentage() <= 20){
+            user.setFbM("훌륭합니다.");
+        }
+
+        if(user.getContractPercentage() <= 5){
+            user.setFbC("근력 부족이 느껴집니다. 일어날 때 힘을 폭발시키듯이 빠르게 올라와주세요.");
+        }
+        else if(user.getContractPercentage() <= 10){
+            user.setFbC("중량 이시면 훌륭합니다. 맨몸일 경우 조금 더 일어날 때 힘을 넣어주세요.");
+        }
+        else if(user.getContractPercentage() <= 15){
+            user.setFbC("대체적으로 안정적입니다.");
+        }
+        else if(user.getContractPercentage() <= 20){
+            user.setFbC("훌륭합니다!");
+        }
+
+        if(user.getTensionPercentage() <= 5){
+            user.setFbT("긴장이 너무 많이 풀립니다. 부상 주의하세요.");
+        }
+        else if(user.getTensionPercentage() <= 10){
+            user.setFbT("중간중간 쉬어가는 것이 느껴집니다.");
+        }
+        else if(user.getTensionPercentage() <= 15){
+            user.setFbT("대체적으로 안정적입니다.");
+        }
+        else if(user.getTensionPercentage() <= 20){
+            user.setFbT("훌륭합니다!");
+        }
+
+        if(user.getGoodPosePercentage() <= 5){
+            user.setFbB("심각합니다. 기초 체력 부족일 가능성이 있으니 런닝과, 플랭크 등을 통하여 코어와 체력을 키우세요!");
+        }
+        else if(user.getGoodPosePercentage() <= 10){
+            user.setFbB("불안정할 때가 많습니다. 밑에 분석결과를 참조해주세요.");
+        }
+        else if(user.getGoodPosePercentage() <= 15){
+            user.setFbB("대체적으로 안정적입니다.");
+        }
+        else if(user.getGoodPosePercentage() <= 20){
+            user.setFbB("훌륭합니다!");
+        }
+
+
+        feedbackMaxAngle.setText(user.getFbM());
+        feedbackContract.setText(user.getFbC());
+        feedbackTension.setText(user.getFbT());
+        feedbackBalance.setText(user.getFbB());
+
+    }
+
+    public void PushUps(){
+        APPS[0] = "과한 동작";
+        APPS[1] = "작은 동작";
+        APPS[2] = "허리 말림";
+        APPS[3] = "긴장 풀림";
+        APPS[4] = "좋은 자세";
+
+        for(int i = 0; i < num; i++){
+            if(maxAngle.get(i) < 56){
+                user.setBig(user.getBig()+1);
+            }
+            else if (maxAngle.get(i) > 85){
+                user.setSmall(user.getSmall() + 1);
+            }
+            if (waist_banding.get(i) == false){
+                user.setWaist(user.getWaist() + 1);
+            }
+            if (Tension.get(i) == false){
+                user.setTension(user.getTension() + 1);
+            }
+            if(goodPose.get(i) == true){
+                user.setGood(user.getGood() + 1);
+            }
+        }
+
+        if(user.getWaist() >= user.getGood() / 2 && user.getWaist() != 0){
+            user.setFb(user.getFb() + "\n허리가 휘거나 굽습니다. 또는 상체가 자주 앞으로 숙여집니다.\n이것은 체중의 무게가 앞쪽으로 실려있어 그렇습니다. 스쿼트를 할 때 항상 무게 중심을 뒷꿈치에 잡습니다.\n" +
+                    "간단한 팁을 알려드리자면 엉덩이와 복부에 힘을 준 상태에서 천천히 내려가세요.\n내려간 이후 엉덩이를 앞으로 내미는 동시에 일어납니다.\n그렇게 된다면 수월하게 동작이 이루어 지고 허리가 덜 굽게 될 것입니다.\n");
+        }
+        if(user.getBig() + user.getSmall() >= num / 2 && user.getBig() + user.getSmall() != 0){
+            user.setFb(user.getFb() + "\n대부분의 자세에서 가동범위가 크거나 작습니다.\n가동범위가 클 경우 무릎에 가해지는 부하가 심해집니다.\n작을 경우에는 스트렝스가 적어 허벅지에 자극이 적을 것입니다.\n" +
+                    "영상촬영을 통해 가동범위가 어떤지 확인하며 모범자세와의 차이점을 확인하세요.\n몸 전체가 아닌 어느 한 부분이 잘려서 찍힌거나 촬영 각도가 문제 있을 시 다시 측정해주십시오.\n");
+        }
+        if(user.getTension() >= num / 2 && user.getTension() != 0){
+            user.setFb(user.getFb() + "\n일어났을 때 다리를 완전히 펴버리면 근육의 긴장이 풀리게 됩니다.\n긴장이 풀릴 시 다음 동작 수행에서 부상 위험과 관절 통증, 근육 스트렝스 저하 등 문제점이 생깁니다.\n일어날 때 무릎은 살짝 굽힌 상태를 유지한다는 느낌으로 일어나 주세요.\n");
+        }
+        if(user.getGood() > user.getWaist() + user.getBig() + user.getSmall()){
+            user.setFb(user.getFb() + "\n대체적으로 자세는 괜찮습니다. 다만 완벽하지는 않기에 데이터를 토대로 모범자세를 의식하며 계속 정진하세요!!\n");
+        }
+        if(num < 12){
+            user.setFb(user.getFb() + "\n전체 횟수가 아직 12개 이상이 되지 않는 다는 것은 기초 근력이 부족하다는 것입니다.\n꾸준히 정진하여 12개를 채우는 것을 목표로 잡습니다.\n만약 중량이시면 횟수에 근접해질 시 중량을 5kg 단위로 늘려주세요.\n");
+        }
+        if(user.getGood() == 12){
+            user.setFb(user.getFb() + "\n자세가 완벽합니다! 이대로 꾸준히 정진해주세요!! 다음 운동도 파이팅!\n");
+        }
+
+        feedback.setText(user.getFb());
+    }
 
     @Override
     protected void onPause() {

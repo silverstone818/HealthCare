@@ -19,7 +19,7 @@ public class SquatsGuideActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_squats_guide);
+        setContentView(R.layout.activity_squat_guide);
 
         startButton = (Button) findViewById(R.id.squat_start_btn);
         startButton.setOnClickListener(new View.OnClickListener() {

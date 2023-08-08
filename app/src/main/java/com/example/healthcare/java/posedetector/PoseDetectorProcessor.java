@@ -28,8 +28,8 @@ import androidx.annotation.NonNull;
 import com.example.healthcare.Graphic.GraphicOverlay;
 import com.example.healthcare.java.Health.HealthKind;
 import com.example.healthcare.java.Health.Pullup;
-import com.example.healthcare.java.Health.PushUps;
-import com.example.healthcare.java.Health.Squrts;
+import com.example.healthcare.java.Health.PushUp;
+import com.example.healthcare.java.Health.Squrt;
 import com.example.healthcare.java.VisionProcessorBase;
 import com.example.healthcare.java.posedetector.classification.PoseClassifierProcessor;
 import com.google.android.gms.tasks.Task;
@@ -228,11 +228,11 @@ public class PoseDetectorProcessor
                                 isTtsInitialized = false;
                                 switch (Health){
                                     case 1:
-                                        Kind = new Squrts();
+                                        Kind = new Squrt();
                                         Kind.setTts(tts);
                                         break;
                                     case 2:
-                                        Kind = new PushUps();
+                                        Kind = new PushUp();
                                         Kind.setTts(tts);
                                         break;
                                     case 3:
@@ -251,7 +251,6 @@ public class PoseDetectorProcessor
                             whitePaint.setStrokeWidth(4.0f);
                             whitePaint.setTextSize(50f);
 
-
                             Kind.onHealthAngle(pose);
 
                             waist_banding = Kind.isWaist_banding();
@@ -261,7 +260,6 @@ public class PoseDetectorProcessor
                             contract = Kind.getContract();
                             goodPose = Kind.isGoodPose();
                             Tension = Kind.isTension();
-
 
                             canvas.drawText("Left angle: " + Kind.getLeftAngle(), 20, 200, whitePaint);
                             canvas.drawText("Right angle: " + Kind.getRightAngle(), 20, 250, whitePaint);

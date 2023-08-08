@@ -19,7 +19,7 @@ public class PushUpsGuideActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pushups_guide);
+        setContentView(R.layout.activity_pushup_guide);
 
         startButton = (Button) findViewById(R.id.pushup_start_btn);
         startButton.setOnClickListener(new View.OnClickListener() {
