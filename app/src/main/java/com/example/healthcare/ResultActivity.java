@@ -208,7 +208,6 @@ public class ResultActivity extends AppCompatActivity {
 
         BarDataSet barDataSet = new BarDataSet(entries, label.toString());
 
-
         // 새로운 IntegerValueFormatter 생성
         IntegerValueFormatter integerValueFormatter = new IntegerValueFormatter();
 
@@ -654,7 +653,6 @@ public class ResultActivity extends AppCompatActivity {
             user.setFbB("훌륭합니다!");
         }
 
-
         feedbackMaxAngle.setText(user.getFbM());
         feedbackContract.setText(user.getFbC());
         feedbackTension.setText(user.getFbT());
@@ -665,7 +663,7 @@ public class ResultActivity extends AppCompatActivity {
     public void PushUps(){
         APPS[0] = "과한 동작";
         APPS[1] = "작은 동작";
-        APPS[2] = "허리 말림";
+        APPS[2] = "허리 굽힘";
         APPS[3] = "긴장 풀림";
         APPS[4] = "좋은 자세";
 
@@ -688,15 +686,15 @@ public class ResultActivity extends AppCompatActivity {
         }
 
         if(user.getWaist() >= user.getGood() / 2 && user.getWaist() != 0){
-            user.setFb(user.getFb() + "\n허리가 휘거나 굽습니다. 또는 상체가 자주 앞으로 숙여집니다.\n이것은 체중의 무게가 앞쪽으로 실려있어 그렇습니다. 스쿼트를 할 때 항상 무게 중심을 뒷꿈치에 잡습니다.\n" +
-                    "간단한 팁을 알려드리자면 엉덩이와 복부에 힘을 준 상태에서 천천히 내려가세요.\n내려간 이후 엉덩이를 앞으로 내미는 동시에 일어납니다.\n그렇게 된다면 수월하게 동작이 이루어 지고 허리가 덜 굽게 될 것입니다.\n");
+            user.setFb(user.getFb() + "\n허리가 과도하게 내려가는 자세에 주의하세요.\n 몸이 일직선을 유지하도록 하여 허리와 엉덩이를 효과적으로 지탱하며 운동하실 수 있도록 노력해주세요.\n" +
+                    "허리를 펴고 복부 근육을 긴장시킨 상태에서 푸시업을 수행하면 부상의 위험을 줄이고 근력 향상에 도움이 됩니다.\n");
         }
         if(user.getBig() + user.getSmall() >= num / 2 && user.getBig() + user.getSmall() != 0){
-            user.setFb(user.getFb() + "\n대부분의 자세에서 가동범위가 크거나 작습니다.\n가동범위가 클 경우 무릎에 가해지는 부하가 심해집니다.\n작을 경우에는 스트렝스가 적어 허벅지에 자극이 적을 것입니다.\n" +
+            user.setFb(user.getFb() + "\n대부분의 자세에서 가동범위가 크거나 작습니다.\n가동범위가 클 경우 팔꿈치에 가해지는 부하가 심해집니다.\n작을 경우에는 스트렝스가 적어 자극이 적을 것입니다.\n" +
                     "영상촬영을 통해 가동범위가 어떤지 확인하며 모범자세와의 차이점을 확인하세요.\n몸 전체가 아닌 어느 한 부분이 잘려서 찍힌거나 촬영 각도가 문제 있을 시 다시 측정해주십시오.\n");
         }
         if(user.getTension() >= num / 2 && user.getTension() != 0){
-            user.setFb(user.getFb() + "\n일어났을 때 다리를 완전히 펴버리면 근육의 긴장이 풀리게 됩니다.\n긴장이 풀릴 시 다음 동작 수행에서 부상 위험과 관절 통증, 근육 스트렝스 저하 등 문제점이 생깁니다.\n일어날 때 무릎은 살짝 굽힌 상태를 유지한다는 느낌으로 일어나 주세요.\n");
+            user.setFb(user.getFb() + "\n일어났을 때 팔을 완전히 펴버리면 근육의 긴장이 풀리게 됩니다.\n긴장이 풀릴 시 다음 동작 수행에서 부상 위험과 관절 통증, 근육 스트렝스 저하 등 문제점이 생깁니다.\n일어날 때 팔을 완전히 편 상태에서 살짝 굽힌 상태를 유지한다는 느낌으로 일어나 주세요.\n");
         }
         if(user.getGood() > user.getWaist() + user.getBig() + user.getSmall()){
             user.setFb(user.getFb() + "\n대체적으로 자세는 괜찮습니다. 다만 완벽하지는 않기에 데이터를 토대로 모범자세를 의식하며 계속 정진하세요!!\n");
