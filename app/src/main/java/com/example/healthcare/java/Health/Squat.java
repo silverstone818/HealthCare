@@ -8,7 +8,7 @@ import com.google.mlkit.vision.pose.PoseLandmark;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-public class Squrt implements HealthKind{
+public class Squat implements HealthKind{
     private int numAnglesInRange = 0;
     private int numSquats = 0;
     private double maxAngle = 0;

@@ -29,7 +29,7 @@ import com.example.healthcare.Graphic.GraphicOverlay;
 import com.example.healthcare.java.Health.HealthKind;
 import com.example.healthcare.java.Health.Pullup;
 import com.example.healthcare.java.Health.PushUp;
-import com.example.healthcare.java.Health.Squrt;
+import com.example.healthcare.java.Health.Squat;
 import com.example.healthcare.java.VisionProcessorBase;
 import com.example.healthcare.java.posedetector.classification.PoseClassifierProcessor;
 import com.google.android.gms.tasks.Task;
@@ -228,7 +228,7 @@ public class PoseDetectorProcessor
                                 isTtsInitialized = false;
                                 switch (Health){
                                     case 1:
-                                        Kind = new Squrt();
+                                        Kind = new Squat();
                                         Kind.setTts(tts);
                                         break;
                                     case 2:

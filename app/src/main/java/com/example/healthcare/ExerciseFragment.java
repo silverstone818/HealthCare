@@ -10,8 +10,8 @@ import android.widget.ImageButton;
 import androidx.fragment.app.Fragment;
 
 import com.example.healthcare.Guide.PullupGuideActivity;
-import com.example.healthcare.Guide.SquatsGuideActivity;
-import com.example.healthcare.Guide.PushUpsGuideActivity;
+import com.example.healthcare.Guide.SquatGuideActivity;
+import com.example.healthcare.Guide.PushUpGuideActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,7 +61,7 @@ public class ExerciseFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-                    intent = new Intent(getActivity(), SquatsGuideActivity.class);
+                    intent = new Intent(getActivity(), SquatGuideActivity.class);
                 }
                 startActivity(intent);
             }
@@ -73,7 +73,7 @@ public class ExerciseFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-                    intent = new Intent(getActivity(), PushUpsGuideActivity.class);
+                    intent = new Intent(getActivity(), PushUpGuideActivity.class);
                 }
                 startActivity(intent);
             }

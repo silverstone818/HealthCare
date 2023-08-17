@@ -29,10 +29,10 @@
             android:name=".RecordListActivity"
             android:exported="false" />
         <activity
-            android:name=".Guide.SquatsGuideActivity"
+            android:name=".Guide.SquatGuideActivity"
             android:exported="false" />
         <activity
-            android:name=".Guide.PushUpsGuideActivity"
+            android:name=".Guide.PushUpGuideActivity"
             android:exported="false" />
         <activity
             android:name=".Guide.PullupGuideActivity"
