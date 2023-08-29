@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,8 +22,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -151,26 +157,7 @@ public class UserdataActivity extends AppCompatActivity {
                     return;
                 }
 
-                // 수정할 User 객체 생성
-                User updatedUser = new User();
-                updatedUser.setAge(age_text.getText().toString());
-                updatedUser.setHeight(height_text.getText().toString());
-                updatedUser.setWeight(weight_text.getText().toString());
-
-                // 수정할 데이터의 참조 경로 가져오기
-                DatabaseReference memoRef = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/BeforeData/");
-
-                // 수정할 데이터의 참조 경로와 고유 ID를 결합하여 해당 데이터의 참조 경로를 가져옵니다.
-                DatabaseReference memoToUpdateRef = memoRef.child("profile");
-
-                // 수정할 데이터의 값을 Map 객체로 만듭니다.
-                Map<String, Object> updates = new HashMap<>();
-                updates.put("age", updatedUser.getAge());
-                updates.put("height", updatedUser.getHeight());
-                updates.put("weight", updatedUser.getWeight());
-
-                // 해당 데이터의 참조 경로에 updateChildren() 메소드를 호출하여 값을 수정합니다.
-                memoToUpdateRef.updateChildren(updates);
+                saveMemo();
 
                 Button moveButton;
                 moveButton = findViewById(R.id.btn_move2);
@@ -210,20 +197,62 @@ public class UserdataActivity extends AppCompatActivity {
         updatedUser.setAge(age_text.getText().toString());
         updatedUser.setHeight(height_text.getText().toString());
         updatedUser.setWeight(weight_text.getText().toString());
+        updatedUser.setName(mFirebaseUser.getDisplayName());
+        updatedUser.setEmail(mFirebaseUser.getEmail());
 
         // 수정할 데이터의 참조 경로 가져오기
-        DatabaseReference memoRef = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid());
+        DatabaseReference userRef = mFirebaseDatabase.getReference("memos/users");
 
         // 수정할 데이터의 참조 경로와 고유 ID를 결합하여 해당 데이터의 참조 경로를 가져옵니다.
-        DatabaseReference memoToUpdateRef = memoRef.child("/BeforeData/profile");
+        userRef.child("count").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Long count = dataSnapshot.getValue(Long.class);
+                if (count != null) {
+                    updatedUser.setCount(count + 1);
+                } else {
+                    updatedUser.setCount(1);
+                }
+                Log.w("testtest", String.valueOf(updatedUser.getCount()));
+                DatabaseReference userToUpdateRef = userRef.child("/usersID" + updatedUser.getCount() + "/userData");
 
-        // 수정할 데이터의 값을 Map 객체로 만듭니다.
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("age", updatedUser.getAge());
-        updates.put("height", updatedUser.getHeight());
-        updates.put("weight", updatedUser.getWeight());
+                Map<String, Object> updates = new HashMap<>();
+                updates.put("count", updatedUser.getCount());
+                userRef.updateChildren(updates);
 
-        // 해당 데이터의 참조 경로에 updateChildren() 메소드를 호출하여 값을 수정합니다.
-        memoToUpdateRef.updateChildren(updates);
+                // 수정할 데이터의 값을 Map 객체로 만듭니다.
+                Map<String, Object> updates1 = new HashMap<>();
+                updates1.put("name", updatedUser.getName());
+                updates1.put("email", updatedUser.getEmail());
+
+                // 해당 데이터의 참조 경로에 updateChildren() 메소드를 호출하여 값을 수정합니다.
+                userToUpdateRef.updateChildren(updates1);
+
+                // 수정할 데이터의 참조 경로 가져오기
+                DatabaseReference memoRef = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid());
+
+                // 수정할 데이터의 참조 경로와 고유 ID를 결합하여 해당 데이터의 참조 경로를 가져옵니다.
+                DatabaseReference memoToUpdateRef = memoRef.child("/BeforeData/profile");
+
+                // 수정할 데이터의 값을 Map 객체로 만듭니다.
+                Map<String, Object> updates2 = new HashMap<>();
+                updates2.put("age", updatedUser.getAge());
+                updates2.put("height", updatedUser.getHeight());
+                updates2.put("weight", updatedUser.getWeight());
+                updates2.put("num", updatedUser.getCount());
+
+                // 해당 데이터의 참조 경로에 updateChildren() 메소드를 호출하여 값을 수정합니다.
+                memoToUpdateRef.updateChildren(updates2);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("MainActivity", "getCountValue:onCancelled", databaseError.toException());
+            }
+        });
+
+
+
+
     }
 }
