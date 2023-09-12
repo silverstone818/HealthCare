@@ -522,13 +522,12 @@ public class ResultActivity extends AppCompatActivity {
         }
         if(num < 12){
             user.setFb(user.getFb() + "\n전체 횟수가 아직 12개 이상이 되지 않는 다는 것은 기초 근력이 부족하다는 것입니다.\n꾸준히 정진하여 12개를 채우는 것을 목표로 잡습니다.\n만약 중량이시면 횟수에 근접해질 시 중량을 5kg 단위로 늘려주세요.\n");
-            user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + totalCaloriesBurned + " 칼로리\n");
         }
         if(user.getGood() == 12){
             user.setFb(user.getFb() + "\n자세가 완벽합니다! 이대로 꾸준히 정진해주세요!! 다음 운동도 파이팅!\n");
-            user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + totalCaloriesBurned + " 칼로리\n");
         }
-
+        
+        user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + totalCaloriesBurned + " 칼로리\n");
         feedback.setText(user.getFb());
     }
 
@@ -713,13 +712,12 @@ public class ResultActivity extends AppCompatActivity {
         }
         if(num < 12){
             user.setFb(user.getFb() + "\n전체 횟수가 아직 12개 이상이 되지 않는 다는 것은 기초 근력이 부족하다는 것입니다.\n꾸준히 정진하여 12개를 채우는 것을 목표로 잡습니다.\n만약 중량이시면 횟수에 근접해질 시 중량을 5kg 단위로 늘려주세요.\n");
-            user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + totalCaloriesBurned + " 칼로리\n");
         }
         if(user.getGood() == 12){
             user.setFb(user.getFb() + "\n자세가 완벽합니다! 이대로 꾸준히 정진해주세요!! 다음 운동도 파이팅!\n");
-            user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + totalCaloriesBurned + " 칼로리\n");
         }
 
+        user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + totalCaloriesBurned + " 칼로리\n");
         feedback.setText(user.getFb());
     }
 
@@ -905,13 +903,12 @@ public class ResultActivity extends AppCompatActivity {
         }
         if(num < 12){
             user.setFb(user.getFb() + "\n전체 횟수가 아직 12개 이상이 되지 않는 다는 것은 기초 근력이 부족하다는 것입니다.\n꾸준히 정진하여 12개를 채우는 것을 목표로 잡습니다.\n만약 중량이시면 횟수에 근접해질 시 중량을 5kg 단위로 늘려주세요.\n");
-            user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + totalCaloriesBurned + " 칼로리\n");
         }
         if(user.getGood() == 12){
             user.setFb(user.getFb() + "\n자세가 완벽합니다! 이대로 꾸준히 정진해주세요!! 다음 운동도 파이팅!\n");
-            user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + totalCaloriesBurned + " 칼로리\n");
         }
 
+        user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + totalCaloriesBurned + " 칼로리\n");
         feedback.setText(user.getFb());
     }
 

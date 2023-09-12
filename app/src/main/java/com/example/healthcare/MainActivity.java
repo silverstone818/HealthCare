@@ -94,12 +94,8 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     return "루틴";
                 case 1:
-                    return "소셜";
-                case 2:
                     return "운동";
-                case 3:
-                    return "알람";
-                case 4:
+                case 2:
                     return "메뉴";
                 default:
                     return "";
