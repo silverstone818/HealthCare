@@ -66,18 +66,16 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tl_tabs);
         ViewPager viewPager = (ViewPager) findViewById(R.id.vp_pager);
 
-        Fragment[] arrFragments = new Fragment[5];
+        Fragment[] arrFragments = new Fragment[3];
         arrFragments[0] = new RoutinFragment();
-        arrFragments[1] = new SocialFragment();
-        arrFragments[2] = new ExerciseFragment();
-        arrFragments[3] = new AlarmFragment();
-        arrFragments[4] = new MenuFragment();
+        arrFragments[1] = new ExerciseFragment();
+        arrFragments[2] = new MenuFragment();
 
         MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager(), arrFragments);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
-        viewPager.setCurrentItem(2); // 하체 페이지를 중앙으로 설정
+        viewPager.setCurrentItem(1); // 하체 페이지를 중앙으로 설정
     }
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
