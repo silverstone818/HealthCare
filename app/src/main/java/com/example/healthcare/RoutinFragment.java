@@ -128,6 +128,7 @@ public class RoutinFragment extends Fragment {
         return url != null && (url.startsWith("http://www.youtube.com") || url.startsWith("https://www.youtube.com"));
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

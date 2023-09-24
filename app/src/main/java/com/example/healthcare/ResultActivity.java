@@ -530,7 +530,6 @@ public class ResultActivity extends AppCompatActivity {
         user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + totalCaloriesBurned + " 칼로리\n");
         feedback.setText(user.getFb());
     }
-
     public void PushUpsScore(){
         //이완 점수
         double sum = 0;

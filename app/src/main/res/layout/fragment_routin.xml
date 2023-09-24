@@ -31,5 +31,6 @@
             android:layout_height="235dp"
             android:background="#000000"
             android:textAlignment="center" />
+
     </LinearLayout>
 </ScrollView>

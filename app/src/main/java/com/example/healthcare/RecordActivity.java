@@ -99,6 +99,7 @@ public class RecordActivity extends AppCompatActivity {
             APPS[4] = "좋은 자세";
         }
 
+
         valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
