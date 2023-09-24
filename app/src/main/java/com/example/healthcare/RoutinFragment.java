@@ -1,6 +1,8 @@
 package com.example.healthcare;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -106,12 +108,24 @@ public class RoutinFragment extends Fragment {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
+                if (isYouTubeUrl(url)) {
+                    // YouTube 동영상 URL인 경우 YouTube 앱으로 열도록 처리합니다.
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    intent.setPackage("com.google.android.youtube"); // YouTube 앱의 패키지 이름
+                    startActivity(intent);
+                    return true;
+                } else {
+                    // 다른 URL은 WebView 내에서 열도록 처리합니다.
+                    view.loadUrl(url);
+                    return true;
+                }
             }
         });
-
         webView.loadData("<html><body><iframe src=\"" + url + "\" width=\"100%\" height=\"100%\"></iframe></body></html>", "text/html", "UTF-8");
+    }
+
+    private boolean isYouTubeUrl(String url) {
+        return url != null && (url.startsWith("http://www.youtube.com") || url.startsWith("https://www.youtube.com"));
     }
 
     @Override
@@ -137,5 +151,6 @@ public class RoutinFragment extends Fragment {
             }
         });
     }
+
 
 }

@@ -84,6 +84,20 @@ public class RecordActivity extends AppCompatActivity {
             APPS[3] = "긴장 풀림";
             APPS[4] = "좋은 자세";
         }
+        else if(Health.contains("푸쉬업")){
+            APPS[0] = "과한 동작";
+            APPS[1] = "작은 동작";
+            APPS[2] = "허리 굽힘";
+            APPS[3] = "긴장 풀림";
+            APPS[4] = "좋은 자세";
+        }
+        else if(Health.contains("풀업")){
+            APPS[0] = "과한 동작";
+            APPS[1] = "작은 동작";
+            APPS[2] = "허리 젖힘";
+            APPS[3] = "긴장 풀림";
+            APPS[4] = "좋은 자세";
+        }
 
         valueEventListener = new ValueEventListener() {
             @Override
