@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".RoutinFragment">
 
     <LinearLayout
@@ -15,21 +16,18 @@
             android:id="@+id/webView_1"
             android:layout_width="match_parent"
             android:layout_height="235dp"
-            android:background="#000000"
             android:textAlignment="center" />
 
         <WebView
             android:id="@+id/webView_2"
             android:layout_width="match_parent"
             android:layout_height="235dp"
-            android:background="#000000"
             android:textAlignment="center" />
 
         <WebView
             android:id="@+id/webView_3"
             android:layout_width="match_parent"
             android:layout_height="235dp"
-            android:background="#000000"
             android:textAlignment="center" />
 
     </LinearLayout>

@@ -4,352 +4,233 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C1C1C1"
+    android:background="#EEEEEE"
     android:orientation="vertical"
     tools:context=".ProfileActivity">
 
-
-    <Button
-        android:layout_margin="1dp"
-        android:id="@+id/btn_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#FFFFFF"
-        android:text="◀"
-        android:textColor="@color/black"
-        tools:ignore="HardcodedText"
-        android:layout_marginBottom="20dp"/>
-
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_margin="1dp"
+        android:background="#FF3000"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFFFFF"
+            android:text="◀"
+            android:textColor="@color/black"
+            tools:ignore="HardcodedText"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_margin="1dp"
             android:gravity="center"
-            android:text="After"
+            android:text="회원정보                  "
             android:textColor="@color/black"
-            android:textSize="25dp" />
-
+            android:textSize="20dp" />
     </LinearLayout>
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:gravity="center"
+        android:background="@color/gray"
+        android:textSize="20dp"/>
 
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_margin="1dp"
-        android:orientation="horizontal">
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="85dp"
-            android:layout_height="48dp"
-            android:gravity="center"
-            android:text="이름"
+            android:layout_width="140dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:text="아이디(이메일)"
             android:textColor="@color/black"
             android:textSize="20sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text=": "
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
         <TextView
             android:id="@+id/txtName"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="40dp"
+            android:gravity="bottom"
             android:text="홍길동"
             android:textColor="@color/black"
             android:textSize="14sp" />
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_margin="1dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="85dp"
-            android:layout_height="48dp"
-            android:gravity="center"
-            android:text="이메일"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text=": "
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
         <TextView
             android:id="@+id/txtEmail"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="20dp"
+            android:gravity="bottom"
             android:text="android@gamil.com"
             android:textSize="14sp"
             android:textColor="@color/black" />
-    </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:gravity="center"
+            android:background="@color/gray"
+            android:textSize="20dp"/>
 
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_margin="1dp"
-        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="85dp"
-            android:layout_height="48dp"
-            android:gravity="center"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
             android:text="나이"
             android:textColor="@color/black"
             android:textSize="20sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text=": "
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
         <TextView
             android:id="@+id/age_text2"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_weight="1"
+            android:layout_height="30dp"
+            android:gravity="bottom"
             android:textColor="@color/black"
             android:textSize="14sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:gravity="center"
+            android:background="@color/gray"
+            android:textSize="20dp"/>
 
 
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_margin="1dp"
-        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="85dp"
-            android:layout_height="48dp"
-            android:gravity="center"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
             android:text="키"
             android:textColor="@color/black"
             android:textSize="20sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text=": "
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
         <TextView
             android:id="@+id/height_text2"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_weight="1"
+            android:layout_height="30dp"
+            android:gravity="bottom"
             android:textColor="@color/black"
             android:textSize="14sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:gravity="center"
+            android:background="@color/gray"
+            android:textSize="20dp"/>
 
 
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_margin="1dp"
-        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="85dp"
-            android:layout_height="48dp"
-            android:gravity="center"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
             android:text="몸무게"
             android:textColor="@color/black"
             android:textSize="20sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text=": "
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
         <TextView
             android:id="@+id/weight_text2"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_weight="1"
+            android:layout_height="30dp"
+            android:gravity="bottom"
             android:textColor="@color/black"
             android:textSize="14sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:gravity="center"
+            android:background="@color/gray"
+            android:textSize="20dp"/>
 
 
-    </LinearLayout>
-
-
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#00FFFFFF"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_margin="1dp"
-        android:orientation="horizontal">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="Before"
+            android:text="이전 신체정보"
             android:textColor="@color/black"
-            android:textSize="25dp" />
+            android:textSize="20dp" />
 
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_margin="1dp"
-        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="85dp"
-            android:layout_height="48dp"
-            android:gravity="center"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
             android:text="나이"
             android:textColor="@color/black"
             android:textSize="20sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text=": "
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
         <TextView
             android:id="@+id/age_text"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_weight="1"
+            android:layout_height="30dp"
+            android:gravity="bottom"
             android:textColor="@color/black"
             android:textSize="14sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:gravity="center"
+            android:background="@color/gray"
+            android:textSize="20dp"/>
 
 
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_margin="1dp"
-        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="85dp"
-            android:layout_height="48dp"
-            android:gravity="center"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
             android:text="키"
             android:textColor="@color/black"
             android:textSize="20sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text=": "
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
         <TextView
             android:id="@+id/height_text"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_weight="1"
+            android:layout_height="30dp"
+            android:gravity="bottom"
             android:textColor="@color/black"
             android:textSize="14sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:gravity="center"
+            android:background="@color/gray"
+            android:textSize="20dp"/>
 
 
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_margin="1dp"
-        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="85dp"
-            android:layout_height="48dp"
-            android:gravity="center"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
             android:text="몸무게"
             android:textColor="@color/black"
             android:textSize="20sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text=": "
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
         <TextView
             android:id="@+id/weight_text"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_weight="1"
+            android:layout_height="30dp"
+            android:gravity="bottom"
             android:textColor="@color/black"
             android:textSize="14sp" />
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:background="@color/gray"
+            android:textSize="20dp"/>
     </LinearLayout>
-
-
-
 
     <Button
         android:id="@+id/btn_move"
@@ -360,9 +241,5 @@
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:text="정보수정"
-        android:textColor="@color/black"
-        tools:ignore="HardcodedText" />
-
-
-
+        android:textColor="@color/black"/>
 </LinearLayout>

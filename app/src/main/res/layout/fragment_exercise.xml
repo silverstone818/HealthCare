@@ -6,8 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ExerciseFragment"
     android:orientation="vertical"
-    android:background="#C1C1C1"
-    android:gravity="center">
+    android:background="#000000" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,15 +18,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0.8"
-            android:padding="0.5dp"
             android:contentDescription="스쿼트"
+            android:padding="0.5dp"
             android:scaleType="fitXY"
             android:src="@drawable/squat_back" />
 
         <TextView
             android:layout_width="400px"
-            android:layout_height="200px"
-            android:layout_marginStart="15dp"
+            android:layout_height="150px"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="15dp"
             android:text="SQUAT"
             android:textAlignment="center"
@@ -51,11 +50,11 @@
             android:src="@drawable/push_up_back" />
 
         <TextView
-            android:layout_width="400px"
-            android:layout_height="200px"
+            android:layout_width="500px"
+            android:layout_height="150px"
             android:layout_marginStart="25dp"
             android:layout_marginTop="15dp"
-            android:text="Push Up"
+            android:text="PUSH UP"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="100px" />
@@ -77,11 +76,11 @@
             android:src="@drawable/poll_up_back" />
 
         <TextView
-            android:layout_width="400px"
-            android:layout_height="200px"
-            android:layout_marginStart="15dp"
+            android:layout_width="500px"
+            android:layout_height="150px"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="15dp"
-            android:text="Pull Up"
+            android:text="PULL UP"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="100px" />
