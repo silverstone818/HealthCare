@@ -17,21 +17,22 @@
             android:id="@+id/btn_squats"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.8"
+            android:alpha="0.5"
             android:contentDescription="스쿼트"
             android:padding="0.5dp"
             android:scaleType="fitXY"
             android:src="@drawable/squat_back" />
 
         <TextView
-            android:layout_width="400px"
-            android:layout_height="150px"
-            android:layout_marginStart="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="15dp"
-            android:text="SQUAT"
+            android:fontFamily="@font/lotte"
+            android:text="스쿼트"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="100px" />
+            android:textSize="200px" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -43,21 +44,22 @@
             android:id="@+id/btn_pushups"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.8"
+            android:alpha="0.5"
             android:contentDescription="푸쉬업"
             android:padding="0.5dp"
             android:scaleType="fitXY"
             android:src="@drawable/push_up_back" />
 
         <TextView
-            android:layout_width="500px"
-            android:layout_height="150px"
-            android:layout_marginStart="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="15dp"
-            android:text="PUSH UP"
+            android:fontFamily="@font/lotte"
+            android:text="푸쉬업"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="100px" />
+            android:textSize="200px" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -69,21 +71,22 @@
             android:id="@+id/btn_pullup"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.8"
+            android:alpha="0.5"
             android:contentDescription="풀 업"
             android:padding="0.5dp"
             android:scaleType="fitXY"
             android:src="@drawable/poll_up_back" />
 
         <TextView
-            android:layout_width="500px"
-            android:layout_height="150px"
-            android:layout_marginStart="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="15dp"
-            android:text="PULL UP"
+            android:fontFamily="@font/lotte"
+            android:text="풀 업"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="100px" />
+            android:textSize="200px" />
     </RelativeLayout>
 
 </LinearLayout>
