@@ -98,6 +98,20 @@ public class RecordActivity extends AppCompatActivity {
             APPS[3] = "긴장 풀림";
             APPS[4] = "좋은 자세";
         }
+        else if(Health.contains("푸쉬업")){
+            APPS[0] = "과한 동작";
+            APPS[1] = "작은 동작";
+            APPS[2] = "허리 굽힘";
+            APPS[3] = "긴장 풀림";
+            APPS[4] = "좋은 자세";
+        }
+        else if(Health.contains("풀업")){
+            APPS[0] = "과한 동작";
+            APPS[1] = "작은 동작";
+            APPS[2] = "허리 젖힘";
+            APPS[3] = "긴장 풀림";
+            APPS[4] = "좋은 자세";
+        }
 
 
         valueEventListener = new ValueEventListener() {
@@ -340,6 +354,7 @@ public class RecordActivity extends AppCompatActivity {
         barChart2.invalidate(); // 차트 업데이트
         barChart2.setTouchEnabled(false); // 차트 터치 불가능하게
     }
+
     public void onBackPressed() {
         startActivity(new Intent(RecordActivity.this, RecordListActivity.class));
         finish();
