@@ -1,54 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:CircleProgressView="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#C1C1C1"
+    android:background="#FFFFFF"
+    android:gravity="center"
     tools:context=".MenuFragment">
+
+    <at.grabner.circleprogress.CircleProgressView
+        android:id="@+id/cpb_circlebar"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        CircleProgressView:cpv_autoTextSize="true"
+        CircleProgressView:cpv_barColor="#FF6666"
+        CircleProgressView:cpv_barWidth="30dp"
+        CircleProgressView:cpv_maxValue="100"
+        CircleProgressView:cpv_innerContourSize="0dp"
+        CircleProgressView:cpv_outerContourSize="0dp"
+        CircleProgressView:cpv_rimColor="#DDDDDD"
+        CircleProgressView:cpv_rimWidth="30dp"
+        CircleProgressView:cpv_textScale="0.7"
+        CircleProgressView:cpv_value="90"/>
+
+    <LinearLayout
+        android:id="@+id/prp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cpb_circlebar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="1dp"
+            android:backgroundTint="@color/white"
+            android:text="정상" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/menuTwoBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/prp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_proflie"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_margin="1dp"
+            android:backgroundTint="@color/white"
+            android:text="회원정보"
+            android:textSize="30dp" />
+
+        <Button
+            android:id="@+id/btn_record"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_margin="1dp"
+            android:backgroundTint="@color/white"
+            android:text="운동기록"
+            android:textSize="30dp" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/btn_proflie"
-            android:layout_width="200sp"
-            android:layout_height="wrap_content"
-            android:textColor="#605F5F"
-            android:layout_margin="1dp"
-            android:layout_marginLeft="2dp"
-            android:backgroundTint="@color/white"
-            android:text="내정보" />
-
-        <Button
-            android:id="@+id/btn_record"
-            android:layout_width="200sp"
-            android:layout_height="wrap_content"
-            android:text="최근운동기록"
-            android:backgroundTint="@color/white"
-            android:layout_margin="1dp"
-            android:textColor="#605F5F" />
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom|center"
-        android:layout_marginBottom="1dp"
+        android:layout_below="@id/menuTwoBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_logout"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/white"
@@ -57,7 +98,7 @@
             android:textColor="#605F5F" />
         <Button
             android:id="@+id/btn_withdrawal"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_margin="1dp"
@@ -66,4 +107,4 @@
             android:textColor="#605F5F" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

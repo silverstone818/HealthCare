@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.graphics.Color;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -17,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import at.grabner.circleprogress.CircleProgressView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
  * create an instance of this fragment.
  */
 public class MenuFragment extends Fragment {
+
+    private CircleProgressView circleProgressView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,6 +66,7 @@ public class MenuFragment extends Fragment {
     private Button btn_profile;
     private Button btn_record;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,17 +74,14 @@ public class MenuFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
+
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -111,6 +113,14 @@ public class MenuFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+
+        // 원형 프로그래스 바 설정 뷰
+        circleProgressView = view.findViewById(R.id.cpb_circlebar);
+        float progressValue = 22.2f;
+        circleProgressView.setValue(progressValue);
+        updateProgressColors(progressValue);
+
 
 
         //로그아웃
@@ -176,7 +186,21 @@ public class MenuFragment extends Fragment {
                         .show();
             }
         });
-
         return view;
+    }
+
+    private void updateProgressColors(float progressValue) {
+        int barColor;
+
+        if (progressValue > 30.0) {
+            barColor = Color.parseColor("#8B0000");
+        } else if(progressValue <= 29.9 && progressValue >= 25.0){
+            barColor = Color.parseColor("#FFA500");
+        } else if(progressValue <= 24.9 && progressValue >= 18.5){
+            barColor = Color.parseColor("#00FF00");
+        } else {
+            barColor = Color.parseColor("#00BFFF");
+        }
+        circleProgressView.setBarColor(barColor);
     }
 }
