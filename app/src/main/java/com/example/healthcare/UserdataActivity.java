@@ -239,7 +239,7 @@ public class UserdataActivity extends AppCompatActivity {
                 updates2.put("age", updatedUser.getAge());
                 updates2.put("height", updatedUser.getHeight());
                 updates2.put("weight", updatedUser.getWeight());
-                updates2.put("num", updatedUser.getCount());
+                updates2.put("count", updatedUser.getCount());
 
                 // 해당 데이터의 참조 경로에 updateChildren() 메소드를 호출하여 값을 수정합니다.
                 memoToUpdateRef.updateChildren(updates2);

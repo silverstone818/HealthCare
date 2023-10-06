@@ -40,7 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="top">
         <TextView
             android:layout_width="140dp"
             android:layout_height="30dp"
@@ -153,7 +154,6 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="220dp"
             android:orientation="horizontal">
             <EditText
                 android:id="@+id/weight_text"
@@ -175,19 +175,22 @@
                 android:text="0/3"
                 android:textColor="#777777" />
         </LinearLayout>
+
+
     </LinearLayout>
-
-
-    <Button
-        android:id="@+id/btn_move2"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="정보저장"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/white"
-        android:layout_margin="0dp"
-        tools:ignore="HardcodedText" />
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/btn_move2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="정보저장"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
 
 </LinearLayout>

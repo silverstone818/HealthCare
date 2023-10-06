@@ -3,13 +3,18 @@ package com.example.healthcare;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.graphics.Color;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
@@ -17,7 +22,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import at.grabner.circleprogress.CircleProgressView;
 
 /**
@@ -165,17 +176,50 @@ public class MenuFragment extends Fragment {
                                         .setPositiveButton("네", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which){
-                                                Intent intent = null;
 
-                                                mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).removeValue();
-                                                mFirebaseAuth.getCurrentUser().delete();
-                                                GoogleSignIn.getClient(getContext(), GoogleSignInOptions.DEFAULT_SIGN_IN).signOut();
 
-                                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-                                                    intent = new Intent(getActivity(), AuthActivity.class);
-                                                }
-                                                startActivity(intent);
-                                                getActivity().finish();
+                                                mFirebaseDatabase.getReference("memos/" + mFirebaseAuth.getUid()+"/BeforeData")
+                                                        .addChildEventListener(new ChildEventListener() {
+                                                            @Override
+                                                            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                                                Intent intent = null;
+                                                                User user = dataSnapshot.getValue(User.class);
+
+                                                                Log.d("FCM_TEST", Long.toString(user.getCount()));
+                                                                mFirebaseDatabase.getReference("memos/users/usersID" + user.getCount() + "/userData").removeValue();
+                                                                mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).removeValue();
+                                                                mFirebaseAuth.getCurrentUser().delete();
+                                                                GoogleSignIn.getClient(getContext(), GoogleSignInOptions.DEFAULT_SIGN_IN).signOut();
+
+                                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                                                    intent = new Intent(getActivity(), AuthActivity.class);
+                                                                }
+                                                                startActivity(intent);
+                                                                getActivity().finish();
+                                                            }
+
+                                                            @Override
+                                                            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                                                // 변경된 데이터 처리
+                                                            }
+
+                                                            @Override
+                                                            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                                                                // 삭제된 데이터 처리
+                                                            }
+
+                                                            @Override
+                                                            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                                                // 이동된 데이터 처리
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                                // 처리할 오류가 있으면 여기에 작성
+                                                            }
+                                                        });
+
+
                                             }
                                         })
                                         .setNegativeButton("아니오", null)
