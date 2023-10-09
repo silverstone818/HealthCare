@@ -35,6 +35,7 @@
     </LinearLayout>
 
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,12 +73,47 @@
             android:background="@color/gray"
             android:textSize="20dp"/>
 
+        <TextView
+            android:layout_width="140dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="30dp"
+            android:text="성별"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <RadioGroup
+            android:id="@+id/sex_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/male_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="남" />
+
+            <RadioButton
+                android:id="@+id/female_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="여" />
+
+
+        </RadioGroup>
+
 
 
         <TextView
             android:layout_width="80dp"
             android:layout_height="30dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:text="나이"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -175,6 +211,8 @@
                 android:text="0/3"
                 android:textColor="#777777" />
         </LinearLayout>
+
+
 
 
     </LinearLayout>

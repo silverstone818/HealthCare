@@ -31,6 +31,7 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private FirebaseDatabase mFirebaseDatabase;
+    private TextView sex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
         txtName = (TextView) findViewById(R.id.txtName);
         txtEmail.setText(mFirebaseUser.getEmail());
         txtName.setText(mFirebaseUser.getDisplayName());
+        sex = (TextView) findViewById(R.id.sex_group);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
         btn_cancel = (Button) findViewById(R.id.btn_cancel);
@@ -110,6 +112,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     age_text2.setText(user.getAge());
                                     height_text2.setText(user.getHeight());
                                     weight_text2.setText(user.getWeight());
+                                    sex.setText(user.getSex());
                                     // user 데이터를 사용하여 출력
                                 }
 

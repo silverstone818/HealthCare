@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +45,8 @@ public class UserdataActivity extends AppCompatActivity {
     private FirebaseUser mFirebaseUser;
     private FirebaseDatabase mFirebaseDatabase;
     private TextView txtEmail2, txtName2, age_limit, height_limit, weight_limit;
+    private RadioGroup sex;
+    private User user;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -52,7 +56,7 @@ public class UserdataActivity extends AppCompatActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        User user = new User();
+        user = new User();
 
         age_text = (EditText) findViewById(R.id.age_text);
         height_text = (EditText) findViewById(R.id.height_text);
@@ -63,6 +67,8 @@ public class UserdataActivity extends AppCompatActivity {
         height_limit = (TextView) findViewById(R.id.height_limit);
         weight_limit = (TextView) findViewById(R.id.weight_limit);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
+        sex = (RadioGroup) findViewById(R.id.sex_group);
+
 
         txtEmail2.setText(mFirebaseUser.getEmail());
         txtName2.setText(mFirebaseUser.getDisplayName());
@@ -84,6 +90,23 @@ public class UserdataActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+        sex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.male_btn:
+                        user.setSex("남");
+                        break;
+                    case R.id.female_btn:
+                        user.setSex("여");
+                        break;
+                }
+            }
+        });
+
+
+
 
         age_text.addTextChangedListener(new TextWatcher() {
             @Override
@@ -194,11 +217,13 @@ public class UserdataActivity extends AppCompatActivity {
     }
     private void saveMemo(){
         User updatedUser = new User();
+        updatedUser.setSex(user.getSex());
         updatedUser.setAge(age_text.getText().toString());
         updatedUser.setHeight(height_text.getText().toString());
         updatedUser.setWeight(weight_text.getText().toString());
         updatedUser.setName(mFirebaseUser.getDisplayName());
         updatedUser.setEmail(mFirebaseUser.getEmail());
+
 
         // 수정할 데이터의 참조 경로 가져오기
         DatabaseReference userRef = mFirebaseDatabase.getReference("memos/users");
@@ -240,6 +265,7 @@ public class UserdataActivity extends AppCompatActivity {
                 updates2.put("height", updatedUser.getHeight());
                 updates2.put("weight", updatedUser.getWeight());
                 updates2.put("count", updatedUser.getCount());
+                updates2.put("sex", updatedUser.getSex());
 
                 // 해당 데이터의 참조 경로에 updateChildren() 메소드를 호출하여 값을 수정합니다.
                 memoToUpdateRef.updateChildren(updates2);

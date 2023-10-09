@@ -4,6 +4,7 @@ public class User {
 
 
     private long count;
+    private String sex;
     private String age;
     private String height;
     private String weight;
@@ -15,6 +16,14 @@ public class User {
 
     public void setCount(long count) {
         this.count = count;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public String getEmail() {
