@@ -3,6 +3,7 @@ package com.example.healthcare;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +36,7 @@ public class RecordListActivity extends AppCompatActivity {
     private FirebaseUser mFirebaseUser;
     private FirebaseDatabase mFirebaseDatabase;
     private CustomAdapter adapter;
+    private TextView noRecordTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +46,9 @@ public class RecordListActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
+        noRecordTextView = findViewById(R.id.noRecordTextView);
         adapter = new CustomAdapter(this, new ArrayList<ExerciseItem>());
-        adapter.clear();
+
         for(int i = 1; i <= 10; i++){
             mFirebaseDatabase.getReference("memos/" + mFirebaseAuth.getUid()+"/record"+i)
                     .addChildEventListener(new ChildEventListener() {
@@ -85,6 +90,19 @@ public class RecordListActivity extends AppCompatActivity {
 
         list.setAdapter(adapter);
 
+        adapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                // 데이터가 변경될 때마다 호출되며, 데이터 유무에 따라 TextView를 보이거나 숨깁니다.
+                if (adapter.getCount() == 0) {
+                    noRecordTextView.setVisibility(View.VISIBLE);
+                } else {
+                    noRecordTextView.setVisibility(View.GONE);
+                }
+            }
+        });
+
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -96,6 +114,7 @@ public class RecordListActivity extends AppCompatActivity {
                 finish();
             }
         });
+        adapter.clear();
     }
 
 
