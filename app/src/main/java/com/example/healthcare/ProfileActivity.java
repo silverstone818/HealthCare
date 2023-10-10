@@ -155,6 +155,8 @@ public class ProfileActivity extends AppCompatActivity {
                         height_text.setText(user.getHeight());
                         weight_text.setText(user.getWeight());
                         // user 데이터를 사용하여 출력
+
+
                     }
 
                     @Override

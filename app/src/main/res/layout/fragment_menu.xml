@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFFFFF"
     android:gravity="center"
+    android:background="@drawable/menu_back"
     tools:context=".MenuFragment">
 <LinearLayout
     android:layout_width="match_parent"
@@ -23,14 +23,15 @@
         android:layout_centerHorizontal="true"
         CircleProgressView:cpv_autoTextSize="true"
         CircleProgressView:cpv_barColor="#FF6666"
-        CircleProgressView:cpv_barWidth="30dp"
-        CircleProgressView:cpv_maxValue="100"
+        CircleProgressView:cpv_barWidth="15dp"
+        CircleProgressView:cpv_maxValue="40"
         CircleProgressView:cpv_innerContourSize="0dp"
         CircleProgressView:cpv_outerContourSize="0dp"
-        CircleProgressView:cpv_rimColor="#DDDDDD"
-        CircleProgressView:cpv_rimWidth="30dp"
+        CircleProgressView:cpv_rimColor="@color/white"
+        CircleProgressView:cpv_rimWidth="10dp"
         CircleProgressView:cpv_textScale="0.7"
-        CircleProgressView:cpv_value="90"/>
+        CircleProgressView:cpv_textColor="#FFFFFF"
+        CircleProgressView:cpv_value="20"/>
 
     <LinearLayout
         android:id="@+id/prp"
@@ -42,7 +43,8 @@
         android:gravity="center"
         android:orientation="vertical">
         <Button
-            android:layout_width="200dp"
+            android:id="@+id/StatBtn"
+            android:layout_width="150dp"
             android:layout_height="50dp"
             android:layout_marginStart="1dp"
             android:layout_marginTop="1dp"

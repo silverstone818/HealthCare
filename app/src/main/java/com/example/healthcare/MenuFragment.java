@@ -39,31 +39,21 @@ import at.grabner.circleprogress.CircleProgressView;
 public class MenuFragment extends Fragment {
 
     private CircleProgressView circleProgressView;
+    private Button StatBtn;
+    private String stat;
+    private float progressValue;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private FirebaseDatabase mFirebaseDatabase;
 
 
     public MenuFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MenuFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MenuFragment newInstance(String param1, String param2) {
         MenuFragment fragment = new MenuFragment();
         Bundle args = new Bundle();
@@ -125,14 +115,135 @@ public class MenuFragment extends Fragment {
             }
         });
 
-
         // 원형 프로그래스 바 설정 뷰
-        circleProgressView = view.findViewById(R.id.cpb_circlebar);
-        float progressValue = 22.2f;
-        circleProgressView.setValue(progressValue);
-        updateProgressColors(progressValue);
+        DatabaseReference userRef = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/AfterData");
 
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // 데이터가 존재하는 경우
+                    mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/AfterData")
+                            .addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                    User user = dataSnapshot.getValue(User.class);
 
+                                    // BMI 계산
+                                    float weight = Float.parseFloat(user.getWeight());
+                                    float height = Float.parseFloat(user.getHeight());
+                                    String sex = user.getSex();
+
+                                    progressValue = (float) (weight / Math.pow(height / 100, 2));
+                                    String stat = calculateStat(sex, progressValue);
+
+                                    circleProgressView = view.findViewById(R.id.cpb_circlebar);
+                                    Button Stat = view.findViewById(R.id.StatBtn);
+                                    Stat.setText(stat);
+                                    circleProgressView.setValue(progressValue);
+                                    updateProgressColors(stat);
+                                }
+
+                                @Override
+                                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                    // 변경된 데이터 처리
+                                    User user = dataSnapshot.getValue(User.class);
+
+                                    // BMI 계산
+                                    float weight = Float.parseFloat(user.getWeight());
+                                    float height = Float.parseFloat(user.getHeight());
+                                    String sex = user.getSex();
+
+                                    progressValue = (float) (weight / Math.pow(height / 100, 2));
+                                    String stat = calculateStat(sex, progressValue);
+
+                                    circleProgressView = view.findViewById(R.id.cpb_circlebar);
+                                    Button Stat = view.findViewById(R.id.StatBtn);
+                                    Stat.setText(stat);
+                                    circleProgressView.setValue(progressValue);
+                                    updateProgressColors(stat);
+                                }
+
+                                @Override
+                                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                                    // 삭제된 데이터 처리
+                                }
+
+                                @Override
+                                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                    // 이동된 데이터 처리
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    // 처리할 오류가 있으면 여기에 작성
+                                }
+                            });
+                } else {
+                    mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/BeforeData")
+                            .addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                    User user = dataSnapshot.getValue(User.class);
+
+                                    // BMI 계산
+                                    float weight = Float.parseFloat(user.getWeight());
+                                    float height = Float.parseFloat(user.getHeight());
+                                    String sex = user.getSex();
+
+                                    progressValue = (float) (weight / Math.pow(height / 100, 2));
+                                    String stat = calculateStat(sex, progressValue);
+
+                                    circleProgressView = view.findViewById(R.id.cpb_circlebar);
+                                    Button Stat = view.findViewById(R.id.StatBtn);
+                                    Stat.setText(stat);
+                                    circleProgressView.setValue(progressValue);
+                                    updateProgressColors(stat);
+                                }
+
+                                @Override
+                                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                    // 변경된 데이터 처리
+                                    User user = dataSnapshot.getValue(User.class);
+
+                                    // BMI 계산
+                                    float weight = Float.parseFloat(user.getWeight());
+                                    float height = Float.parseFloat(user.getHeight());
+                                    String sex = user.getSex();
+
+                                    progressValue = (float) (weight / Math.pow(height / 100, 2));
+                                    String stat = calculateStat(sex, progressValue);
+
+                                    circleProgressView = view.findViewById(R.id.cpb_circlebar);
+                                    Button Stat = view.findViewById(R.id.StatBtn);
+                                    Stat.setText(stat);
+                                    circleProgressView.setValue(progressValue);
+                                    updateProgressColors(stat);
+                                }
+
+                                @Override
+                                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                                    // 삭제된 데이터 처리
+                                }
+
+                                @Override
+                                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                    // 이동된 데이터 처리
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    // 처리할 오류가 있으면 여기에 작성
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // 처리할 오류가 있으면 여기에 작성
+            }
+        });
 
         //로그아웃
         btn_logout = view.findViewById(R.id.btn_logout);
@@ -233,18 +344,59 @@ public class MenuFragment extends Fragment {
         return view;
     }
 
-    private void updateProgressColors(float progressValue) {
+    // 원형 프로그래스 바 색상 변경값
+    private void updateProgressColors(String Stat) {
         int barColor;
 
-        if (progressValue > 30.0) {
-            barColor = Color.parseColor("#8B0000");
-        } else if(progressValue <= 29.9 && progressValue >= 25.0){
-            barColor = Color.parseColor("#FFA500");
-        } else if(progressValue <= 24.9 && progressValue >= 18.5){
+        if (Stat.equalsIgnoreCase("저체중")) {
+            barColor = Color.parseColor("#FFFF00");
+        } else if (Stat.equalsIgnoreCase("정상체중")) {
             barColor = Color.parseColor("#00FF00");
+        } else if (Stat.equalsIgnoreCase("과체중")) {
+            barColor = Color.parseColor("#FFA500");
+        } else if (Stat.equalsIgnoreCase("경도비만")) {
+            barColor = Color.parseColor("#800080");
+        } else if (Stat.equalsIgnoreCase("고도비만")) {
+            barColor = Color.parseColor("#FF0000");
+        } else if (Stat.equalsIgnoreCase("고위험군")) {
+            barColor = Color.parseColor("#FF6666");
         } else {
-            barColor = Color.parseColor("#00BFFF");
+            barColor = Color.parseColor("#FFFFFF");
         }
+
         circleProgressView.setBarColor(barColor);
+    }
+
+    // 성별과 progressValue를 기반으로 Stat을 계산하는 메서드
+    private String calculateStat(String sex, float progressValue) {
+        if ("남".equals(sex)) {
+            if (progressValue < 20) {
+                return "저체중";
+            } else if (progressValue >= 20 && progressValue <= 24.9) {
+                return "정상체중";
+            } else if (progressValue >= 25 && progressValue <= 29.9) {
+                return "과체중";
+            } else if (progressValue >= 30 && progressValue <= 34.9) {
+                return "경도비만";
+            } else if (progressValue >= 35 && progressValue <= 39.9) {
+                return "고도비만";
+            } else {
+                return "고위험군";
+            }
+        } else {
+            if (progressValue < 18.5) {
+                return "저체중";
+            } else if (progressValue >= 18.5 && progressValue <= 23.9) {
+                return "정상체중";
+            } else if (progressValue >= 24 && progressValue <= 29.9) {
+                return "과체중";
+            } else if (progressValue >= 30 && progressValue <= 34.9) {
+                return "경도비만";
+            } else if (progressValue >= 35 && progressValue <= 39.9) {
+                return "고도비만";
+            } else {
+                return "고위험군";
+            }
+        }
     }
 }
