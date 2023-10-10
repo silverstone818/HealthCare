@@ -33,6 +33,17 @@
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="200px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="300dp"
+            android:layout_marginTop="200dp"
+            android:fontFamily="@font/lotte"
+            android:text="SQUST"
+            android:textAlignment="center"
+            android:textColor="#C0C0C0"
+            android:textSize="77px" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -60,6 +71,17 @@
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="200px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="270dp"
+            android:layout_marginTop="200dp"
+            android:fontFamily="@font/lotte"
+            android:text="PUSH UP"
+            android:textAlignment="center"
+            android:textColor="#C0C0C0"
+            android:textSize="77px" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -87,6 +109,17 @@
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="200px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="275dp"
+            android:layout_marginTop="200dp"
+            android:fontFamily="@font/lotte"
+            android:text="PULL UP"
+            android:textAlignment="center"
+            android:textColor="#C0C0C0"
+            android:textSize="77px" />
     </RelativeLayout>
 
 </LinearLayout>
