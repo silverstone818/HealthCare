@@ -13,15 +13,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="HealtH Care"
-        android:textSize="90px"
+        android:textSize="100px"
+        android:fontFamily="@font/lotte_bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="397dp"
+        android:layout_height="306dp"
         android:src="@drawable/logo" />
 
     <com.google.android.gms.common.SignInButton
