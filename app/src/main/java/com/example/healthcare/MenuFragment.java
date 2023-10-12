@@ -1,5 +1,6 @@
 package com.example.healthcare;
 
+import java.util.ArrayList;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,11 +13,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.graphics.Color;
 import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -29,8 +37,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import at.grabner.circleprogress.CircleProgressView;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MenuFragment#newInstance} factory method to
@@ -38,8 +44,8 @@ import at.grabner.circleprogress.CircleProgressView;
  */
 public class MenuFragment extends Fragment {
 
-    private CircleProgressView circleProgressView;
     private Button StatBtn;
+    private TextView BTN_N;
     private String stat;
     private float progressValue;
 
@@ -76,6 +82,7 @@ public class MenuFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
 
@@ -116,6 +123,26 @@ public class MenuFragment extends Fragment {
         });
 
         // 원형 프로그래스 바 설정 뷰
+        PieChart pieChart = view.findViewById(R.id.piechart);
+
+        ArrayList<PieEntry> entries = new ArrayList<>();
+        entries.add(new PieEntry(1000f, "저체중"));
+        entries.add(new PieEntry(1000f, "정상체중"));
+        entries.add(new PieEntry(1000f, "과체중"));
+        entries.add(new PieEntry(1000f, "경도비만"));
+        entries.add(new PieEntry(1000f, "고도비만"));
+
+        pieChart.getDescription().setEnabled(false);
+
+        PieDataSet dataSet = new PieDataSet(entries, "/  BMI 수치");
+        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        dataSet.setValueTextSize(0f); // 숫자 값 크기를 0으로 설정하여 숨김
+
+        PieData data = new PieData(dataSet);
+        pieChart.setData(data);
+
+        pieChart.animateXY(5000, 5000);
+
         DatabaseReference userRef = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/AfterData");
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -137,11 +164,12 @@ public class MenuFragment extends Fragment {
                                     progressValue = (float) (weight / Math.pow(height / 100, 2));
                                     String stat = calculateStat(sex, progressValue);
 
-                                    circleProgressView = view.findViewById(R.id.cpb_circlebar);
                                     Button Stat = view.findViewById(R.id.StatBtn);
+                                    TextView BMI_N = view.findViewById(R.id.BMI_N);
+
+                                    String formattedValue = String.format("%.1f", progressValue);
                                     Stat.setText(stat);
-                                    circleProgressView.setValue(progressValue);
-                                    updateProgressColors(stat);
+                                    BMI_N.setText(formattedValue);
                                 }
 
                                 @Override
@@ -157,11 +185,12 @@ public class MenuFragment extends Fragment {
                                     progressValue = (float) (weight / Math.pow(height / 100, 2));
                                     String stat = calculateStat(sex, progressValue);
 
-                                    circleProgressView = view.findViewById(R.id.cpb_circlebar);
                                     Button Stat = view.findViewById(R.id.StatBtn);
+                                    TextView BMI_N = view.findViewById(R.id.BMI_N);
+
+                                    String formattedValue = String.format("%.1f", progressValue);
                                     Stat.setText(stat);
-                                    circleProgressView.setValue(progressValue);
-                                    updateProgressColors(stat);
+                                    BMI_N.setText(formattedValue);
                                 }
 
                                 @Override
@@ -194,31 +223,17 @@ public class MenuFragment extends Fragment {
                                     progressValue = (float) (weight / Math.pow(height / 100, 2));
                                     String stat = calculateStat(sex, progressValue);
 
-                                    circleProgressView = view.findViewById(R.id.cpb_circlebar);
                                     Button Stat = view.findViewById(R.id.StatBtn);
+                                    TextView BMI_N = view.findViewById(R.id.BMI_N);
+
+                                    String formattedValue = String.format("%.1f", progressValue);
                                     Stat.setText(stat);
-                                    circleProgressView.setValue(progressValue);
-                                    updateProgressColors(stat);
+                                    BMI_N.setText(formattedValue);
                                 }
 
                                 @Override
                                 public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                                     // 변경된 데이터 처리
-                                    User user = dataSnapshot.getValue(User.class);
-
-                                    // BMI 계산
-                                    float weight = Float.parseFloat(user.getWeight());
-                                    float height = Float.parseFloat(user.getHeight());
-                                    String sex = user.getSex();
-
-                                    progressValue = (float) (weight / Math.pow(height / 100, 2));
-                                    String stat = calculateStat(sex, progressValue);
-
-                                    circleProgressView = view.findViewById(R.id.cpb_circlebar);
-                                    Button Stat = view.findViewById(R.id.StatBtn);
-                                    Stat.setText(stat);
-                                    circleProgressView.setValue(progressValue);
-                                    updateProgressColors(stat);
                                 }
 
                                 @Override
@@ -342,29 +357,6 @@ public class MenuFragment extends Fragment {
             }
         });
         return view;
-    }
-
-    // 원형 프로그래스 바 색상 변경값
-    private void updateProgressColors(String Stat) {
-        int barColor;
-
-        if (Stat.equalsIgnoreCase("저체중")) {
-            barColor = Color.parseColor("#FFFF00");
-        } else if (Stat.equalsIgnoreCase("정상체중")) {
-            barColor = Color.parseColor("#00FF00");
-        } else if (Stat.equalsIgnoreCase("과체중")) {
-            barColor = Color.parseColor("#FFA500");
-        } else if (Stat.equalsIgnoreCase("경도비만")) {
-            barColor = Color.parseColor("#800080");
-        } else if (Stat.equalsIgnoreCase("고도비만")) {
-            barColor = Color.parseColor("#FF0000");
-        } else if (Stat.equalsIgnoreCase("고위험군")) {
-            barColor = Color.parseColor("#FF6666");
-        } else {
-            barColor = Color.parseColor("#FFFFFF");
-        }
-
-        circleProgressView.setBarColor(barColor);
     }
 
     // 성별과 progressValue를 기반으로 Stat을 계산하는 메서드

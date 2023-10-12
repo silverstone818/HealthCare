@@ -30,5 +30,10 @@
             android:layout_height="235dp"
             android:textAlignment="center" />
 
+        <WebView
+            android:id="@+id/webView_4"
+            android:layout_width="match_parent"
+            android:layout_height="235dp"
+            android:textAlignment="center" />
     </LinearLayout>
 </ScrollView>

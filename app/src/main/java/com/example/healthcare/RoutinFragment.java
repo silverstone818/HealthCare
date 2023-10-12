@@ -14,6 +14,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
+import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,7 +25,7 @@ public class RoutinFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private WebView webView_1, webView_2, webView_3;
+    private WebView webView_1, webView_2, webView_3, webView_4;
     private View mCustomView;
     private WebChromeClient.CustomViewCallback mCustomViewCallback;
 
@@ -62,10 +63,12 @@ public class RoutinFragment extends Fragment {
         webView_1 = view.findViewById(R.id.webView_1);
         webView_2 = view.findViewById(R.id.webView_2);
         webView_3 = view.findViewById(R.id.webView_3);
+        webView_4 = view.findViewById(R.id.webView_4);
 
         initWebView(webView_1, "https://www.youtube.com/embed/2rb3GZw0IEw");
         initWebView(webView_2, "https://www.youtube.com/embed/7Melm8LEFqY");
         initWebView(webView_3, "https://www.youtube.com/embed/KCAwey51gUc");
+        initWebView(webView_4, "https://www.youtube.com/embed/PfibseV_kus");
 
         return view;
     }
@@ -74,6 +77,7 @@ public class RoutinFragment extends Fragment {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
 
+        webView.setBackgroundColor(Color.TRANSPARENT);
         webView.setWebChromeClient(new WebChromeClient() {
 
             @Override
