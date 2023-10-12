@@ -47,6 +47,10 @@ public class MenuFragment extends Fragment {
     private Button StatBtn;
     private TextView BTN_N;
     private String stat;
+
+    private int clickCount = 0;
+    private AlertDialog alertDialog;
+
     private float progressValue;
 
     private static final String ARG_PARAM1 = "param1";
@@ -141,7 +145,7 @@ public class MenuFragment extends Fragment {
         PieData data = new PieData(dataSet);
         pieChart.setData(data);
 
-        pieChart.animateXY(5000, 5000);
+        pieChart.animateXY(3000, 3000);
 
         DatabaseReference userRef = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/AfterData");
 
@@ -170,6 +174,9 @@ public class MenuFragment extends Fragment {
                                     String formattedValue = String.format("%.1f", progressValue);
                                     Stat.setText(stat);
                                     BMI_N.setText(formattedValue);
+
+                                    int backgroundColor = getBackgroundColorForStat(stat);
+                                    Stat.setBackgroundColor(backgroundColor);
                                 }
 
                                 @Override
@@ -191,6 +198,9 @@ public class MenuFragment extends Fragment {
                                     String formattedValue = String.format("%.1f", progressValue);
                                     Stat.setText(stat);
                                     BMI_N.setText(formattedValue);
+
+                                    int backgroundColor = getBackgroundColorForStat(stat);
+                                    Stat.setBackgroundColor(backgroundColor);
                                 }
 
                                 @Override
@@ -229,6 +239,9 @@ public class MenuFragment extends Fragment {
                                     String formattedValue = String.format("%.1f", progressValue);
                                     Stat.setText(stat);
                                     BMI_N.setText(formattedValue);
+
+                                    int backgroundColor = getBackgroundColorForStat(stat);
+                                    Stat.setBackgroundColor(backgroundColor);
                                 }
 
                                 @Override
@@ -257,6 +270,21 @@ public class MenuFragment extends Fragment {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // 처리할 오류가 있으면 여기에 작성
+            }
+        });
+
+        Button StatBtn = view.findViewById(R.id.StatBtn);
+        StatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 클릭 횟수 증가
+                clickCount++;
+
+                // 클릭 횟수가 10 이상인지 확인
+                if (clickCount >= 5) {
+                    // 팝업 대화상자를 표시합니다.
+                    showPopupDialog();
+                }
             }
         });
 
@@ -390,5 +418,53 @@ public class MenuFragment extends Fragment {
                 return "고위험군";
             }
         }
+    }
+
+    // BMI 지수 색상
+    private int getBackgroundColorForStat(String stat) {
+        int backgroundColor; // 기본 배경 색상 (예시: 흰색)
+
+        switch (stat) {
+            case "저체중":
+                backgroundColor = Color.parseColor("#FF5733"); // 저체중에 대한 배경 색상
+                break;
+            case "정상체중":
+                backgroundColor = Color.parseColor("#00FF00"); // 정상체중에 대한 배경 색상
+                break;
+            case "과체중":
+                backgroundColor = Color.parseColor("#FFA500"); // 과체중에 대한 배경 색상
+                break;
+            case "경도비만":
+                backgroundColor = Color.parseColor("#FFFF00"); // 경도비만에 대한 배경 색상
+                break;
+            case "고도비만":
+                backgroundColor = Color.parseColor("#FF0000"); // 고도비만에 대한 배경 색상
+                break;
+            default:
+                backgroundColor = Color.parseColor("#FFFFFF"); // 기본 배경 색상 (흰색)
+        }
+
+        return backgroundColor;
+    }
+
+    // 팝업
+    private void showPopupDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(
+                        "저체중ㅡ : ~ 18.5 " + "\n" +
+                        "정상체중 : 18.5 ~ 24.9" + "\n" +
+                        "과체중ㅡ : 25.0 ~ 29.9" + "\n" +
+                        "경도비만 :  30.0 ~ 34.9" + "\n" +
+                        "고도비만 : 35.0 ~ 39.9" + "\n" +
+                        "고위험군 : 40 ~")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 사용자가 대화상자를 인식한 후 클릭 횟수를 재설정합니다.
+                        clickCount = 0;
+                    }
+                });
+        alertDialog = builder.create();
+        alertDialog.show();
     }
 }
