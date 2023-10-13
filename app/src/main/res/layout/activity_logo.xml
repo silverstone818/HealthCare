@@ -9,19 +9,17 @@
     android:orientation="vertical"
     tools:context=".LogoActivity">
 
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="300dp"
+        android:src="@drawable/logo" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="HealtH Care"
         android:textSize="100px"
-        android:fontFamily="@font/lotte_bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:fontFamily="@font/lotte_bold" />
 
-    <ImageView
-        android:layout_width="397dp"
-        android:layout_height="306dp"
-        android:src="@drawable/logo" />
 </LinearLayout>

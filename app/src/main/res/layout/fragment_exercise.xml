@@ -37,7 +37,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="300dp"
+            android:layout_marginStart="290dp"
             android:layout_marginTop="200dp"
             android:fontFamily="@font/lotte"
             android:text="SQUST"
@@ -75,7 +75,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="270dp"
+            android:layout_marginStart="260dp"
             android:layout_marginTop="200dp"
             android:fontFamily="@font/lotte"
             android:text="PUSH UP"
@@ -113,7 +113,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="275dp"
+            android:layout_marginStart="265dp"
             android:layout_marginTop="200dp"
             android:fontFamily="@font/lotte"
             android:text="PULL UP"

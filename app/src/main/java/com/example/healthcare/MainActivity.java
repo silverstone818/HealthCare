@@ -45,10 +45,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth;
-
     private FirebaseUser mFirebaseUser;
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @SuppressLint("MissingInflatedId")
