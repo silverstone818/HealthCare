@@ -426,19 +426,19 @@ public class MenuFragment extends Fragment {
 
         switch (stat) {
             case "저체중":
-                backgroundColor = Color.parseColor("#FF5733"); // 저체중에 대한 배경 색상
+                backgroundColor = Color.parseColor("#B74C7A"); // 저체중에 대한 배경 색상
                 break;
             case "정상체중":
-                backgroundColor = Color.parseColor("#00FF00"); // 정상체중에 대한 배경 색상
+                backgroundColor = Color.parseColor("#FF8C00"); // 정상체중에 대한 배경 색상
                 break;
             case "과체중":
-                backgroundColor = Color.parseColor("#FFA500"); // 과체중에 대한 배경 색상
+                backgroundColor = Color.parseColor("#FFD700"); // 과체중에 대한 배경 색상
                 break;
             case "경도비만":
-                backgroundColor = Color.parseColor("#FFFF00"); // 경도비만에 대한 배경 색상
+                backgroundColor = Color.parseColor("#6B8E23"); // 경도비만에 대한 배경 색상
                 break;
             case "고도비만":
-                backgroundColor = Color.parseColor("#FF0000"); // 고도비만에 대한 배경 색상
+                backgroundColor = Color.parseColor("#CD853F"); // 고도비만에 대한 배경 색상
                 break;
             default:
                 backgroundColor = Color.parseColor("#FFFFFF"); // 기본 배경 색상 (흰색)

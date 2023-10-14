@@ -34,7 +34,7 @@ public class SubMenuActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private FirebaseDatabase mFirebaseDatabase;
-    private TextView txtEmail2, txtName2, age_limit, height_limit, weight_limit;
+    private TextView age_limit, height_limit, weight_limit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +48,10 @@ public class SubMenuActivity extends AppCompatActivity {
         age_text = (EditText) findViewById(R.id.age_text);
         height_text = (EditText) findViewById(R.id.height_text);
         weight_text = (EditText) findViewById(R.id.weight_text);
-        txtEmail2 = (TextView) findViewById(R.id.txtEmail2);
-        txtName2 = (TextView) findViewById(R.id.txtName2);
         age_limit = (TextView) findViewById(R.id.age_limit);
         height_limit = (TextView) findViewById(R.id.height_limit);
         weight_limit = (TextView) findViewById(R.id.weight_limit);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-
-        txtEmail2.setText(mFirebaseUser.getEmail());
-        txtName2.setText(mFirebaseUser.getDisplayName());
 
         btn_cancel = (Button) findViewById(R.id.btn_cancel);
 

@@ -49,8 +49,8 @@ public class ProfileActivity extends AppCompatActivity {
         weight_text2 = (TextView) findViewById(R.id.weight_text2);
         txtEmail = (TextView) findViewById(R.id.txtEmail);
         txtName = (TextView) findViewById(R.id.txtName);
-        txtEmail.setText(mFirebaseUser.getEmail());
-        txtName.setText(mFirebaseUser.getDisplayName());
+        txtEmail.setText("  " + mFirebaseUser.getEmail());
+        txtName.setText("  " + mFirebaseUser.getDisplayName());
         sex = (TextView) findViewById(R.id.sex_group);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
@@ -76,9 +76,9 @@ public class ProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                                     User user = dataSnapshot.getValue(User.class);
-                                    age_text2.setText(user.getAge());
-                                    height_text2.setText(user.getHeight());
-                                    weight_text2.setText(user.getWeight());
+                                    age_text2.setText("  " + user.getAge());
+                                    height_text2.setText("  " + user.getHeight());
+                                    weight_text2.setText("  " + user.getWeight());
                                     // user 데이터를 사용하여 출력
                                 }
 
@@ -109,10 +109,9 @@ public class ProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                                     User user = dataSnapshot.getValue(User.class);
-                                    age_text2.setText(user.getAge());
-                                    height_text2.setText(user.getHeight());
-                                    weight_text2.setText(user.getWeight());
-                                    sex.setText(user.getSex());
+                                    age_text2.setText("  " + user.getAge());
+                                    height_text2.setText("  " + user.getHeight());
+                                    weight_text2.setText("  " + user.getWeight());
                                     // user 데이터를 사용하여 출력
                                 }
 
@@ -151,12 +150,11 @@ public class ProfileActivity extends AppCompatActivity {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         User user = dataSnapshot.getValue(User.class);
-                        age_text.setText(user.getAge());
-                        height_text.setText(user.getHeight());
-                        weight_text.setText(user.getWeight());
+                        age_text.setText("  " + user.getAge());
+                        height_text.setText("  " + user.getHeight());
+                        weight_text.setText("  " + user.getWeight());
+                        sex.setText("  " + user.getSex() + "성");
                         // user 데이터를 사용하여 출력
-
-
                     }
 
                     @Override

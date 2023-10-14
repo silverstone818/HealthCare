@@ -70,8 +70,8 @@ public class UserdataActivity extends AppCompatActivity {
         sex = (RadioGroup) findViewById(R.id.sex_group);
 
 
-        txtEmail2.setText(mFirebaseUser.getEmail());
-        txtName2.setText(mFirebaseUser.getDisplayName());
+        txtEmail2.setText("  " + mFirebaseUser.getEmail());
+        txtName2.setText("  " + mFirebaseUser.getDisplayName());
 
         btn_cancel = (Button) findViewById(R.id.btn_cancel);
 
