@@ -138,7 +138,7 @@ public class MenuFragment extends Fragment {
 
         pieChart.getDescription().setEnabled(false);
 
-        PieDataSet dataSet = new PieDataSet(entries, "/  BMI 수치");
+        PieDataSet dataSet = new PieDataSet(entries, "");
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         dataSet.setValueTextSize(0f); // 숫자 값 크기를 0으로 설정하여 숨김
 
