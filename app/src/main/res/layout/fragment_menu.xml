@@ -7,13 +7,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    android:gravity="center"
     tools:context=".MenuFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:gravity="center"
+        android:layout_gravity="center"
         android:orientation="vertical">
 
         <FrameLayout
@@ -23,38 +24,33 @@
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/piechart"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
                 android:layout_marginTop="30dp" />
 
             <TextView
                 android:id="@+id/BMI_N"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
                 android:layout_gravity="center"
                 android:text="중앙 텍스트"
                 android:textSize="30sp"
                 android:fontFamily="@font/lotte_bold"
-                android:textColor="#000000" />
+                android:textColor="#000000"/>
         </FrameLayout>
 
         <LinearLayout
             android:id="@+id/prp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <Button
                 android:id="@+id/StatBtn"
                 android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="1dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
+                android:layout_height="wrap_content"
                 android:backgroundTint="#FFFFFF"
                 android:text="정상" />
         </LinearLayout>
@@ -63,19 +59,15 @@
             android:id="@+id/menuTwoBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_weight="1"
             android:layout_gravity="center"
             android:orientation="vertical">
 
             <Button
                 android:id="@+id/btn_proflie"
                 android:layout_width="300dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="1dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
                 android:backgroundTint="@color/white"
                 android:text="💁🏻ᩚ 회원정보                               ->"
                 android:textSize="15dp" />
@@ -83,12 +75,8 @@
             <Button
                 android:id="@+id/btn_food"
                 android:layout_width="300dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="1dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
                 android:backgroundTint="@color/white"
                 android:text="🍽️ᩚ 식단정보                                ->"
                 android:textSize="15dp" />
@@ -96,12 +84,8 @@
             <Button
                 android:id="@+id/btn_record"
                 android:layout_width="300dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="1dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
                 android:backgroundTint="@color/white"
                 android:text="📊️ 운동기록                                ->"
                 android:textSize="15dp" />
@@ -109,22 +93,18 @@
             <Button
                 android:id="@+id/btn_map"
                 android:layout_width="300dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="1dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
                 android:backgroundTint="@color/white"
                 android:text="🏋️ 헬스장맵                                ->"
                 android:textSize="15dp" />
         </LinearLayout>
-    </LinearLayout>
 
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="bottom"
         android:orientation="horizontal">
 
         <Button

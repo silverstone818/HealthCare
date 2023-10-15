@@ -52,15 +52,6 @@ public class ProfileActivity extends AppCompatActivity {
         sex = (TextView) findViewById(R.id.sex_group);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
-        btn_cancel = (Button) findViewById(R.id.btn_cancel);
-
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
 
         DatabaseReference userRef = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/AfterData");
 

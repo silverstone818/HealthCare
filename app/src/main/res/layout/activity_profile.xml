@@ -35,13 +35,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
         android:gravity="center">
-
-        <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="#00FFFFFF" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,9 +56,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="42.1dp"
-        android:layout_marginRight="42.1dp"
+        android:gravity="center"
         android:orientation="vertical">
 
 
@@ -87,8 +81,6 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="-3dp"
                 android:paddingTop="1dp"
-                android:gravity="center"
-                android:textAlignment="viewStart"
                 android:textSize="20dp"
                 android:textColor="@color/black"
                 android:text=""
@@ -116,8 +108,6 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="-3dp"
                 android:paddingTop="1dp"
-                android:gravity="center"
-                android:textAlignment="viewStart"
                 android:textSize="20dp"
                 android:textColor="@color/black"
                 android:text=""
@@ -128,12 +118,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_marginTop="10dp">
             <TextView
                 android:id="@+id/Icon_age"
                 android:layout_width="50dp"
-                android:layout_height="38.2dp"
-                android:layout_marginTop="-2.5dp"
+                android:layout_height="40dp"
                 android:gravity="center"
                 android:text="나이"
                 android:textSize="15dp"
@@ -144,6 +134,7 @@
                 android:layout_width="280dp"
                 android:layout_height="38dp"
                 android:layout_marginStart="-3dp"
+
                 android:paddingTop="1dp"
                 android:gravity="center"
                 android:textAlignment="viewStart"
@@ -155,12 +146,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_marginTop="10dp">
             <TextView
                 android:id="@+id/Icon_height"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="-2.4dp"
                 android:gravity="center"
                 android:text="키"
                 android:textSize="15dp"
@@ -171,6 +162,7 @@
                 android:layout_width="280dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="-3dp"
+
                 android:paddingTop="1dp"
                 android:gravity="center"
                 android:textAlignment="viewStart"
@@ -182,12 +174,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_marginTop="10dp">
             <TextView
                 android:id="@+id/Icon_weight"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="-2.4dp"
                 android:gravity="center"
                 android:text="몸무게"
                 android:textSize="15dp"
@@ -225,12 +217,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_marginTop="10dp">
             <TextView
                 android:id="@+id/Icon_age"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="-2.4dp"                android:gravity="center"
+                android:gravity="center"
                 android:text="나이"
                 android:textSize="15dp"
                 android:textColor="@color/black"
@@ -251,12 +244,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_marginTop="10dp">
             <TextView
                 android:id="@+id/Icon_height"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="-2.4dp"
                 android:gravity="center"
                 android:text="키"
                 android:textSize="15dp"
@@ -278,12 +271,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_marginTop="10dp">
             <TextView
                 android:id="@+id/Icon_weight"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="-2.4dp"
                 android:gravity="center"
                 android:text="몸무게"
                 android:textSize="15dp"
