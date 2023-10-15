@@ -167,7 +167,11 @@ public class UserdataActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(age_text.getText().toString().length() == 0){
+                if(user.getSex() == null){
+                    Toast.makeText(UserdataActivity.this, "성별를 선택해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if(age_text.getText().toString().length() == 0){
                     Toast.makeText(UserdataActivity.this, "나이를 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
