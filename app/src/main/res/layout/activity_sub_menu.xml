@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -46,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lotte"
-            android:text="개인정보수정"
+            android:text="신체정보수정"
             android:textColor="@color/black"
             android:textSize="15dp" />
         <TextView
@@ -64,8 +65,8 @@
         android:layout_marginRight="42.1dp"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
@@ -73,6 +74,7 @@
                 android:id="@+id/Icon_age"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
+                android:layout_marginTop="-2.4dp"
                 android:gravity="center"
                 android:text="나이"
                 android:textSize="15dp"
@@ -82,7 +84,6 @@
                 android:id="@+id/age_text"
                 android:layout_width="280dp"
                 android:layout_height="40dp"
-                android:layout_toRightOf="@id/Icon_age"
                 android:layout_marginStart="-3dp"
                 android:paddingTop="1dp"
                 android:paddingStart="10dp"
@@ -93,7 +94,7 @@
                 android:inputType="number"
                 android:textColor="@color/black"
                 android:background="@drawable/border_background"/>
-        </RelativeLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/age_limit"
@@ -103,14 +104,15 @@
             android:text="0/3"
             android:textColor="#777777" />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/Icon_height"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
+                android:layout_marginTop="-2.4dp"
                 android:gravity="center"
                 android:text="키"
                 android:textSize="15dp"
@@ -120,7 +122,6 @@
                 android:id="@+id/height_text"
                 android:layout_width="280dp"
                 android:layout_height="40dp"
-                android:layout_toRightOf="@id/Icon_height"
                 android:layout_marginStart="-3dp"
                 android:paddingTop="1dp"
                 android:paddingStart="10dp"
@@ -131,7 +132,7 @@
                 android:inputType="number"
                 android:textColor="@color/black"
                 android:background="@drawable/border_background"/>
-        </RelativeLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/height_limit"
@@ -141,14 +142,15 @@
             android:text="0/3"
             android:textColor="#777777" />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/Icon_weight"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
+                android:layout_marginTop="-2.4dp"
                 android:gravity="center"
                 android:text="몸무게"
                 android:textSize="15dp"
@@ -158,7 +160,6 @@
                 android:id="@+id/weight_text"
                 android:layout_width="280dp"
                 android:layout_height="40dp"
-                android:layout_toRightOf="@id/Icon_weight"
                 android:layout_marginStart="-3dp"
                 android:paddingTop="1dp"
                 android:paddingStart="10dp"
@@ -169,7 +170,7 @@
                 android:inputType="number"
                 android:textColor="@color/black"
                 android:background="@drawable/border_background"/>
-        </RelativeLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/weight_limit"
@@ -185,7 +186,7 @@
         android:layout_height="match_parent"
         android:gravity="bottom"
         android:orientation="vertical">
-            <Button
+        <Button
             android:id="@+id/btn_move2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

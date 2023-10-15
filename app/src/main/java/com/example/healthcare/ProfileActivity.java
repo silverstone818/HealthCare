@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private TextView txtEmail, txtName;
+    private TextView txtName;
 
     private Button btn_move, btn_cancel;
     private TextView age_text, age_text2;
@@ -47,9 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
         age_text2 = (TextView) findViewById(R.id.age_text2);
         height_text2 = (TextView) findViewById(R.id.height_text2);
         weight_text2 = (TextView) findViewById(R.id.weight_text2);
-        txtEmail = (TextView) findViewById(R.id.txtEmail);
         txtName = (TextView) findViewById(R.id.txtName);
-        txtEmail.setText("  " + mFirebaseUser.getEmail());
         txtName.setText("  " + mFirebaseUser.getDisplayName());
         sex = (TextView) findViewById(R.id.sex_group);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
