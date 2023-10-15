@@ -152,119 +152,40 @@ public class MenuFragment extends Fragment {
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // 데이터가 존재하는 경우
-                    mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/AfterData")
-                            .addChildEventListener(new ChildEventListener() {
-                                @Override
-                                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                                    User user = dataSnapshot.getValue(User.class);
+                String childPath = dataSnapshot.exists() ? "AfterData" : "BeforeData";
 
-                                    // BMI 계산
-                                    float weight = Float.parseFloat(user.getWeight());
-                                    float height = Float.parseFloat(user.getHeight());
-                                    String sex = user.getSex();
+                DatabaseReference dataRef = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child(childPath);
+                dataRef.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        User user = dataSnapshot.getValue(User.class);
+                        // BMI 계산
+                        BMI_Calc(user, view);
+                    }
 
-                                    progressValue = (float) (weight / Math.pow(height / 100, 2));
-                                    String stat = calculateStat(sex, progressValue);
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        // 변경된 데이터 처리
+                        User user = dataSnapshot.getValue(User.class);
+                        // BMI 계산
+                        BMI_Calc(user, view);
+                    }
 
-                                    Button Stat = view.findViewById(R.id.StatBtn);
-                                    TextView BMI_N = view.findViewById(R.id.BMI_N);
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                        // 삭제된 데이터 처리
+                    }
 
-                                    String formattedValue = String.format("%.1f", progressValue);
-                                    Stat.setText(stat);
-                                    BMI_N.setText(formattedValue);
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        // 이동된 데이터 처리
+                    }
 
-                                    int backgroundColor = getBackgroundColorForStat(stat);
-                                    Stat.setBackgroundColor(backgroundColor);
-                                }
-
-                                @Override
-                                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                                    // 변경된 데이터 처리
-                                    User user = dataSnapshot.getValue(User.class);
-
-                                    // BMI 계산
-                                    float weight = Float.parseFloat(user.getWeight());
-                                    float height = Float.parseFloat(user.getHeight());
-                                    String sex = user.getSex();
-
-                                    progressValue = (float) (weight / Math.pow(height / 100, 2));
-                                    String stat = calculateStat(sex, progressValue);
-
-                                    Button Stat = view.findViewById(R.id.StatBtn);
-                                    TextView BMI_N = view.findViewById(R.id.BMI_N);
-
-                                    String formattedValue = String.format("%.1f", progressValue);
-                                    Stat.setText(stat);
-                                    BMI_N.setText(formattedValue);
-
-                                    int backgroundColor = getBackgroundColorForStat(stat);
-                                    Stat.setBackgroundColor(backgroundColor);
-                                }
-
-                                @Override
-                                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                                    // 삭제된 데이터 처리
-                                }
-
-                                @Override
-                                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                                    // 이동된 데이터 처리
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    // 처리할 오류가 있으면 여기에 작성
-                                }
-                            });
-                } else {
-                    mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/BeforeData")
-                            .addChildEventListener(new ChildEventListener() {
-                                @Override
-                                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                                    User user = dataSnapshot.getValue(User.class);
-
-                                    // BMI 계산
-                                    float weight = Float.parseFloat(user.getWeight());
-                                    float height = Float.parseFloat(user.getHeight());
-                                    String sex = user.getSex();
-
-                                    progressValue = (float) (weight / Math.pow(height / 100, 2));
-                                    String stat = calculateStat(sex, progressValue);
-
-                                    Button Stat = view.findViewById(R.id.StatBtn);
-                                    TextView BMI_N = view.findViewById(R.id.BMI_N);
-
-                                    String formattedValue = String.format("%.1f", progressValue);
-                                    Stat.setText(stat);
-                                    BMI_N.setText(formattedValue);
-
-                                    int backgroundColor = getBackgroundColorForStat(stat);
-                                    Stat.setBackgroundColor(backgroundColor);
-                                }
-
-                                @Override
-                                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                                    // 변경된 데이터 처리
-                                }
-
-                                @Override
-                                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                                    // 삭제된 데이터 처리
-                                }
-
-                                @Override
-                                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                                    // 이동된 데이터 처리
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    // 처리할 오류가 있으면 여기에 작성
-                                }
-                            });
-                }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        // 처리할 오류가 있으면 여기에 작성
+                    }
+                });
             }
 
             @Override
@@ -272,6 +193,7 @@ public class MenuFragment extends Fragment {
                 // 처리할 오류가 있으면 여기에 작성
             }
         });
+
 
         Button StatBtn = view.findViewById(R.id.StatBtn);
         StatBtn.setOnClickListener(new View.OnClickListener() {
@@ -283,7 +205,42 @@ public class MenuFragment extends Fragment {
                 // 클릭 횟수가 10 이상인지 확인
                 if (clickCount >= 5) {
                     // 팝업 대화상자를 표시합니다.
-                    showPopupDialog();
+                    showPopupDialog("저체중ㅡ : ~ 18.5 " + "\n" +
+                            "정상체중 : 18.5 ~ 24.9" + "\n" +
+                            "과체중ㅡ : 25.0 ~ 29.9" + "\n" +
+                            "경도비만 :  30.0 ~ 34.9" + "\n" +
+                            "고도비만 : 35.0 ~ 39.9" + "\n" +
+                            "고위험군 : 40 ~");
+                }
+            }
+        });
+
+        Button btn_food = view.findViewById(R.id.btn_food);
+        btn_food.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 클릭 횟수 증가
+                clickCount++;
+
+                // 클릭 횟수가 10 이상인지 확인
+                if (clickCount >= 1) {
+                    // 팝업 대화상자를 표시합니다.
+                    showPopupDialog("아직 준비중입니다!");
+                }
+            }
+        });
+
+        Button btn_map = view.findViewById(R.id.btn_map);
+        btn_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 클릭 횟수 증가
+                clickCount++;
+
+                // 클릭 횟수가 10 이상인지 확인
+                if (clickCount >= 1) {
+                    // 팝업 대화상자를 표시합니다.
+                    showPopupDialog("아직 준비중입니다!");
                 }
             }
         });
@@ -443,20 +400,33 @@ public class MenuFragment extends Fragment {
             default:
                 backgroundColor = Color.parseColor("#FFFFFF"); // 기본 배경 색상 (흰색)
         }
-
         return backgroundColor;
     }
 
+    // BMI 계산
+    private void BMI_Calc(User user, View view) {
+        float weight = Float.parseFloat(user.getWeight());
+        float height = Float.parseFloat(user.getHeight());
+        String sex = user.getSex();
+
+        progressValue = (float) (weight / Math.pow(height / 100, 2));
+        String stat = calculateStat(sex, progressValue);
+
+        Button Stat = view.findViewById(R.id.StatBtn);
+        TextView BMI_N = view.findViewById(R.id.BMI_N);
+
+        String formattedValue = String.format("%.1f", progressValue);
+        Stat.setText(stat);
+        BMI_N.setText(formattedValue);
+
+        int backgroundColor = getBackgroundColorForStat(stat);
+        Stat.setBackgroundColor(backgroundColor);
+    }
+
     // 팝업
-    private void showPopupDialog() {
+    private void showPopupDialog(String info) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMessage(
-                        "저체중ㅡ : ~ 18.5 " + "\n" +
-                        "정상체중 : 18.5 ~ 24.9" + "\n" +
-                        "과체중ㅡ : 25.0 ~ 29.9" + "\n" +
-                        "경도비만 :  30.0 ~ 34.9" + "\n" +
-                        "고도비만 : 35.0 ~ 39.9" + "\n" +
-                        "고위험군 : 40 ~")
+        builder.setMessage(info)
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
