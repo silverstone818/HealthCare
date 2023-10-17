@@ -168,6 +168,9 @@ public class MenuFragment extends Fragment {
                     @Override
                     public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         // 변경된 데이터 처리
+                        User user = dataSnapshot.getValue(User.class);
+                        // BMI 계산
+                        BMI_Calc(user, view);
                     }
 
                     @Override
