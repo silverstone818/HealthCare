@@ -293,7 +293,7 @@ public class Pullup implements HealthKind{
                         tts.speak("조금 더 당겨주세요.", TextToSpeech.QUEUE_FLUSH, null, null);
                         goodPose = false;
                     }
-                    else if (maxAngle <85){
+                    else if (maxAngle <= 85 && waist_banding == false){
                         //좋은 자세 일 때
                         tts.speak("좋은 자세 입니다.", TextToSpeech.QUEUE_FLUSH, null, null);
                         goodPose = true;
