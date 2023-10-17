@@ -13,15 +13,17 @@ public class PushUp implements HealthKind{
     private int numAnglesInRange = 0;
     private int numPushUp = 0;
     private double maxAngle = 0;
-    private double temp = 140.0;
+    private double temp = 130.0;
     private double leftAngle = 0;
     private double rightAngle = 0;
     private double waistAngle = 0;
+    private double pelvicAngle = 0;
     private double contract;
     private TextToSpeech tts;
     private int MnumAnglesInRange;
     private boolean isPushUp = false;
     private boolean waist_banding = false;
+    private boolean pelvic_banding = false;
     private boolean goodPose = false;
     private boolean Tension = false;
     private double timeAsDoubleTemp;
@@ -151,7 +153,47 @@ public class PushUp implements HealthKind{
             PointF shoulderCenter = new PointF((leftShoulder.x + rightShoulder.x) / 2, (leftShoulder.y + rightShoulder.y) / 2);
 
             // 3. 엉덩이 중심점, 골반 중심점 및 어깨 중심점 사이의 각도를 계산합니다.
-            waistAngle = calculateAngle(hipCenter, shoulderCenter, new PointF(shoulderCenter.x, shoulderCenter.y - 1));
+            waistAngle = calculateWaistAngle(hipCenter, shoulderCenter, new PointF(shoulderCenter.x, shoulderCenter.y - 1));
+        }
+    }
+    public void pelvicBending(Pose pose){
+        PointF leftShoulder = null;
+        PointF rightShoulder = null;
+        PointF leftHip = null;
+        PointF rightHip = null;
+        PointF leftKnee = null;
+        PointF rightKnee = null;
+
+        // 어깨, 엉덩이, 무릎 중심점을 계산합니다.
+        if (pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER) != null) {
+            leftShoulder = pose.getPoseLandmark(PoseLandmark.LEFT_SHOULDER).getPosition();
+        }
+        if (pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER) != null) {
+            rightShoulder = pose.getPoseLandmark(PoseLandmark.RIGHT_SHOULDER).getPosition();
+        }
+        if (pose.getPoseLandmark(PoseLandmark.LEFT_HIP) != null) {
+            leftHip = pose.getPoseLandmark(PoseLandmark.LEFT_HIP).getPosition();
+        }
+        if (pose.getPoseLandmark(PoseLandmark.RIGHT_HIP) != null) {
+            rightHip = pose.getPoseLandmark(PoseLandmark.RIGHT_HIP).getPosition();
+        }
+        if (pose.getPoseLandmark(PoseLandmark.LEFT_KNEE) != null) {
+            leftKnee = pose.getPoseLandmark(PoseLandmark.LEFT_KNEE).getPosition();
+        }
+        if (pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE) != null) {
+            rightKnee = pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE).getPosition();
+        }
+
+        if (leftShoulder != null && rightShoulder != null
+                && leftHip != null && rightHip != null
+                && leftKnee != null && rightKnee != null) {
+            // 어깨 중심점과 엉덩이 중심점을 연결한 선과
+            // 엉덩이 중심점과 무릎 중심점을 연결한 선 사이의 각도를 계산합니다.
+            double angleShoulderHipKnee = calculatePelvicAngle(leftShoulder, leftHip, leftKnee);
+            double angleHipKneeShoulder = calculatePelvicAngle(leftHip, leftKnee, leftShoulder);
+
+            // 두 선이 벌어진 각도는 두 각도의 합이 됩니다.
+            pelvicAngle = (angleShoulderHipKnee + angleHipKneeShoulder) / 2;
         }
     }
 
@@ -191,7 +233,7 @@ public class PushUp implements HealthKind{
         // 새로운 푸쉬업마다 상태 초기화
         if (allAngle == 0) {
             isPushUp = false;
-            waist_banding = false;
+            pelvic_banding = false;
             numAnglesInRange = 0;
         }
 
@@ -199,12 +241,20 @@ public class PushUp implements HealthKind{
                 && rightShoulder != null && rightElbow != null && rightWrist != null) {
 
             waistBending(pose);
+            pelvicBending(pose);
 
-            if (allAngle != 0 && allAngle <= 100) {
+            if (allAngle != 0 && allAngle <= 90) {
                 numAnglesInRange++;
-                if (numAnglesInRange >= 12 && !isPushUp) {  // 푸쉬업 체크
+                if (numAnglesInRange >= 15 && !isPushUp) {  // 푸쉬업 체크
                     tts.speak("Up!!", TextToSpeech.QUEUE_FLUSH, null, null);
-                    if(waistAngle >= 130 && waistAngle <= 190){
+                    //허리 각도 확인
+                    if (pelvicAngle >= 130 && pelvicAngle <= 170){
+                        pelvic_banding = true;
+                    }else{
+                        pelvic_banding = false;
+                    }
+                    //허리 굽음 확인
+                    if(waistAngle >= 180 && waistAngle <= 300){
                         waist_banding = true;
                     }else{
                         waist_banding = false;
@@ -222,11 +272,11 @@ public class PushUp implements HealthKind{
                 }
             }
 
-            if (allAngle > 150) {
+            if (allAngle > 140) {
                 if(isPushUp){
                     numPushUp++;
                     maxAngle = temp;
-                    temp = 140;
+                    temp = 130;
 
                     long now = System.currentTimeMillis();
                     Date date = new Date(now);
@@ -241,24 +291,41 @@ public class PushUp implements HealthKind{
                         contract = timeAsDouble - timeAsDoubleTemp;
                     }
 
-                    if (waistAngle >= 130 && waistAngle <= 180){
+                    if(waistAngle >= 180 && waistAngle <= 300){
                         waist_banding = true;
                     }else{
                         waist_banding = false;
                     }
-                    if(waist_banding == false){
-                        //허리가 굽었을 때
+
+                    if (pelvicAngle >= 130 && pelvicAngle <= 170){
+                        pelvic_banding = true;
+                    }else{
+                        pelvic_banding = false;
+                    }
+
+                    if(waist_banding == true) {
+                        //허리가 휘었을 때
                         tts.speak("허리를 펴주세요.", TextToSpeech.QUEUE_FLUSH, null, null);
+                        goodPose = false;
+                    }
+                    else if(pelvic_banding == false){
+                        //허리가 내려갔을 때
+                        tts.speak("허리를 올려주세요.", TextToSpeech.QUEUE_FLUSH, null, null);
                         goodPose = false;
                     }
                     else if(maxAngle > 100){
                         //조금 구부렸을 때
-                        tts.speak("조금 더 구부려주세요.", TextToSpeech.QUEUE_FLUSH, null, null);
+                        tts.speak("조금 더 내려가세요.", TextToSpeech.QUEUE_FLUSH, null, null);
                         goodPose = false;
                     }
-                    else if(maxAngle >= 50 && maxAngle <= 80 && waist_banding == true){
+                    else if(maxAngle >= 50 && maxAngle <= 80 && pelvic_banding == true){
                         //좋은 자세 일 때
-                        tts.speak("좋은 자세 입니다.", TextToSpeech.QUEUE_FLUSH, null, null);
+                        tts.speak("좋은 자세입니다.", TextToSpeech.QUEUE_FLUSH, null, null);
+                        goodPose = true;
+                    }
+                    else if(maxAngle >= 50 && maxAngle <= 60 && pelvic_banding == true && waist_banding == true){
+                        //좋은 자세 일 때
+                        tts.speak("완벽한 자세입니다.", TextToSpeech.QUEUE_FLUSH, null, null);
                         goodPose = true;
                     }
                 }
@@ -301,6 +368,61 @@ public class PushUp implements HealthKind{
         // 각도를 도 단위로 변환합니다.
         angle = Math.toDegrees(angle);
 
+        return angle;
+    }
+
+    private static double calculateWaistAngle(PointF hip, PointF knee, PointF ankle) {
+        if (hip == null || knee == null || ankle == null) {
+            return 0;
+        }
+        double angle = Math.toDegrees(Math.atan2(hip.y - knee.y, hip.x - knee.x)
+                - Math.atan2(ankle.y - knee.y, ankle.x - knee.x));
+
+        if (angle < 0) {
+            angle += 360;
+        }
+
+        return angle;
+    }
+
+    public static double calculatePelvicAngle(PointF point1, PointF point2, PointF point3) {
+        if (point1 == null || point2 == null || point3 == null) {
+            // 필요한 점이 없는 경우 처리
+            return 0.0;
+        }
+
+        // 벡터 1: point1에서 point2로 향하는 벡터
+        float vector1X = point2.x - point1.x;
+        float vector1Y = point2.y - point1.y;
+
+        // 벡터 2: point3에서 point2로 향하는 벡터
+        float vector2X = point2.x - point3.x;
+        float vector2Y = point2.y - point3.y;
+
+        // 벡터 1과 벡터 2의 내적을 계산
+        double dotProduct = vector1X * vector2X + vector1Y * vector2Y;
+
+        // 벡터 1의 크기 계산
+        double magnitude1 = Math.sqrt(vector1X * vector1X + vector1Y * vector1Y);
+
+        // 벡터 2의 크기 계산
+        double magnitude2 = Math.sqrt(vector2X * vector2X + vector2Y * vector2Y);
+
+        // 두 벡터의 내적을 이용하여 각도를 계산 (라디안)
+        double cosTheta = dotProduct / (magnitude1 * magnitude2);
+
+        // acos 함수를 사용하여 라디안 각도를 얻음
+        double angleInRadians = Math.acos(cosTheta);
+
+        // 라디안을 원하는 범위로 변환 (0도에서 250도)
+        double angle = Math.toDegrees(angleInRadians);
+
+        // 범위를 0도에서 250도로 조정
+        if (angle > 250.0) {
+            angle = 250.0;
+        } else if (angle < 0.0) {
+            angle = 0.0;
+        }
         return angle;
     }
 }

@@ -49,6 +49,8 @@ public class Squat implements HealthKind{
         this.maxAngle = maxAngle;
     }
 
+    public void pelvicBending(Pose pose) {}
+
     public double getTemp() {
         return temp;
     }

@@ -65,6 +65,9 @@ public interface HealthKind {
     //운동 허리 각도 함수
     void waistBending(Pose pose);
 
+    //운동 허리 각도 함수
+    void pelvicBending(Pose pose);
+
     //운동 각도 총 계산 함수
     void onHealthAngle(Pose pose);
 }

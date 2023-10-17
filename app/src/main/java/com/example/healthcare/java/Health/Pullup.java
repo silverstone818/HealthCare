@@ -56,6 +56,8 @@ public class Pullup implements HealthKind{
         this.maxAngle = maxAngle;
     }
 
+    public void pelvicBending(Pose pose) {}
+
     public double getTemp() {
         return temp;
     }
