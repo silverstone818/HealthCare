@@ -26,8 +26,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/lotte"
             android:text="스쿼트"
             android:textAlignment="center"
@@ -40,8 +40,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/lotte"
             android:text="SQUST"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="20dp"
             android:textColor="#C0C0C0"
             android:textSize="30dp" />
     </FrameLayout>
@@ -64,8 +64,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/lotte"
             android:text="푸쉬업"
             android:textAlignment="center"
@@ -78,8 +78,8 @@
             android:layout_gravity="bottom|right"
             android:fontFamily="@font/lotte"
             android:text="PUSH UP"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="20dp"
             android:textColor="#C0C0C0"
             android:textSize="30dp" />
     </FrameLayout>
@@ -102,8 +102,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/lotte"
             android:text="풀 업"
             android:textAlignment="center"
@@ -116,8 +116,8 @@
             android:layout_gravity="bottom|right"
             android:fontFamily="@font/lotte"
             android:text="PULL UP"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="20dp"
             android:textColor="#C0C0C0"
             android:textSize="30dp" />
     </FrameLayout>

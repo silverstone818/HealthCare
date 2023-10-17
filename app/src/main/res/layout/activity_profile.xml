@@ -197,6 +197,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/Gone1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lotte"
@@ -207,12 +208,14 @@
             android:textSize="15dp" />
 
         <View
+            android:id="@+id/Gone2"
             android:layout_width="330dp"
             android:layout_height="2dp"
             android:layout_marginTop="10dp"
             android:background="@color/gray" />
 
         <LinearLayout
+            android:id="@+id/Gone3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -243,6 +246,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:id="@+id/Gone4"
             android:layout_marginTop="10dp">
             <TextView
                 android:id="@+id/Icon_height"
@@ -270,6 +274,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:id="@+id/Gone5"
             android:layout_marginTop="10dp">
             <TextView
                 android:id="@+id/Icon_weight"

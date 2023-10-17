@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,8 @@ public class SubMenuActivity extends AppCompatActivity {
     private FirebaseUser mFirebaseUser;
     private FirebaseDatabase mFirebaseDatabase;
     private TextView age_limit, height_limit, weight_limit;
+    private User user;
+    private RadioGroup sex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,7 @@ public class SubMenuActivity extends AppCompatActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        User user = new User();
+        user = new User();
 
         age_text = (EditText) findViewById(R.id.age_text);
         height_text = (EditText) findViewById(R.id.height_text);
@@ -52,7 +55,7 @@ public class SubMenuActivity extends AppCompatActivity {
         height_limit = (TextView) findViewById(R.id.height_limit);
         weight_limit = (TextView) findViewById(R.id.weight_limit);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-
+        sex = (RadioGroup) findViewById(R.id.sex_group1);
         btn_cancel = (Button) findViewById(R.id.btn_cancel);
 
         btn_cancel.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +63,20 @@ public class SubMenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(SubMenuActivity.this, ProfileActivity.class));
                 finish();
+            }
+        });
+
+        sex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.male_btn1:
+                        user.setSex("남");
+                        break;
+                    case R.id.female_btn1:
+                        user.setSex("여");
+                        break;
+                }
             }
         });
 
@@ -227,6 +244,7 @@ public class SubMenuActivity extends AppCompatActivity {
 
                 // 수정할 User 객체 생성
                 User updatedUser = new User();
+                updatedUser.setSex(user.getSex());
                 updatedUser.setAge(age_text.getText().toString());
                 updatedUser.setHeight(height_text.getText().toString());
                 updatedUser.setWeight(weight_text.getText().toString());
@@ -239,6 +257,7 @@ public class SubMenuActivity extends AppCompatActivity {
 
                 // 수정할 데이터의 값을 Map 객체로 만듭니다.
                 Map<String, Object> updates = new HashMap<>();
+                updates.put("sex", updatedUser.getSex());
                 updates.put("age", updatedUser.getAge());
                 updates.put("height", updatedUser.getHeight());
                 updates.put("weight", updatedUser.getWeight());

@@ -1,9 +1,11 @@
 package com.example.healthcare;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,7 +33,9 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private FirebaseDatabase mFirebaseDatabase;
-    private TextView sex;
+    private TextView sex, Gone1;
+    private View Gone2;
+    private LinearLayout Gone3, Gone4, Gone5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,13 @@ public class ProfileActivity extends AppCompatActivity {
         txtName.setText("  " + mFirebaseUser.getDisplayName());
         sex = (TextView) findViewById(R.id.sex_group);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
+        Gone1 = (TextView) findViewById(R.id.Gone1);
+        Gone2 = (View) findViewById(R.id.Gone2);
+        Gone3 = (LinearLayout) findViewById(R.id.Gone3);
+        Gone4 = (LinearLayout) findViewById(R.id.Gone4);
+        Gone5 = (LinearLayout) findViewById(R.id.Gone5);
+
+
 
 
         DatabaseReference userRef = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/AfterData");
@@ -61,28 +72,34 @@ public class ProfileActivity extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     // 데이터가 존재하는 경우
                     mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/AfterData")
-                            .addChildEventListener(new ChildEventListener() {
-                                @Override
-                                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                                    User user = dataSnapshot.getValue(User.class);
-                                    age_text2.setText("  " + user.getAge());
-                                    height_text2.setText("  " + user.getHeight());
-                                    weight_text2.setText("  " + user.getWeight());
-                                    // user 데이터를 사용하여 출력
-                                }
+                                        .addChildEventListener(new ChildEventListener() {
+                                            @Override
+                                            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                                User user = dataSnapshot.getValue(User.class);
+                                                if(user.getSex() == null){
+                                                    sex.setText("  성");
+                                                }
+                                                else {
+                                                    sex.setText("  " + user.getSex() + "성");
+                                                }
+                                                age_text2.setText("  " + user.getAge());
+                                                height_text2.setText("  " + user.getHeight());
+                                                weight_text2.setText("  " + user.getWeight());
+                                                // user 데이터를 사용하여 출력
+                                            }
 
-                                @Override
-                                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                                    // 변경된 데이터 처리
-                                }
+                                            @Override
+                                            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                                // 변경된 데이터 처리
+                                            }
 
-                                @Override
-                                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                                    // 삭제된 데이터 처리
-                                }
+                                            @Override
+                                            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                                                // 삭제된 데이터 처리
+                                            }
 
-                                @Override
-                                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                            @Override
+                                            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                                     // 이동된 데이터 처리
                                 }
 
@@ -98,9 +115,16 @@ public class ProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                                     User user = dataSnapshot.getValue(User.class);
-                                    age_text2.setText("  " + user.getAge());
-                                    height_text2.setText("  " + user.getHeight());
-                                    weight_text2.setText("  " + user.getWeight());
+                                    if((Integer.parseInt(user.getAge()) == 0)){
+                                        age_text.setText("  입력안함");
+                                        height_text.setText("  입력안함");
+                                        weight_text.setText("  입력안함");
+                                    }
+                                    else{
+                                        age_text.setText("  " + user.getAge());
+                                        height_text.setText("  " + user.getHeight());
+                                        weight_text.setText("  " + user.getWeight());
+                                    }
                                     // user 데이터를 사용하여 출력
                                 }
 
@@ -136,12 +160,22 @@ public class ProfileActivity extends AppCompatActivity {
 
         mFirebaseDatabase.getReference("memos/" + mFirebaseAuth.getUid()+"/BeforeData")
                 .addChildEventListener(new ChildEventListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         User user = dataSnapshot.getValue(User.class);
-                        age_text.setText("  " + user.getAge());
-                        height_text.setText("  " + user.getHeight());
-                        weight_text.setText("  " + user.getWeight());
+                        if((Integer.parseInt(user.getAge()) == 0)){
+                            Gone1.setVisibility(View.GONE);
+                            Gone2.setVisibility(View.GONE);
+                            Gone3.setVisibility(View.GONE);
+                            Gone4.setVisibility(View.GONE);
+                            Gone5.setVisibility(View.GONE);
+                        }
+                        else{
+                            age_text.setText("  " + user.getAge());
+                            height_text.setText("  " + user.getHeight());
+                            weight_text.setText("  " + user.getWeight());
+                        }
                         sex.setText("  " + user.getSex() + "성");
                         // user 데이터를 사용하여 출력
                     }

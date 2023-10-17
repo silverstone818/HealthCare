@@ -37,7 +37,7 @@ import java.util.Map;
 
 public class UserdataActivity extends AppCompatActivity {
 
-    private Button btn_move2, btn_cancel;
+    private Button btn_move2, btn_cancel, btn_move3;
     private EditText age_text;
     private EditText height_text;
     private EditText weight_text;
@@ -67,6 +67,7 @@ public class UserdataActivity extends AppCompatActivity {
         weight_limit = (TextView) findViewById(R.id.weight_limit);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         sex = (RadioGroup) findViewById(R.id.sex_group);
+        btn_move3 = (Button) findViewById(R.id.btn_move3);
 
         txtName2.setText("  " + mFirebaseUser.getDisplayName());
 
@@ -181,11 +182,29 @@ public class UserdataActivity extends AppCompatActivity {
                     return;
                 }
 
+                user.setAge(age_text.getText().toString());
+                user.setHeight(height_text.getText().toString());
+                user.setWeight(weight_text.getText().toString());
+
                 saveMemo();
 
-                Button moveButton;
-                moveButton = findViewById(R.id.btn_move2);
-                moveButton.setOnClickListener(onClickListener);
+                Intent intent = new Intent(UserdataActivity.this, TutorialActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        btn_move3.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+                user.setSex("");
+
+                user.setAge("0");
+                user.setHeight("0");
+                user.setWeight("0");
+
+                saveMemo();
 
                 Intent intent = new Intent(UserdataActivity.this, TutorialActivity.class);
                 startActivity(intent);
@@ -193,6 +212,8 @@ public class UserdataActivity extends AppCompatActivity {
             }
         });
     }
+
+
     Button.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -219,9 +240,9 @@ public class UserdataActivity extends AppCompatActivity {
     private void saveMemo(){
         User updatedUser = new User();
         updatedUser.setSex(user.getSex());
-        updatedUser.setAge(age_text.getText().toString());
-        updatedUser.setHeight(height_text.getText().toString());
-        updatedUser.setWeight(weight_text.getText().toString());
+        updatedUser.setAge(user.getAge());
+        updatedUser.setHeight(user.getHeight());
+        updatedUser.setWeight(user.getWeight());
         updatedUser.setName(mFirebaseUser.getDisplayName());
         updatedUser.setEmail(mFirebaseUser.getEmail());
 
