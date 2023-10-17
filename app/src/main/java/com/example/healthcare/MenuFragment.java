@@ -2,6 +2,7 @@ package com.example.healthcare;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -147,7 +148,7 @@ public class MenuFragment extends Fragment {
 
         pieChart.animateXY(3000, 3000);
 
-        DatabaseReference userRef = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("/AfterData");
+        DatabaseReference userRef = mFirebaseDatabase.getReference("memos/" + mFirebaseUser.getUid()).child("AfterData");
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -158,6 +159,7 @@ public class MenuFragment extends Fragment {
                 dataRef.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        // 변경된 데이터 처리
                         User user = dataSnapshot.getValue(User.class);
                         // BMI 계산
                         BMI_Calc(user, view);
@@ -166,9 +168,6 @@ public class MenuFragment extends Fragment {
                     @Override
                     public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         // 변경된 데이터 처리
-                        User user = dataSnapshot.getValue(User.class);
-                        // BMI 계산
-                        BMI_Calc(user, view);
                     }
 
                     @Override
@@ -193,7 +192,6 @@ public class MenuFragment extends Fragment {
                 // 처리할 오류가 있으면 여기에 작성
             }
         });
-
 
         Button StatBtn = view.findViewById(R.id.StatBtn);
         StatBtn.setOnClickListener(new View.OnClickListener() {
@@ -409,7 +407,7 @@ public class MenuFragment extends Fragment {
         float height = Float.parseFloat(user.getHeight());
         String sex = user.getSex();
 
-        progressValue = (float) (weight / Math.pow(height / 100, 2));
+        float progressValue = (float) (weight / Math.pow(height / 100, 2));
         String stat = calculateStat(sex, progressValue);
 
         Button Stat = view.findViewById(R.id.StatBtn);
