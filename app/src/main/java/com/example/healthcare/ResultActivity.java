@@ -46,7 +46,7 @@ public class ResultActivity extends AppCompatActivity {
     private ValueEventListener valueEventListener;
     private int num;
     private ArrayList<Double> maxAngle;
-    private ArrayList<Boolean> goodPose, waist_banding;
+    private ArrayList<Boolean> goodPose, waist_banding, pelvic_banding;
     private ArrayList<Double> contract;
     private ArrayList<Boolean> Tension;
     private int Health;
@@ -678,13 +678,13 @@ public class ResultActivity extends AppCompatActivity {
         double totalCaloriesBurned = user.getGood() * caloriesBurnedPerRep;
 
         for(int i = 0; i < num; i++){
-            if(maxAngle.get(i) < 56){
+            if(maxAngle.get(i) > 100){
                 user.setBig(user.getBig()+1);
             }
-            else if (maxAngle.get(i) > 85){
+            else if (maxAngle.get(i) < 90){
                 user.setSmall(user.getSmall() + 1);
             }
-            if (waist_banding.get(i) == false){
+            if (waist_banding.get(i) == true && pelvic_banding.get(i) == false){
                 user.setWaist(user.getWaist() + 1);
             }
             if (Tension.get(i) == false){
