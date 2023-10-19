@@ -14,11 +14,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.RadarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.RadarData;
+import com.github.mikephil.charting.data.RadarDataSet;
+import com.github.mikephil.charting.data.RadarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,7 +51,7 @@ public class ResultActivity extends AppCompatActivity {
     private ValueEventListener valueEventListener;
     private int num;
     private ArrayList<Double> maxAngle;
-    private ArrayList<Boolean> goodPose, waist_banding, pelvic_banding;
+    private ArrayList<Boolean> goodPose, waist_banding;
     private ArrayList<Double> contract;
     private ArrayList<Boolean> Tension;
     private int Health;
@@ -133,7 +138,6 @@ public class ResultActivity extends AppCompatActivity {
         Graph1();
         Graph2();
 
-
         btn_result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,8 +146,6 @@ public class ResultActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
     public void Graph1(){
         ArrayList<BarEntry> entry_chart = new ArrayList<>(); // 데이터를 담을 Arraylist
@@ -526,7 +528,7 @@ public class ResultActivity extends AppCompatActivity {
         if(user.getGood() == 12){
             user.setFb(user.getFb() + "\n자세가 완벽합니다! 이대로 꾸준히 정진해주세요!! 다음 운동도 파이팅!\n");
         }
-        
+
         user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + totalCaloriesBurned + " 칼로리\n");
         feedback.setText(user.getFb());
     }

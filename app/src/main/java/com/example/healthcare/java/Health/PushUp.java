@@ -2,6 +2,7 @@ package com.example.healthcare.java.Health;
 
 import android.graphics.PointF;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 
 import com.google.mlkit.vision.pose.Pose;
 import com.google.mlkit.vision.pose.PoseLandmark;
@@ -161,7 +162,8 @@ public class PushUp implements HealthKind{
             double angleHipKneeShoulder = calculateWaistAngle(leftHip, leftKnee, leftShoulder);
 
             // 두 선이 벌어진 각도는 두 각도의 합이 됩니다.
-            waistAngle = (angleShoulderHipKnee + angleHipKneeShoulder) / 2;
+            waistAngle = angleShoulderHipKnee;
+            Log.d("PushUp", "waistAngle: " + waistAngle);
         }
     }
 
@@ -212,10 +214,10 @@ public class PushUp implements HealthKind{
 
             if (allAngle != 0 && allAngle <= 90) {
                 numAnglesInRange++;
-                if (numAnglesInRange >= 15 && !isPushUp) {  // 푸쉬업 체크
+                if (numAnglesInRange >= 12 && !isPushUp) {  // 푸쉬업 체크
                     tts.speak("Up!!", TextToSpeech.QUEUE_FLUSH, null, null);
                     //허리 각도 확인
-                    if (waistAngle >= 130 && waistAngle <= 170){
+                    if (waistAngle >= 155 && waistAngle <= 165){
                         waist_banding = true;
                     }else{
                         waist_banding = false;
@@ -233,7 +235,7 @@ public class PushUp implements HealthKind{
                 }
             }
 
-            if (allAngle > 140) {
+            if (allAngle > 145) {
                 if(isPushUp){
                     numPushUp++;
                     maxAngle = temp;
@@ -252,13 +254,7 @@ public class PushUp implements HealthKind{
                         contract = timeAsDouble - timeAsDoubleTemp;
                     }
 
-                    if(waistAngle >= 180 && waistAngle <= 300){
-                        waist_banding = true;
-                    }else{
-                        waist_banding = false;
-                    }
-
-                    if (waistAngle >= 130 && waistAngle <= 170){
+                    if (waistAngle >= 155 && waistAngle <= 165){
                         waist_banding = true;
                     }else{
                         waist_banding = false;
