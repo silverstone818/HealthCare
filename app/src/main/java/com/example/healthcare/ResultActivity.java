@@ -14,16 +14,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.RadarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.RadarData;
-import com.github.mikephil.charting.data.RadarDataSet;
-import com.github.mikephil.charting.data.RadarEntry;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -107,8 +102,6 @@ public class ResultActivity extends AppCompatActivity {
 
         btn_result = (Button) findViewById(R.id.btn_result);
         btn_share = (Button) findViewById(R.id.btn_share);
-
-        Log.d(TAG1, "result"+contract.toString());
 
         user = new Together_group_list();
 
@@ -487,8 +480,8 @@ public class ResultActivity extends AppCompatActivity {
         APPS[3] = "긴장 풀림";
         APPS[4] = "좋은 자세";
 
-        double caloriesBurnedPerRep = 0.5;
-        double totalCaloriesBurned = user.getGood() * caloriesBurnedPerRep;
+        double caloriesBurnedPerRep = 0.325;
+        double countSquat = 0;
 
         for(int i = 0; i < num; i++){
             if(maxAngle.get(i) < 56){
@@ -506,6 +499,7 @@ public class ResultActivity extends AppCompatActivity {
             if(goodPose.get(i) == true){
                 user.setGood(user.getGood() + 1);
             }
+            countSquat++;
         }
 
         if(user.getWaist() >= user.getGood() / 2 && user.getWaist() != 0){
@@ -528,6 +522,7 @@ public class ResultActivity extends AppCompatActivity {
         if(user.getGood() == 12){
             user.setFb(user.getFb() + "\n자세가 완벽합니다! 이대로 꾸준히 정진해주세요!! 다음 운동도 파이팅!\n");
         }
+        double totalCaloriesBurned = countSquat * caloriesBurnedPerRep;
 
         user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + totalCaloriesBurned + " 칼로리\n");
         feedback.setText(user.getFb());
@@ -676,8 +671,8 @@ public class ResultActivity extends AppCompatActivity {
         APPS[3] = "긴장 풀림";
         APPS[4] = "좋은 자세";
 
-        double caloriesBurnedPerRep = 0.5;
-        double totalCaloriesBurned = user.getGood() * caloriesBurnedPerRep;
+        double caloriesBurnedPerRep = 0.75;
+        double countPushUp = 0;
 
         for(int i = 0; i < num; i++){
             if(maxAngle.get(i) > 100){
@@ -695,6 +690,7 @@ public class ResultActivity extends AppCompatActivity {
             if(goodPose.get(i) == true){
                 user.setGood(user.getGood() + 1);
             }
+            countPushUp++;
         }
 
         if(user.getWaist() >= user.getGood() / 2 && user.getWaist() != 0){
@@ -717,6 +713,8 @@ public class ResultActivity extends AppCompatActivity {
         if(user.getGood() == 12){
             user.setFb(user.getFb() + "\n자세가 완벽합니다! 이대로 꾸준히 정진해주세요!! 다음 운동도 파이팅!\n");
         }
+
+        double totalCaloriesBurned = countPushUp * caloriesBurnedPerRep;
 
         user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + totalCaloriesBurned + " 칼로리\n");
         feedback.setText(user.getFb());
@@ -867,7 +865,7 @@ public class ResultActivity extends AppCompatActivity {
         APPS[4] = "좋은 자세";
 
         double caloriesBurnedPerRep = 1.5;
-        double totalCaloriesBurned = user.getGood() * caloriesBurnedPerRep;
+        double countPullUp = 0;
 
 
         for(int i = 0; i < num; i++){
@@ -886,6 +884,7 @@ public class ResultActivity extends AppCompatActivity {
             if(goodPose.get(i) == true){
                 user.setGood(user.getGood() + 1);
             }
+            countPullUp++;
         }
 
         if(user.getWaist() >= user.getGood() / 2 && user.getWaist() != 0){
@@ -908,6 +907,8 @@ public class ResultActivity extends AppCompatActivity {
         if(user.getGood() == 12){
             user.setFb(user.getFb() + "\n자세가 완벽합니다! 이대로 꾸준히 정진해주세요!! 다음 운동도 파이팅!\n");
         }
+
+        double totalCaloriesBurned = countPullUp * caloriesBurnedPerRep;
 
         user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + totalCaloriesBurned + " 칼로리\n");
         feedback.setText(user.getFb());
