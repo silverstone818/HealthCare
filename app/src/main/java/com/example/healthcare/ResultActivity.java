@@ -674,7 +674,7 @@ public class ResultActivity extends AppCompatActivity {
         APPS[3] = "긴장 풀림";
         APPS[4] = "좋은 자세";
 
-        double caloriesBurnedPerRep = 0.7;
+        double caloriesBurnedPerRep = 0.5;
         double totalCaloriesBurned = user.getGood() * caloriesBurnedPerRep;
 
         for(int i = 0; i < num; i++){
@@ -684,7 +684,7 @@ public class ResultActivity extends AppCompatActivity {
             else if (maxAngle.get(i) < 90){
                 user.setSmall(user.getSmall() + 1);
             }
-            if (waist_banding.get(i) == true && pelvic_banding.get(i) == false){
+            if (waist_banding.get(i)){
                 user.setWaist(user.getWaist() + 1);
             }
             if (Tension.get(i) == false){
