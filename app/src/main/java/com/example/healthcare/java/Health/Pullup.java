@@ -241,7 +241,7 @@ public class Pullup implements HealthKind{
             if (allAngle != 0 && allAngle <= 100) {
                 numAnglesInRange++;
                 if (numAnglesInRange >= 20 && !isPullup) {
-                    tts.speak("Down Slowly!", TextToSpeech.QUEUE_FLUSH, null, null);
+                    tts.speak("Down!", TextToSpeech.QUEUE_FLUSH, null, null);
                     if(waistAngle >= 170 && waistAngle <= 225){
                         waist_banding = true;
                     }else{
