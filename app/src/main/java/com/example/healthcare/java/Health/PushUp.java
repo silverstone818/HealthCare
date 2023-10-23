@@ -217,7 +217,7 @@ public class PushUp implements HealthKind{
                 if (numAnglesInRange >= 12 && !isPushUp) {  // 푸쉬업 체크
                     tts.speak("Up!!", TextToSpeech.QUEUE_FLUSH, null, null);
                     //허리 각도 확인
-                    if (waistAngle >= 155 && waistAngle <= 165){
+                    if (waistAngle >= 150 && waistAngle <= 180){
                         waist_banding = true;
                     }else{
                         waist_banding = false;
@@ -254,7 +254,7 @@ public class PushUp implements HealthKind{
                         contract = timeAsDouble - timeAsDoubleTemp;
                     }
 
-                    if (waistAngle >= 155 && waistAngle <= 165){
+                    if (waistAngle >= 150 && waistAngle <= 180){
                         waist_banding = true;
                     }else{
                         waist_banding = false;
