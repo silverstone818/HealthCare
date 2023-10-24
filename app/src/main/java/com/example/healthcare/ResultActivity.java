@@ -591,8 +591,9 @@ public class ResultActivity extends AppCompatActivity {
             user.setFb(user.getFb() + "\n자세가 완벽합니다! 이대로 꾸준히 정진해주세요!! 다음 운동도 파이팅!\n");
         }
         double totalCaloriesBurned = countSquat * caloriesBurnedPerRep;
+        String formattedTotalCaloriesBurned = String.format("%.2f", totalCaloriesBurned);
 
-        user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + totalCaloriesBurned + " 칼로리\n");
+        user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + formattedTotalCaloriesBurned + " 칼로리\n");
         feedback.setText(user.getFb());
     }
     public void PushUpsScore(){
@@ -783,8 +784,9 @@ public class ResultActivity extends AppCompatActivity {
         }
 
         double totalCaloriesBurned = countPushUp * caloriesBurnedPerRep;
+        String formattedTotalCaloriesBurned = String.format("%.2f", totalCaloriesBurned);
 
-        user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + totalCaloriesBurned + " 칼로리\n");
+        user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + formattedTotalCaloriesBurned + " 칼로리\n");
         feedback.setText(user.getFb());
     }
 
@@ -977,8 +979,9 @@ public class ResultActivity extends AppCompatActivity {
         }
 
         double totalCaloriesBurned = countPullUp * caloriesBurnedPerRep;
+        String formattedTotalCaloriesBurned = String.format("%.2f", totalCaloriesBurned);
 
-        user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + totalCaloriesBurned + " 칼로리\n");
+        user.setFb(user.getFb() + "\n예상 칼로리 소모량: " + formattedTotalCaloriesBurned + " 칼로리\n");
         feedback.setText(user.getFb());
     }
 
