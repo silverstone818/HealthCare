@@ -222,7 +222,7 @@
             android:gravity="center"
             android:layout_marginTop="10dp">
             <TextView
-                android:id="@+id/Icon_age"
+                android:id="@+id/Icon_age1"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
                 android:gravity="center"
@@ -250,7 +250,7 @@
             android:id="@+id/Gone4"
             android:layout_marginTop="10dp">
             <TextView
-                android:id="@+id/Icon_height"
+                android:id="@+id/Icon_height2"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
                 android:gravity="center"
@@ -278,7 +278,7 @@
             android:id="@+id/Gone5"
             android:layout_marginTop="10dp">
             <TextView
-                android:id="@+id/Icon_weight"
+                android:id="@+id/Icon_weight3"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
                 android:gravity="center"
