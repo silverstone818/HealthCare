@@ -2,6 +2,7 @@ package com.example.healthcare.java.Health;
 
 import android.graphics.PointF;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 
 import com.google.mlkit.vision.pose.Pose;
 import com.google.mlkit.vision.pose.PoseLandmark;
@@ -242,7 +243,7 @@ public class Pullup implements HealthKind{
                 numAnglesInRange++;
                 if (numAnglesInRange >= 20 && !isPullup) {
                     tts.speak("Down!", TextToSpeech.QUEUE_FLUSH, null, null);
-                    if(waistAngle >= 170 && waistAngle <= 225){
+                    if(waistAngle >= 185 && waistAngle <= 200){
                         waist_banding = true;
                     }else{
                         waist_banding = false;
@@ -260,7 +261,7 @@ public class Pullup implements HealthKind{
                 }
             }
 
-            if (allAngle > 150) {
+            if (allAngle > 120) {
                 if(isPullup){
                     numPullup++;
                     maxAngle = temp;
@@ -279,14 +280,14 @@ public class Pullup implements HealthKind{
                         contract = timeAsDouble - timeAsDoubleTemp;
                     }
 
-                    if(waistAngle >= 175 && waistAngle <= 185){
+                    if(waistAngle >= 180 && waistAngle <= 200){
                         waist_banding = true;
                     }else{
                         waist_banding = false;
                     }
-                    if(waist_banding == true){
+                    if(waist_banding == false){
                         //가슴을 안내밀었을 때
-                        tts.speak("가슴을 적당히 내밀어주세요.", TextToSpeech.QUEUE_FLUSH, null, null);
+                        tts.speak("어깨가 말려 올라갑니다.", TextToSpeech.QUEUE_FLUSH, null, null);
                         goodPose = false;
 
                     }
@@ -295,7 +296,7 @@ public class Pullup implements HealthKind{
                         tts.speak("조금 더 당겨주세요.", TextToSpeech.QUEUE_FLUSH, null, null);
                         goodPose = false;
                     }
-                    else if (maxAngle <= 85 && waist_banding == false){
+                    else if (maxAngle <= 85 && waist_banding == true){
                         //좋은 자세 일 때
                         tts.speak("좋은 자세 입니다.", TextToSpeech.QUEUE_FLUSH, null, null);
                         goodPose = true;

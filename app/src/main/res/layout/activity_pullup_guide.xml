@@ -144,7 +144,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:text="정확한 판단을 위해
-                                             동작 1번 후 'Down Slowly' 소리에
+                                             동작 1번 후 'Down' 소리에
                                              동작 2번을, 총 12회 실행해주세요."
                     android:layout_marginRight="20dp"
                     android:textColor="#000000"
@@ -172,7 +172,7 @@
                     android:layout_gravity="left"
                     android:text="카메라는 몸 전체가 보여야 하며
                             사용자 명치 정도 높이에 놓아서 측정해주세요.
-                            (약 100cm 높이)"
+                            (약 100cm 높이) \n 운동하는 사람의 왼쪽에서 촬영해주세요."
                     android:layout_marginRight="20dp"
                     android:textColor="#000000"
                     android:textSize="18dp"

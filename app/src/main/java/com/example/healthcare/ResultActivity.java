@@ -939,7 +939,7 @@ public class ResultActivity extends AppCompatActivity {
 
 
         for(int i = 0; i < num; i++){
-            if(maxAngle.get(i) < 56){
+            if(maxAngle.get(i) < 0){
                 user.setBig(user.getBig()+1);
             }
             else if (maxAngle.get(i) > 85){
