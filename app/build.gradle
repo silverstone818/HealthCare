@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.healthcare.hellthing'
+    namespace 'com.example.healthcare'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.healthcare.hellthing"
+        applicationId "com.example.healthcare"
         minSdk 24
         targetSdk 33
         versionCode 1
